@@ -3,7 +3,12 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Bot, Mic, MicOff, Send, RefreshCw, CheckCircle, AlertCircle } from 'lucide-react'
-import { interviewQuestions, InterviewQuestion } from './interview-data'
+// import { interviewQuestions, InterviewQuestion } from './interview-data'
+
+interface InterviewQuestion {
+  question: string;
+  answer: string;
+}
 
 type InterviewTier = 'tier1' | 'tier2'
 type InterviewRole = string
@@ -20,6 +25,30 @@ const interviewRoles = {
     { id: 'systems', name: 'Systems Administration', description: 'Exchange, O365, DNS, DHCP management' }
   ]
 }
+
+// 5 CompTIA A+ inspired interview questions
+const helpdeskQuestions: InterviewQuestion[] = [
+  {
+    question: "A user reports their computer is running slowly. What are the first three things you would check?",
+    answer: "First, I would open Task Manager to check CPU, memory, and disk usage to identify any processes consuming excessive resources. Second, I would verify available hard drive space, ensuring at least 15% is free for optimal performance. Third, I would check for malware by running a full antivirus scan and reviewing startup programs that might be loading unnecessarily. I'd also document findings in the ticket for future reference."
+  },
+  {
+    question: "Explain what DHCP is and how it works in simple terms a non-technical user could understand.",
+    answer: "DHCP stands for Dynamic Host Configuration Protocol. Think of it like a hotel front desk - when you check in (connect to the network), the desk clerk (DHCP server) automatically assigns you a room number (IP address) and gives you information about hotel services like the restaurant and gym (DNS servers and gateway). This happens automatically so you don't have to configure anything manually. The assignment is temporary and can be given to someone else when you check out (disconnect)."
+  },
+  {
+    question: "You need to set up a new workstation for an employee. Walk me through your process from unboxing to ready-to-use.",
+    answer: "I would start by unboxing and physically setting up the hardware, connecting all peripherals. Next, I'd power on and enter BIOS to verify hardware is recognized and update firmware if needed. Then I'd boot from our network or USB to apply the company's standard Windows image. After imaging, I'd join the computer to the domain, install role-specific software, configure Outlook and network drives, enable BitLocker encryption, run all Windows updates, test all applications and peripherals, and finally create documentation in our asset management system before delivering to the user with a brief orientation."
+  },
+  {
+    question: "A user cannot print to a network printer that was working yesterday. How would you troubleshoot this?",
+    answer: "I'd start by checking if other users can print to the same printer to determine if it's isolated to this user. Then I'd verify the printer is online and has paper/toner by checking its status page. On the user's computer, I'd clear the print spooler by stopping the service, deleting stuck jobs, and restarting it. I'd ping the printer's IP address to verify network connectivity, check if the printer driver needs updating, ensure the user didn't accidentally change their default printer, and verify their account has permissions to print. If needed, I'd remove and re-add the printer with fresh drivers."
+  },
+  {
+    question: "What is the difference between RAM and storage, and how would you explain it to a user asking why their computer needs both?",
+    answer: "I'd explain that RAM is like your desk workspace - it's where you spread out papers you're actively working on for quick access. Storage (hard drive/SSD) is like your filing cabinet - it permanently stores all your documents even when you're not using them. When you open a program, it moves from the filing cabinet (storage) to your desk (RAM) so you can work with it quickly. The bigger your desk (more RAM), the more things you can work on at once without slowing down. The bigger your filing cabinet (more storage), the more files you can keep permanently. You need both because RAM is temporary but fast, while storage is permanent but slower."
+  }
+];
 
 // For now, we'll only show helpdesk questions since those are the only ones with answers
 const availableRoles = ['helpdesk']
@@ -44,13 +73,14 @@ export default function MockInterviewPage() {
 
   const generateQuestion = () => {
     if (selectedRole === 'helpdesk') {
-      const questions = interviewQuestions.helpdesk
-      const randomQuestion = questions[Math.floor(Math.random() * questions.length)]
-      setCurrentQuestion(randomQuestion)
-      setUserAnswer('')
-      setShowAnswer(false)
-      setExampleAnswer('')
-      setQuestionCount(prev => prev + 1)
+      // Get next question in sequence (cycling through 5 questions)
+      const questionIndex = questionCount % helpdeskQuestions.length;
+      const nextQuestion = helpdeskQuestions[questionIndex];
+      setCurrentQuestion(nextQuestion);
+      setUserAnswer('');
+      setShowAnswer(false);
+      setExampleAnswer('');
+      setQuestionCount(prev => prev + 1);
     }
   }
 

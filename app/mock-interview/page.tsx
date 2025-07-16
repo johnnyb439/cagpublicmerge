@@ -72,10 +72,15 @@ export default function MockInterviewPage() {
   }
 
   const generateQuestion = () => {
+    console.log('generateQuestion called, selectedRole:', selectedRole);
+    console.log('questionCount:', questionCount);
+    console.log('helpdeskQuestions:', helpdeskQuestions);
+    
     if (selectedRole === 'helpdesk') {
       // Get next question in sequence (cycling through 5 questions)
       const questionIndex = questionCount % helpdeskQuestions.length;
       const nextQuestion = helpdeskQuestions[questionIndex];
+      console.log('Setting question:', nextQuestion);
       setCurrentQuestion(nextQuestion);
       setUserAnswer('');
       setShowAnswer(false);
@@ -242,7 +247,13 @@ export default function MockInterviewPage() {
               </div>
               
               <div className="bg-gray-50 rounded-lg p-4 mb-6">
-                <p className="text-lg">{currentQuestion?.question}</p>
+                <p className="text-lg">{currentQuestion?.question || 'Loading question...'}</p>
+                {/* Debug info */}
+                {!currentQuestion && (
+                  <p className="text-sm text-red-500 mt-2">
+                    Debug: No question loaded. Role: {selectedRole}, Count: {questionCount}
+                  </p>
+                )}
               </div>
               
               <div className="space-y-4">

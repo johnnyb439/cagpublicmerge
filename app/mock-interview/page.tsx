@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Bot, Mic, MicOff, Send, RefreshCw, CheckCircle, AlertCircle } from 'lucide-react'
 // import { interviewQuestions, InterviewQuestion } from './interview-data'
@@ -72,15 +72,10 @@ export default function MockInterviewPage() {
   }
 
   const generateQuestion = () => {
-    console.log('generateQuestion called, selectedRole:', selectedRole);
-    console.log('questionCount:', questionCount);
-    console.log('helpdeskQuestions:', helpdeskQuestions);
-    
     if (selectedRole === 'helpdesk') {
       // Get next question in sequence (cycling through 5 questions)
       const questionIndex = questionCount % helpdeskQuestions.length;
       const nextQuestion = helpdeskQuestions[questionIndex];
-      console.log('Setting question:', nextQuestion);
       setCurrentQuestion(nextQuestion);
       setUserAnswer('');
       setShowAnswer(false);
@@ -115,6 +110,15 @@ export default function MockInterviewPage() {
     setExampleAnswer('')
     setQuestionCount(0)
   }
+
+  // Ensure question loads when interview starts
+  useEffect(() => {
+    if (isInterviewing && selectedRole === 'helpdesk' && !currentQuestion) {
+      const firstQuestion = helpdeskQuestions[0];
+      setCurrentQuestion(firstQuestion);
+      setQuestionCount(1);
+    }
+  }, [isInterviewing, selectedRole, currentQuestion]);
 
   return (
     <section className="min-h-screen bg-gray-50 py-20">
@@ -247,13 +251,7 @@ export default function MockInterviewPage() {
               </div>
               
               <div className="bg-gray-50 rounded-lg p-4 mb-6">
-                <p className="text-lg">{currentQuestion?.question || 'Loading question...'}</p>
-                {/* Debug info */}
-                {!currentQuestion && (
-                  <p className="text-sm text-red-500 mt-2">
-                    Debug: No question loaded. Role: {selectedRole}, Count: {questionCount}
-                  </p>
-                )}
+                <p className="text-lg">{currentQuestion?.question}</p>
               </div>
               
               <div className="space-y-4">

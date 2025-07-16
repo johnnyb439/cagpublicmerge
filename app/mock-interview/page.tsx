@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Bot, Mic, MicOff, Send, RefreshCw, CheckCircle, AlertCircle } from 'lucide-react'
+import BinaryBackground from '@/components/BinaryBackground'
 // import { interviewQuestions, InterviewQuestion } from './interview-data'
 
 interface InterviewQuestion {
@@ -141,8 +142,9 @@ export default function MockInterviewPage() {
   }, [isInterviewing, selectedRole, currentQuestion]);
 
   return (
-    <section className="min-h-screen bg-gray-50 py-20">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative min-h-screen bg-gray-50 py-20">
+      <BinaryBackground />
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

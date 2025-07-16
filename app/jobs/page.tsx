@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Search, MapPin, Shield, DollarSign, Filter, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
+import BinaryBackground from '@/components/BinaryBackground'
 
 // Sample job data - in production this would come from a database
 const sampleJobs = [
@@ -82,8 +83,9 @@ export default function JobsPage() {
   })
 
   return (
-    <section className="min-h-screen bg-gray-50 py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative min-h-screen bg-gray-50 py-20">
+      <BinaryBackground />
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

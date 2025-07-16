@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, Phone, Calendar, Send, CheckCircle } from 'lucide-react'
+import BinaryBackground from '@/components/BinaryBackground'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -30,8 +31,9 @@ export default function ContactPage() {
   }
 
   return (
-    <section className="min-h-screen bg-gray-50 py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative min-h-screen bg-gray-50 py-20">
+      <BinaryBackground />
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

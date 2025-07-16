@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { Shield, Target, Users, Award, Briefcase, Heart } from 'lucide-react'
 import Image from 'next/image'
+import BinaryBackground from '@/components/BinaryBackground'
 
 const values = [
   {
@@ -49,6 +50,7 @@ export default function AboutPage() {
     <>
       {/* Hero Section */}
       <section className="relative py-20 bg-professional-gradient text-white">
+        <BinaryBackground />
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-10 right-10 w-96 h-96 bg-dynamic-green/20 rounded-full blur-3xl"></div>
           <div className="absolute bottom-10 left-10 w-72 h-72 bg-sky-blue/20 rounded-full blur-3xl"></div>

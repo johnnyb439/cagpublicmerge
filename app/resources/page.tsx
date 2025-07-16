@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { BookOpen, Download, FileText, Shield, Briefcase, TrendingUp, ChevronRight, Clock } from 'lucide-react'
 import Link from 'next/link'
+import BinaryBackground from '@/components/BinaryBackground'
 
 interface ResourceItem {
   title: string;
@@ -178,6 +179,7 @@ export default function ResourcesPage() {
     <>
       {/* Hero Section */}
       <section className="relative py-20 bg-professional-gradient text-white">
+        <BinaryBackground />
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-10 left-10 w-96 h-96 bg-emerald-green/20 rounded-full blur-3xl"></div>
           <div className="absolute bottom-10 right-10 w-72 h-72 bg-opportunity-orange/20 rounded-full blur-3xl"></div>

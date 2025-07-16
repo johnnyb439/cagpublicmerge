@@ -32,16 +32,9 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20">
           <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-3">
-              <Image 
-                src="/images/cag-logo.png" 
-                alt="Cleared Advisory Group Logo" 
-                width={50} 
-                height={50}
-                className="object-contain"
-              />
+            <Link href="/" className="flex items-center">
               <div>
-                <span className="text-white font-montserrat font-bold text-xl">Cleared Advisory Group</span>
+                <span className="text-white font-montserrat font-bold text-xl whitespace-nowrap">Cleared Advisory Group</span>
                 <p className="text-sky-blue text-xs">Your Gateway to Opportunities</p>
               </div>
             </Link>

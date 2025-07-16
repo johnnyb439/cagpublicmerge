@@ -202,7 +202,7 @@ export default function MockInterviewPage() {
           >
             <div className="card">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="font-montserrat font-semibold">Question {questionCount} of 5</h3>
+                <h3 className="font-montserrat font-semibold">Question {questionCount + 1} of 5</h3>
                 <button
                   onClick={resetInterview}
                   className="text-intel-gray hover:text-command-black transition-colors"

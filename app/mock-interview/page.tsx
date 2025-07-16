@@ -47,6 +47,26 @@ const helpdeskQuestions: InterviewQuestion[] = [
   {
     question: "What is the difference between RAM and storage, and how would you explain it to a user asking why their computer needs both?",
     answer: "I'd explain that RAM is like your desk workspace - it's where you spread out papers you're actively working on for quick access. Storage (hard drive/SSD) is like your filing cabinet - it permanently stores all your documents even when you're not using them. When you open a program, it moves from the filing cabinet (storage) to your desk (RAM) so you can work with it quickly. The bigger your desk (more RAM), the more things you can work on at once without slowing down. The bigger your filing cabinet (more storage), the more files you can keep permanently. You need both because RAM is temporary but fast, while storage is permanent but slower."
+  },
+  {
+    question: "A user complains about receiving too many spam emails. What steps would you take to help reduce spam in their inbox?",
+    answer: "First, I'd check if their email client's spam filter is properly enabled and configured. I'd show them how to mark emails as spam to train the filter, and check if legitimate emails are in the spam folder. Next, I'd advise them never to reply to spam or click unsubscribe links in suspicious emails. I'd help them create rules to automatically filter common spam keywords, review their email address exposure online, and consider setting up a separate email for online shopping or subscriptions. For persistent issues, I might recommend changing email addresses or implementing additional anti-spam solutions. I'd also educate them about phishing attempts and how to identify suspicious emails."
+  },
+  {
+    question: "How would you help a user who says their computer 'just shut off' and won't turn back on?",
+    answer: "I'd start with basic power troubleshooting: verify the power cable is connected securely, test the outlet with another device, and check for tripped circuit breakers. For laptops, I'd remove the battery (if removable) and try powering on with just AC power. Next, I'd look for signs of life like LED lights or fan noise when pressing the power button. I'd perform a hard reset by unplugging power, removing the battery, holding the power button for 30 seconds, then reconnecting. If it's a desktop, I'd check internal connections and try one stick of RAM. For overheating issues, I'd let it cool down completely before attempting to power on. If these steps fail, it likely indicates hardware failure requiring further diagnosis or replacement."
+  },
+  {
+    question: "Explain the difference between a virus, malware, and ransomware to a non-technical user.",
+    answer: "I'd use simple analogies: A virus is like a cold that spreads from person to person - it's a type of malicious software that copies itself and spreads to other files or computers. Malware is the umbrella term for all malicious software, like how 'illness' covers all types of sickness including colds, flu, and infections. It includes viruses, spyware, trojans, and more. Ransomware is a specific type of malware that's like a kidnapper - it locks up your files and demands payment to release them. The key points are: viruses spread, malware is any bad software, and ransomware holds your data hostage. All three can be prevented with good antivirus software, regular updates, and careful online behavior."
+  },
+  {
+    question: "A remote user cannot connect to the company VPN. Walk through your troubleshooting process.",
+    answer: "I'd start by verifying their internet connection is working by having them browse to a website. Then I'd check if they're using the correct VPN server address and credentials, including any recent password changes. I'd ensure their VPN client is up-to-date and reinstall if necessary. Next, I'd verify their firewall isn't blocking VPN ports (typically 1723 for PPTP, 1701 for L2TP, or 443 for SSL VPN). I'd have them try connecting from a different network to rule out ISP blocking. I'd check if their account is active in Active Directory and has VPN access permissions. For certificate-based VPNs, I'd verify certificate validity. I'd also check our VPN server status and user connection limits. If needed, I'd use alternative connection methods like SSL VPN or provide temporary remote access through other approved tools."
+  },
+  {
+    question: "How do you determine if a computer hardware issue is caused by the motherboard, power supply, or RAM?",
+    answer: "I use a systematic elimination process. For power supply issues, I check if fans spin up, listen for clicking sounds, test with a multimeter or PSU tester, and look for burning smells. A completely dead system often indicates PSU failure. For RAM issues, I listen for beep codes, test with one stick at a time in different slots, run memory diagnostic tools, and look for random crashes or blue screens with memory-related errors. For motherboard issues, I check for physical damage like bulging capacitors, test with minimal components (CPU, one RAM stick, PSU), verify all power connections, and look for diagnostic LED codes. The key is isolating components - if the system works with certain RAM removed, it's likely RAM; if swapping PSU fixes it, that's the culprit; persistent issues with known good components suggest motherboard failure."
   }
 ];
 
@@ -92,7 +112,7 @@ export default function MockInterviewPage() {
   }
 
   const nextQuestion = () => {
-    if (questionCount < 5) {
+    if (questionCount < 10) {
       generateQuestion()
     } else {
       setIsInterviewing(false)
@@ -241,7 +261,7 @@ export default function MockInterviewPage() {
           >
             <div className="card">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="font-montserrat font-semibold">Question {questionCount + 1} of 5</h3>
+                <h3 className="font-montserrat font-semibold">Question {questionCount} of 10</h3>
                 <button
                   onClick={resetInterview}
                   className="text-intel-gray hover:text-command-black transition-colors"
@@ -308,14 +328,14 @@ export default function MockInterviewPage() {
                       onClick={nextQuestion}
                       className="btn-primary"
                     >
-                      {questionCount < 5 ? 'Next Question' : 'Finish Interview'}
+                      {questionCount < 10 ? 'Next Question' : 'Finish Interview'}
                     </button>
                   </div>
                 </motion.div>
               )}
             </div>
             
-            {questionCount >= 5 && !isInterviewing && (
+            {questionCount >= 10 && !isInterviewing && (
               <div className="text-center">
                 <h3 className="text-2xl font-montserrat font-bold mb-4">Interview Complete!</h3>
                 <p className="text-intel-gray mb-6">Great job! You've completed the mock interview. Review the example answers to improve your responses.</p>

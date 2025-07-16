@@ -22,24 +22,80 @@ const interviewRoles = {
 
 const sampleQuestions = {
   helpdesk: [
-    "How would you handle an angry user who can't access their email?",
-    "Describe your experience with ticketing systems.",
-    "What steps would you take to troubleshoot a computer that won't boot?"
+    "Walk me through your methodology when a colleague can't access network resources. What's your step-by-step approach?",
+    "Can you explain directory services and demonstrate how you'd help someone who forgot their login credentials?",
+    "A team member mentions their workstation has become sluggish. What's your diagnostic process?",
+    "Compare and contrast different Windows file system formats. In what scenarios would each be most appropriate?",
+    "You receive several urgent requests simultaneously. How do you prioritize and manage your workload?",
+    "Tell me about remote access solutions and how you'd assist someone having trouble connecting from home.",
+    "What's your approach to preparing new hardware for employee use in a corporate environment?",
+    "How do you handle sensitive data when decommissioning equipment? What security measures are essential?",
+    "From a support standpoint, what key changes should technicians know about recent Windows versions?",
+    "A colleague encounters a critical system error with a blue screen. Walk me through your troubleshooting process."
   ],
   osp: [
-    "Describe your experience with fiber optic cable installation.",
-    "How do you ensure safety when working on poles or in manholes?",
-    "What tools do you use for cable testing?"
+    "Walk me through joining optical cables in the field. What equipment is essential for this task?",
+    "Discuss the safety measures you implement when working in underground utility spaces.",
+    "How do you utilize reflectometry equipment to verify optical cable integrity?",
+    "Compare single-strand and multi-strand optical cables. What determines your choice for a project?",
+    "What precautions do you take to maintain signal quality during cable installation?",
+    "Describe your documentation process for tracking cable pathways and connection points.",
+    "Why is electrical protection critical in outdoor telecommunications installations?",
+    "What factors do you consider before running new cables through pre-existing pathways?",
+    "How do you determine acceptable signal loss for extended optical cable installations?",
+    "Compare different methods of joining optical cables. What are the pros and cons of each?"
+  ],
+  isp: [
+    "Demonstrate your process for properly connecting and verifying category-rated network cables.",
+    "Contrast the two primary ethernet wiring configurations. When is each standard used?",
+    "How would you plan the cabling infrastructure for a new corporate facility?",
+    "Why is organized cable routing critical in server room environments? Share your best practices.",
+    "What instruments do you rely on for validating cable performance and compliance?",
+    "How do you maintain industry compliance when installing structured cabling systems?",
+    "Explain powered ethernet technology and its various implementation standards.",
+    "What are the maximum reliable distances for different grades of network cabling?",
+    "Share your system for identifying and tracking network infrastructure components.",
+    "How do you diagnose sporadic connection problems in structured cabling systems?"
+  ],
+  fiber: [
+    "Detail your preparation routine before connecting optical fiber, from initial handling to final preparation.",
+    "Distinguish between various optical connector polish types and their applications.",
+    "Demonstrate the correct procedure for measuring optical signal strength and attenuation.",
+    "What factors contribute to excessive signal loss at connection points? How do you address them?",
+    "What protective measures are essential when handling optical fiber materials?",
+    "Describe your maintenance routine for optical connection points and the supplies you use.",
+    "Can you explain how light behavior affects signal quality in fiber optic systems?",
+    "How does wavelength division technology enhance fiber capacity? Explain the concept.",
+    "You discover no signal passing through an optical connection. What's your diagnostic approach?",
+    "What are the best practices for storing and protecting unused optical cables?"
   ],
   network: [
-    "Explain the difference between a router and a switch.",
-    "How would you troubleshoot a network connectivity issue?",
-    "Describe your experience with VLANs."
+    "Break down the network communication layers and provide real-world examples for each level.",
+    "Demonstrate how you'd implement virtual network segmentation on enterprise switches.",
+    "Compare fixed path routing with adaptive routing protocols. When is each approach preferred?",
+    "Why is loop prevention crucial in switched networks? How do protocols address this?",
+    "You suspect a broadcast storm on the network. How would you identify and resolve it?",
+    "A department needs a network segment for 100 devices. Calculate the appropriate addressing scheme.",
+    "Contrast connection-oriented and connectionless protocols. Provide use cases for each.",
+    "How do you implement traffic filtering rules to enhance network security?",
+    "Share your experience with packet analysis and network performance monitoring solutions.",
+    "Design a fault-tolerant network topology for a mission-critical environment.",
+    "Compare exterior and interior gateway protocols. What are their primary differences?",
+    "How would you prioritize voice traffic on a converged network? Explain your approach."
   ],
   systems: [
-    "How would you migrate a user's mailbox to Office 365?",
-    "Explain DNS and DHCP in simple terms.",
-    "Describe a challenging server issue you resolved."
+    "Outline your strategy for transitioning email services from on-site servers to cloud platforms.",
+    "How do you deploy and maintain centralized configuration policies in a domain environment?",
+    "Compare various disk redundancy configurations. What factors guide your selection?",
+    "A domain member can't resolve internal hostnames. What's your troubleshooting approach?",
+    "Describe your methodology for keeping server operating systems current and secure.",
+    "Have you worked with automated configuration management? Share your experience.",
+    "What metrics do you monitor to ensure database server performance? How do you optimize them?",
+    "Walk me through establishing a certificate authority infrastructure for an organization.",
+    "How would you design a business continuity strategy for essential server infrastructure?",
+    "Share your experience managing virtual server environments and hypervisor platforms.",
+    "What measures do you implement to protect server infrastructure from security threats?",
+    "Describe your process for forecasting and planning future server resource requirements."
   ]
 }
 

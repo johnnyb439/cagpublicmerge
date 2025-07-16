@@ -32,10 +32,22 @@ export async function POST(request: Request) {
     }
 
     // Add role-specific feedback
-    if (tier === 'Tier 1' && !answer.toLowerCase().includes('customer')) {
-      feedback += " For help desk roles, consider mentioning customer service skills.";
-    } else if (tier === 'Tier 2' && !answer.toLowerCase().includes('technical')) {
-      feedback += " For admin roles, emphasize your technical expertise and problem-solving abilities.";
+    if (role === 'helpdesk') {
+      if (!answer.toLowerCase().includes('customer') && !answer.toLowerCase().includes('user')) {
+        feedback += " For help desk roles, remember to emphasize user communication and customer service aspects.";
+      }
+    } else if (role === 'osp' || role === 'isp' || role === 'fiber') {
+      if (!answer.toLowerCase().includes('safety') && !answer.toLowerCase().includes('standard')) {
+        feedback += " For infrastructure roles, consider mentioning safety protocols and industry standards.";
+      }
+    } else if (role === 'network') {
+      if (!answer.toLowerCase().includes('protocol') && !answer.toLowerCase().includes('configure')) {
+        feedback += " For network admin roles, demonstrate your knowledge of protocols and configuration experience.";
+      }
+    } else if (role === 'systems') {
+      if (!answer.toLowerCase().includes('security') && !answer.toLowerCase().includes('performance')) {
+        feedback += " For systems admin roles, highlight security measures and performance optimization strategies.";
+      }
     }
 
     return NextResponse.json({

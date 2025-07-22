@@ -1,0 +1,111 @@
+MILITARY TO CIVILIAN RESUME TRANSLATION WORKSHEET
+Cleared Advisory Group - Your Gateway to Opportunities
+
+=================================================
+PERSONAL INFORMATION
+=================================================
+Name: _________________________________
+Current/Last Rank: ____________________
+Branch of Service: ____________________
+Years of Service: _____________________
+Clearance Level: ______________________
+Clearance Date: _______________________
+
+=================================================
+MILITARY OCCUPATIONAL SPECIALTY (MOS/AFSC/NEC/RATE)
+=================================================
+Military Job Title: ___________________
+Civilian Equivalent: __________________
+
+Key Responsibilities (Military Terms):
+1. ____________________________________
+2. ____________________________________
+3. ____________________________________
+
+Translated to Civilian Terms:
+1. ____________________________________
+2. ____________________________________
+3. ____________________________________
+
+=================================================
+TECHNICAL SKILLS TRANSLATION
+=================================================
+Military System/Technology → Civilian Equivalent
+
+Example: SIPR/JWICS → Secure Network Administration
+1. _________________ → _________________
+2. _________________ → _________________
+3. _________________ → _________________
+4. _________________ → _________________
+5. _________________ → _________________
+
+=================================================
+LEADERSHIP EXPERIENCE
+=================================================
+Number of Personnel Led: ______________
+Budget Managed: $______________________
+
+Military Leadership Role → Civilian Title
+Example: Squad Leader → Team Lead/Supervisor
+1. _________________ → _________________
+2. _________________ → _________________
+3. _________________ → _________________
+
+=================================================
+KEY ACHIEVEMENTS
+=================================================
+Military Achievement → Civilian Impact
+
+Example: "Reduced maintenance downtime by 40%" → 
+"Improved system availability from 60% to 100%, saving $200K annually"
+
+1. Military: __________________________
+   Civilian: __________________________
+   
+2. Military: __________________________
+   Civilian: __________________________
+   
+3. Military: __________________________
+   Civilian: __________________________
+
+=================================================
+CERTIFICATIONS & TRAINING
+=================================================
+Military Training → Industry Certification
+
+Example: Information Assurance Technician Level II → CompTIA Security+
+1. _________________ → _________________
+2. _________________ → _________________
+3. _________________ → _________________
+
+=================================================
+ACTION VERBS TRANSLATION GUIDE
+=================================================
+Instead of...          Use...
+Commanded          →   Directed, Led, Managed
+Deployed           →   Implemented, Launched
+Mission planning   →   Project planning
+Combat operations  →   High-pressure operations
+Tactical           →   Strategic
+
+=================================================
+COMMON ACRONYM TRANSLATIONS
+=================================================
+OPSEC   → Operational Security
+COMSEC  → Communications Security
+C4ISR   → Command, Control, Communications, Intelligence, Surveillance
+NCO     → Mid-level Manager
+OIC     → Department Head/Director
+
+=================================================
+NOTES & ADDITIONAL TRANSLATIONS
+=================================================
+_______________________________________
+_______________________________________
+_______________________________________
+_______________________________________
+_______________________________________
+
+Remember: Quantify your achievements with numbers, percentages, and dollar amounts whenever possible!
+
+© 2025 Cleared Advisory Group - Empowering Cleared Professionals

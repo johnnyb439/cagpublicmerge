@@ -299,7 +299,7 @@ export default function ServicesPage() {
               },
               {
                 name: 'Professional',
-                price: '$497',
+                price: '$200',
                 description: 'Comprehensive career transition support',
                 features: [
                   'Everything in Starter',

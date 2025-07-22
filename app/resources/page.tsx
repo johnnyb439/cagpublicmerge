@@ -25,6 +25,8 @@ interface ResourceItem {
   views?: number;
   rating?: number;
   date?: string;
+  content?: string;
+  sections?: { title: string; content: string }[];
 }
 
 // Extended resources with all categories
@@ -39,7 +41,29 @@ const allResources: ResourceItem[] = [
     readTime: '15 min',
     featured: true,
     views: 1543,
-    rating: 4.9
+    rating: 4.9,
+    sections: [
+      {
+        title: 'What is a Security Clearance?',
+        content: 'A security clearance is a status granted to individuals allowing them access to classified information. The process involves a thorough background investigation to ensure the individual is trustworthy and reliable.'
+      },
+      {
+        title: 'Types of Security Clearances',
+        content: 'There are three main levels of security clearance:\n\n• **Confidential**: The lowest level, for information that could damage national security if disclosed.\n• **Secret**: Mid-level clearance for information that could cause serious damage to national security.\n• **Top Secret**: The highest level, for information that could cause exceptionally grave damage to national security.'
+      },
+      {
+        title: 'The Investigation Process',
+        content: 'The security clearance process involves:\n\n1. **Application**: Complete the SF-86 form with detailed personal history\n2. **Investigation**: Background check including finances, foreign contacts, and criminal history\n3. **Adjudication**: Final determination based on investigation results\n4. **Periodic Reinvestigation**: Regular reviews to maintain clearance'
+      },
+      {
+        title: 'Timeline Expectations',
+        content: 'Processing times vary:\n\n• **Secret Clearance**: 3-6 months average\n• **Top Secret**: 6-12 months average\n• **Interim Clearance**: May be granted within 1-2 months for urgent needs'
+      },
+      {
+        title: 'Maintaining Your Clearance',
+        content: 'To maintain your clearance:\n\n• Report foreign travel and contacts\n• Keep finances in good order\n• Avoid criminal activities\n• Report significant life changes\n• Complete periodic reinvestigations on time'
+      }
+    ]
   },
   {
     id: 'military-transition',
@@ -49,7 +73,21 @@ const allResources: ResourceItem[] = [
     category: 'Getting Started',
     readTime: '20 min',
     views: 892,
-    rating: 4.8
+    rating: 4.8,
+    sections: [
+      {
+        title: 'Translating Military Skills',
+        content: 'Your military experience is incredibly valuable in the civilian IT sector:\n\n• **Leadership**: Team management and project leadership\n• **Security Mindset**: Understanding of security protocols and compliance\n• **Problem Solving**: Quick decision-making under pressure\n• **Communication**: Clear and concise briefing skills\n• **Discipline**: Strong work ethic and attention to detail'
+      },
+      {
+        title: 'Key Certifications to Pursue',
+        content: 'Focus on certifications that complement your clearance:\n\n1. **CompTIA Security+**: Required for many DoD positions\n2. **CISSP**: Advanced security certification\n3. **Cloud Certifications**: AWS, Azure, or GCP\n4. **Project Management**: PMP or Agile certifications\n5. **Specialized Tech**: Based on your interest area'
+      },
+      {
+        title: 'Timeline and Action Steps',
+        content: '**6 Months Before Separation**:\n• Start networking and attending job fairs\n• Begin certification studies\n• Update resume with civilian terminology\n\n**3 Months Before**:\n• Apply for positions\n• Practice interviewing\n• Connect with veteran hiring programs\n\n**Post-Separation**:\n• Leverage veteran benefits for education\n• Join professional organizations\n• Continue skill development'
+      }
+    ]
   },
   {
     id: 'gov-contracting',
@@ -407,6 +445,7 @@ export default function ResourcesPage() {
   const [showCalculator, setShowCalculator] = useState(false)
   const [subscribedToNewsletter, setSubscribedToNewsletter] = useState(false)
   const [email, setEmail] = useState('')
+  const [selectedResource, setSelectedResource] = useState<ResourceItem | null>(null)
 
   // Filter resources based on search and filters
   const filteredResources = useMemo(() => {
@@ -601,9 +640,12 @@ export default function ResourcesPage() {
                           Watch Video
                         </button>
                       ) : (
-                        <Link href="#" className="flex-1 btn-primary text-sm text-center">
+                        <button 
+                          onClick={() => setSelectedResource(resource)}
+                          className="flex-1 btn-primary text-sm"
+                        >
                           Read More
-                        </Link>
+                        </button>
                       )}
                     </div>
                   </motion.div>
@@ -702,9 +744,12 @@ export default function ResourcesPage() {
                             Watch Video
                           </button>
                         ) : (
-                          <Link href="#" className="flex-1 btn-secondary text-sm text-center">
+                          <button 
+                            onClick={() => setSelectedResource(resource)}
+                            className="flex-1 btn-secondary text-sm"
+                          >
                             Access
-                          </Link>
+                          </button>
                         )}
                       </div>
                     </motion.div>
@@ -796,6 +841,112 @@ export default function ResourcesPage() {
           </motion.div>
         </div>
       </section>
+
+      {/* Resource Content Modal */}
+      <AnimatePresence>
+        {selectedResource && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4"
+            onClick={() => setSelectedResource(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-command-black border border-gray-800 rounded-lg max-w-4xl max-h-[80vh] overflow-auto p-8"
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Modal Header */}
+              <div className="flex justify-between items-start mb-6">
+                <div>
+                  <h2 className="text-3xl font-montserrat font-semibold mb-2">{selectedResource.title}</h2>
+                  <p className="text-gray-400">{selectedResource.description}</p>
+                  <div className="flex items-center gap-4 mt-2 text-sm text-gray-500">
+                    {selectedResource.readTime && (
+                      <span className="flex items-center gap-1">
+                        <Clock className="w-4 h-4" />
+                        {selectedResource.readTime}
+                      </span>
+                    )}
+                    {selectedResource.views && (
+                      <span className="flex items-center gap-1">
+                        <Eye className="w-4 h-4" />
+                        {selectedResource.views} views
+                      </span>
+                    )}
+                    {selectedResource.rating && (
+                      <span className="flex items-center gap-1">
+                        <Star className="w-4 h-4 fill-yellow-500 text-yellow-500" />
+                        {selectedResource.rating}
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <button
+                  onClick={() => setSelectedResource(null)}
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+              </div>
+
+              {/* Modal Content */}
+              <div className="prose prose-invert max-w-none">
+                {selectedResource.sections ? (
+                  selectedResource.sections.map((section, index) => (
+                    <div key={index} className="mb-8">
+                      <h3 className="text-xl font-semibold text-dynamic-green mb-3">{section.title}</h3>
+                      <div className="text-gray-300 whitespace-pre-line">
+                        {section.content.split('\n').map((paragraph, pIndex) => (
+                          <p key={pIndex} className="mb-2">
+                            {paragraph.split(/(\*\*.*?\*\*)/).map((part, partIndex) => {
+                              if (part.startsWith('**') && part.endsWith('**')) {
+                                return <strong key={partIndex} className="text-white">{part.slice(2, -2)}</strong>
+                              }
+                              return part
+                            })}
+                          </p>
+                        ))}
+                      </div>
+                    </div>
+                  ))
+                ) : selectedResource.content ? (
+                  <div className="text-gray-300 whitespace-pre-line">{selectedResource.content}</div>
+                ) : (
+                  <div className="text-gray-400">
+                    <p className="mb-4">This resource is currently being developed. Check back soon for the full content!</p>
+                    <p>In the meantime, feel free to:</p>
+                    <ul className="list-disc list-inside mt-2">
+                      <li>Explore our other resources</li>
+                      <li>Contact us for personalized guidance</li>
+                      <li>Try our mock interview feature</li>
+                    </ul>
+                  </div>
+                )}
+              </div>
+
+              {/* Modal Actions */}
+              <div className="flex gap-4 mt-8 pt-6 border-t border-gray-800">
+                {selectedResource.downloadable && (
+                  <button className="btn-primary">
+                    <Download className="w-4 h-4 mr-2" />
+                    Download Resource
+                  </button>
+                )}
+                <button
+                  onClick={() => setSelectedResource(null)}
+                  className="btn-secondary"
+                >
+                  Close
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   )
 }

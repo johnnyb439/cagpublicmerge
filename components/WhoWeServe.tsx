@@ -8,25 +8,29 @@ const audiences = [
     icon: Shield,
     title: "National Guard Members",
     description: "Balance drill weekends with a thriving IT career. We understand your unique scheduling needs.",
-    color: "dynamic-green"
+    bgColor: "bg-dynamic-green/10",
+    iconColor: "text-dynamic-green"
   },
   {
     icon: Award,
     title: "Reservists",
     description: "Your part-time service doesn't limit your full-time potential. We'll help you maximize both.",
-    color: "dynamic-blue"
+    bgColor: "bg-dynamic-blue/10",
+    iconColor: "text-dynamic-blue"
   },
   {
     icon: Plane,
     title: "Transitioning Military",
     description: "From military IT to contractor success. We translate your skills for civilian employers.",
-    color: "sky-blue"
+    bgColor: "bg-sky-blue/10",
+    iconColor: "text-sky-blue"
   },
   {
     icon: UserCheck,
     title: "Veterans & Cleared Professionals",
     description: "Your clearance is currency. We'll help you invest it in the right opportunities.",
-    color: "emerald-green"
+    bgColor: "bg-emerald-green/10",
+    iconColor: "text-emerald-green"
   }
 ]
 
@@ -69,8 +73,8 @@ export default function WhoWeServe() {
               viewport={{ once: true }}
               className="glass-card text-center group hover:scale-105"
             >
-              <div className={`w-16 h-16 bg-${audience.color}/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                <audience.icon className={`w-8 h-8 text-${audience.color}`} />
+              <div className={`w-16 h-16 ${audience.bgColor} rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                <audience.icon className={`w-8 h-8 ${audience.iconColor}`} />
               </div>
               <h3 className="text-xl font-montserrat font-semibold mb-3 text-white">{audience.title}</h3>
               <p className="text-gray-300">{audience.description}</p>

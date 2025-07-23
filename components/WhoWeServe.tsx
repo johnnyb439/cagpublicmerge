@@ -71,7 +71,7 @@ export default function WhoWeServe() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="glass-card text-center group hover:scale-105"
+              className="glass-card text-center group hover-lift"
             >
               <div className={`w-16 h-16 ${audience.bgColor} rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}>
                 <audience.icon className={`w-8 h-8 ${audience.iconColor}`} />

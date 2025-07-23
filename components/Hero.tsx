@@ -45,9 +45,9 @@ export default function Hero() {
       
       {/* Animated Background Elements */}
       <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-dynamic-green/20 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-dynamic-blue/20 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-sky-blue/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-20 left-10 w-72 h-72 bg-dynamic-green/20 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-dynamic-blue/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-sky-blue/10 rounded-full blur-3xl animate-pulse-slow"></div>
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -89,9 +89,9 @@ export default function Hero() {
             </div>
           </div>
           
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-montserrat font-bold text-white mb-6">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-montserrat font-bold text-white mb-6 text-shadow-lg">
             Your Gateway to
-            <span className="block gradient-text">Cleared IT Opportunities</span>
+            <span className="block gradient-text-animated mt-2">Cleared IT Opportunities</span>
           </h1>
           
           <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
@@ -100,16 +100,22 @@ export default function Hero() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <Link href="/jobs" className="glass-button text-white inline-flex items-center group">
-              Browse Cleared Jobs
-              <ArrowRight className="ml-2 transition-transform group-hover:translate-x-1" size={20} />
-            </Link>
-            <Link href="/mock-interview" className="glass-button text-white inline-flex items-center">
-              Try AI Mock Interview
-            </Link>
-            <Link href="/contact" className="glass-button text-white inline-flex items-center">
-              Schedule Consultation
-            </Link>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link href="/jobs" className="glass-button text-white inline-flex items-center group hover-glow">
+                Browse Cleared Jobs
+                <ArrowRight className="ml-2 transition-transform group-hover:translate-x-2" size={20} />
+              </Link>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link href="/mock-interview" className="glass-button text-white inline-flex items-center hover-glow">
+                Try AI Mock Interview
+              </Link>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link href="/contact" className="glass-button text-white inline-flex items-center hover-glow">
+                Schedule Consultation
+              </Link>
+            </motion.div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">

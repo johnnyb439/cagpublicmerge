@@ -624,25 +624,25 @@ export default function ResourcesPage() {
                       {resource.downloadable && resource.downloadPath ? (
                         <button 
                           onClick={() => handleDownload(resource.downloadPath)}
-                          className="flex-1 btn-primary text-sm"
+                          className="flex-1 btn-secondary text-sm"
                         >
                           Download
                         </button>
                       ) : resource.interactive && resource.id === 'clearance-timeline' ? (
                         <button 
                           onClick={() => setShowCalculator(true)}
-                          className="flex-1 btn-primary text-sm"
+                          className="flex-1 btn-secondary text-sm"
                         >
                           Open Calculator
                         </button>
                       ) : resource.type === 'video' ? (
-                        <button className="flex-1 btn-primary text-sm">
+                        <button className="flex-1 btn-secondary text-sm">
                           Watch Video
                         </button>
                       ) : (
                         <button 
                           onClick={() => setSelectedResource(resource)}
-                          className="flex-1 btn-primary text-sm"
+                          className="flex-1 btn-secondary text-sm"
                         >
                           Read More
                         </button>
@@ -748,7 +748,7 @@ export default function ResourcesPage() {
                             onClick={() => setSelectedResource(resource)}
                             className="flex-1 btn-secondary text-sm"
                           >
-                            Access
+                            Read More
                           </button>
                         )}
                       </div>

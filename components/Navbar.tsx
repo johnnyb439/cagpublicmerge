@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Menu, X, User } from 'lucide-react'
+import ThemeToggle from './ThemeToggle'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -70,6 +71,9 @@ export default function Navbar() {
               </Link>
             )}
             
+            {/* Theme Toggle */}
+            <ThemeToggle />
+            
             {/* American Flag */}
             <div className="flex items-center space-x-2 ml-4">
               <div className="w-8 h-5 relative bg-patriot-red">
@@ -123,6 +127,12 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+            
+            {/* Theme Toggle in Mobile */}
+            <div className="border-t border-gray-700 mt-4 pt-4 flex items-center justify-between">
+              <span className="text-white">Theme</span>
+              <ThemeToggle />
+            </div>
             
             {/* User Account Links in Mobile */}
             <div className="border-t border-gray-700 mt-4 pt-4">

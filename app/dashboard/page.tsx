@@ -79,7 +79,7 @@ export default function DashboardPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="bg-white dark:bg-command-black rounded-lg shadow-md p-6 mb-8">
+          className="bg-white dark:bg-command-black rounded-lg shadow-md p-6 mb-8"
         >
           <div className="flex justify-between items-center">
             <div>
@@ -92,7 +92,7 @@ export default function DashboardPage() {
             </div>
             <button
               onClick={handleLogout}
-              className="flex items-center text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors">
+              className="flex items-center text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors"
             >
               <LogOut size={20} className="mr-2" />
               Log Out
@@ -108,7 +108,7 @@ export default function DashboardPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: index * 0.1 }}
-              className="bg-white dark:bg-command-black rounded-lg shadow-md p-6">
+              className="bg-white dark:bg-command-black rounded-lg shadow-md p-6"
             >
               <div className="flex items-center justify-between mb-4">
                 <stat.icon size={24} className={stat.color} />
@@ -128,13 +128,13 @@ export default function DashboardPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="bg-white dark:bg-command-black rounded-lg shadow-md p-6">
+              className="bg-white dark:bg-command-black rounded-lg shadow-md p-6"
             >
               <h2 className="text-xl font-montserrat font-bold mb-6">Quick Actions</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Link
                   href="/jobs"
-                  className="flex items-center p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                  className="flex items-center p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                 >
                   <Briefcase className="text-dynamic-green mr-3" size={24} />
                   <div>
@@ -144,7 +144,7 @@ export default function DashboardPage() {
                 </Link>
                 <Link
                   href="/mock-interview"
-                  className="flex items-center p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                  className="flex items-center p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                 >
                   <Target className="text-dynamic-blue mr-3" size={24} />
                   <div>
@@ -154,7 +154,7 @@ export default function DashboardPage() {
                 </Link>
                 <Link
                   href="/resources"
-                  className="flex items-center p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                  className="flex items-center p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                 >
                   <BookOpen className="text-emerald-green mr-3" size={24} />
                   <div>
@@ -164,7 +164,7 @@ export default function DashboardPage() {
                 </Link>
                 <Link
                   href="/dashboard/resume"
-                  className="flex items-center p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                  className="flex items-center p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                 >
                   <FileText className="text-sky-blue mr-3" size={24} />
                   <div>
@@ -180,7 +180,7 @@ export default function DashboardPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="bg-white dark:bg-command-black rounded-lg shadow-md p-6">
+              className="bg-white dark:bg-command-black rounded-lg shadow-md p-6"
             >
               <h2 className="text-xl font-montserrat font-bold mb-6">Recent Activity</h2>
               <div className="space-y-4">
@@ -204,7 +204,7 @@ export default function DashboardPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="bg-white dark:bg-command-black rounded-lg shadow-md p-6">
+              className="bg-white dark:bg-command-black rounded-lg shadow-md p-6"
             >
               <h2 className="text-xl font-montserrat font-bold mb-6">Job Matches</h2>
               <div className="space-y-4">
@@ -212,7 +212,7 @@ export default function DashboardPage() {
                   <Link
                     key={index}
                     href="/jobs"
-                    className="block p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+                    className="block p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                   >
                     <div className="flex justify-between items-start mb-2">
                       <h3 className="font-semibold">{job.title}</h3>
@@ -237,7 +237,7 @@ export default function DashboardPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
-              className="bg-white dark:bg-command-black rounded-lg shadow-md p-6">
+              className="bg-white dark:bg-command-black rounded-lg shadow-md p-6"
             >
               <h2 className="text-xl font-montserrat font-bold mb-6">Upcoming Events</h2>
               <div className="space-y-4">

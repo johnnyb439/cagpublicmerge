@@ -21,7 +21,8 @@ const config: Config = {
         'command-black': '#000000',
         'base-white': '#FFFFFF',
         'ops-charcoal': '#1F2937',
-        'intel-gray': '#6B7280'
+        'intel-gray': '#6B7280',
+        'cyber-cyan': '#06B6D4'
       },
       fontFamily: {
         'montserrat': ['Montserrat', 'sans-serif'],

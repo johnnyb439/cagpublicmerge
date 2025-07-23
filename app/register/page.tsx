@@ -67,8 +67,25 @@ export default function RegisterPage() {
             <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-dynamic-green to-dynamic-blue rounded-full mb-4">
               <Shield size={32} className="text-white" />
             </div>
-            <h1 className="text-2xl font-montserrat font-bold mb-2">Create Your Account</h1>
+            <h1 className="text-2xl font-montserrat font-bold mb-2 dark:text-white">Create Your Account</h1>
             <p className="text-gray-600 dark:text-gray-400">Join the cleared professional community</p>
+          </div>
+
+          {/* Account Type Toggle */}
+          <div className="flex justify-center mb-6">
+            <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-1 flex">
+              <button
+                className="px-4 py-2 rounded-md bg-white dark:bg-gray-700 text-gray-800 dark:text-white shadow-sm"
+              >
+                Individual
+              </button>
+              <Link 
+                href="/register/company"
+                className="px-4 py-2 rounded-md text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200 transition-colors"
+              >
+                Company
+              </Link>
+            </div>
           </div>
 
           {/* Form */}
@@ -84,7 +101,7 @@ export default function RegisterPage() {
                   id="name"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:border-dynamic-green"
+                  className="w-full pl-10 pr-4 py-3 border dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg focus:outline-none focus:border-dynamic-green dark:text-white"
                   placeholder="John Doe"
                   required
                 />
@@ -102,7 +119,7 @@ export default function RegisterPage() {
                   id="email"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:border-dynamic-green"
+                  className="w-full pl-10 pr-4 py-3 border dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg focus:outline-none focus:border-dynamic-green dark:text-white"
                   placeholder="john.doe@email.com"
                   required
                 />
@@ -117,7 +134,7 @@ export default function RegisterPage() {
                 id="clearance"
                 value={formData.clearanceLevel}
                 onChange={(e) => setFormData({ ...formData, clearanceLevel: e.target.value })}
-                className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-dynamic-green"
+                className="w-full px-4 py-3 border dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg focus:outline-none focus:border-dynamic-green dark:text-white"
                 required
               >
                 <option value="">Select clearance level</option>
@@ -140,7 +157,7 @@ export default function RegisterPage() {
                   id="password"
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:border-dynamic-green"
+                  className="w-full pl-10 pr-4 py-3 border dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg focus:outline-none focus:border-dynamic-green dark:text-white"
                   placeholder="••••••••"
                   required
                 />
@@ -159,7 +176,7 @@ export default function RegisterPage() {
                   id="confirmPassword"
                   value={formData.confirmPassword}
                   onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                  className="w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:border-dynamic-green"
+                  className="w-full pl-10 pr-4 py-3 border dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg focus:outline-none focus:border-dynamic-green dark:text-white"
                   placeholder="••••••••"
                   required
                 />

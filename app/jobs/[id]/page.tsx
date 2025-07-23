@@ -267,7 +267,7 @@ export default function JobDetailPage() {
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           onClick={() => router.back()}
-          className="flex items-center text-gray-600 dark:text-gray-400 hover:text-dynamic-green dark:hover:text-dynamic-green mb-6 transition-colors">
+          className="flex items-center text-gray-600 dark:text-gray-400 hover:text-dynamic-green dark:hover:text-dynamic-green mb-6 transition-colors"
         >
           <ArrowLeft size={20} className="mr-2" />
           Back to Jobs
@@ -278,7 +278,7 @@ export default function JobDetailPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="bg-white dark:bg-command-black rounded-lg shadow-md p-8 mb-8">
+          className="bg-white dark:bg-command-black rounded-lg shadow-md p-8 mb-8"
         >
           <div className="flex justify-between items-start mb-6">
             <div>
@@ -331,7 +331,7 @@ export default function JobDetailPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
-          className="bg-white dark:bg-command-black rounded-lg shadow-md p-8 mb-8">
+          className="bg-white dark:bg-command-black rounded-lg shadow-md p-8 mb-8"
         >
           <h2 className="text-2xl font-montserrat font-bold mb-4">About This Role</h2>
           <div className="prose max-w-none text-gray-700 dark:text-gray-300 whitespace-pre-line">
@@ -344,7 +344,7 @@ export default function JobDetailPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="bg-white dark:bg-command-black rounded-lg shadow-md p-8 mb-8">
+          className="bg-white dark:bg-command-black rounded-lg shadow-md p-8 mb-8"
         >
           <h2 className="text-2xl font-montserrat font-bold mb-4">Requirements</h2>
           <ul className="space-y-3">
@@ -362,7 +362,7 @@ export default function JobDetailPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="bg-white dark:bg-command-black rounded-lg shadow-md p-8 mb-8">
+          className="bg-white dark:bg-command-black rounded-lg shadow-md p-8 mb-8"
         >
           <h2 className="text-2xl font-montserrat font-bold mb-4">Responsibilities</h2>
           <ul className="space-y-3">
@@ -380,7 +380,7 @@ export default function JobDetailPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="bg-white dark:bg-command-black rounded-lg shadow-md p-8 mb-8">
+          className="bg-white dark:bg-command-black rounded-lg shadow-md p-8 mb-8"
         >
           <h2 className="text-2xl font-montserrat font-bold mb-4">Benefits & Perks</h2>
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">

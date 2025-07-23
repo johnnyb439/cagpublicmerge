@@ -5,7 +5,7 @@ import Footer from '@/components/Footer'
 import LiveChat from '@/components/LiveChat'
 
 export const metadata: Metadata = {
-  title: 'Cleared Advisory Group - Your Gateway to Cleared IT Opportunities',
+  title: 'Cleared Advisory Group - Your Gateway to Cleared IT Opportunities [Updated: 2025-07-23]',
   description: 'Bridging the gap for National Guard, Reservists, Veterans, and cleared professionals seeking government contracting opportunities.',
   keywords: 'security clearance, government contracting, IT jobs, military transition, cleared jobs',
 }

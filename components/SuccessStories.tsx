@@ -32,7 +32,7 @@ const stories = [
 
 export default function SuccessStories() {
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-white dark:bg-command-black transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -41,10 +41,10 @@ export default function SuccessStories() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-montserrat font-bold mb-4">
+          <h2 className="text-4xl md:text-5xl font-montserrat font-bold mb-4 dark:text-white">
             Success <span className="gradient-text">Stories</span>
           </h2>
-          <p className="text-xl text-intel-gray max-w-3xl mx-auto">
+          <p className="text-xl text-intel-gray dark:text-gray-300 max-w-3xl mx-auto">
             Real cleared professionals who transformed their careers with our guidance
           </p>
         </motion.div>

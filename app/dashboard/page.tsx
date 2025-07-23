@@ -45,7 +45,7 @@ export default function DashboardPage() {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gray-50 py-20 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-ops-charcoal py-20 flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-dynamic-green"></div>
       </div>
     )
@@ -72,27 +72,27 @@ export default function DashboardPage() {
   ]
 
   return (
-    <section className="min-h-screen bg-gray-50 py-20">
+    <section className="min-h-screen bg-gray-50 dark:bg-ops-charcoal py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="bg-white rounded-lg shadow-md p-6 mb-8"
+          className="bg-white dark:bg-command-black rounded-lg shadow-md p-6 mb-8">
         >
           <div className="flex justify-between items-center">
             <div>
               <h1 className="text-2xl font-montserrat font-bold mb-1">
                 Welcome back, {user.name}!
               </h1>
-              <p className="text-gray-600">
+              <p className="text-gray-600 dark:text-gray-400">
                 Clearance Level: <span className="text-dynamic-green font-semibold">{user.clearanceLevel}</span>
               </p>
             </div>
             <button
               onClick={handleLogout}
-              className="flex items-center text-gray-600 hover:text-red-600 transition-colors"
+              className="flex items-center text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors">
             >
               <LogOut size={20} className="mr-2" />
               Log Out
@@ -108,13 +108,13 @@ export default function DashboardPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: index * 0.1 }}
-              className="bg-white rounded-lg shadow-md p-6"
+              className="bg-white dark:bg-command-black rounded-lg shadow-md p-6">
             >
               <div className="flex items-center justify-between mb-4">
                 <stat.icon size={24} className={stat.color} />
                 <span className="text-2xl font-bold">{stat.value}</span>
               </div>
-              <p className="text-gray-600 text-sm">{stat.label}</p>
+              <p className="text-gray-600 dark:text-gray-400 text-sm">{stat.label}</p>
             </motion.div>
           ))}
         </div>
@@ -128,48 +128,48 @@ export default function DashboardPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="bg-white rounded-lg shadow-md p-6"
+              className="bg-white dark:bg-command-black rounded-lg shadow-md p-6">
             >
               <h2 className="text-xl font-montserrat font-bold mb-6">Quick Actions</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Link
                   href="/jobs"
-                  className="flex items-center p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+                  className="flex items-center p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
                 >
                   <Briefcase className="text-dynamic-green mr-3" size={24} />
                   <div>
                     <p className="font-semibold">Browse Jobs</p>
-                    <p className="text-sm text-gray-600">View cleared positions</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">View cleared positions</p>
                   </div>
                 </Link>
                 <Link
                   href="/mock-interview"
-                  className="flex items-center p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+                  className="flex items-center p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
                 >
                   <Target className="text-dynamic-blue mr-3" size={24} />
                   <div>
                     <p className="font-semibold">Practice Interview</p>
-                    <p className="text-sm text-gray-600">AI-powered prep</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">AI-powered prep</p>
                   </div>
                 </Link>
                 <Link
                   href="/resources"
-                  className="flex items-center p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+                  className="flex items-center p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
                 >
                   <BookOpen className="text-emerald-green mr-3" size={24} />
                   <div>
                     <p className="font-semibold">Resources</p>
-                    <p className="text-sm text-gray-600">Career guides</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">Career guides</p>
                   </div>
                 </Link>
                 <Link
                   href="/dashboard/resume"
-                  className="flex items-center p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+                  className="flex items-center p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
                 >
                   <FileText className="text-sky-blue mr-3" size={24} />
                   <div>
                     <p className="font-semibold">Update Resume</p>
-                    <p className="text-sm text-gray-600">Military translation</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">Military translation</p>
                   </div>
                 </Link>
               </div>
@@ -180,7 +180,7 @@ export default function DashboardPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="bg-white rounded-lg shadow-md p-6"
+              className="bg-white dark:bg-command-black rounded-lg shadow-md p-6">
             >
               <h2 className="text-xl font-montserrat font-bold mb-6">Recent Activity</h2>
               <div className="space-y-4">
@@ -188,8 +188,8 @@ export default function DashboardPage() {
                   <div key={index} className="flex items-start">
                     <div className="w-2 h-2 bg-dynamic-green rounded-full mt-2 mr-3"></div>
                     <div className="flex-1">
-                      <p className="text-gray-800">{activity.title}</p>
-                      <p className="text-sm text-gray-500">{activity.time}</p>
+                      <p className="text-gray-800 dark:text-gray-200">{activity.title}</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400">{activity.time}</p>
                     </div>
                   </div>
                 ))}
@@ -204,7 +204,7 @@ export default function DashboardPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="bg-white rounded-lg shadow-md p-6"
+              className="bg-white dark:bg-command-black rounded-lg shadow-md p-6">
             >
               <h2 className="text-xl font-montserrat font-bold mb-6">Job Matches</h2>
               <div className="space-y-4">
@@ -212,14 +212,14 @@ export default function DashboardPage() {
                   <Link
                     key={index}
                     href="/jobs"
-                    className="block p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+                    className="block p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
                   >
                     <div className="flex justify-between items-start mb-2">
                       <h3 className="font-semibold">{job.title}</h3>
                       <span className="text-sm text-dynamic-green font-semibold">{job.match}</span>
                     </div>
-                    <p className="text-sm text-gray-600">{job.company}</p>
-                    <p className="text-sm text-gray-500">Requires: {job.clearance}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">{job.company}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Requires: {job.clearance}</p>
                   </Link>
                 ))}
               </div>
@@ -237,7 +237,7 @@ export default function DashboardPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
-              className="bg-white rounded-lg shadow-md p-6"
+              className="bg-white dark:bg-command-black rounded-lg shadow-md p-6">
             >
               <h2 className="text-xl font-montserrat font-bold mb-6">Upcoming Events</h2>
               <div className="space-y-4">
@@ -245,14 +245,14 @@ export default function DashboardPage() {
                   <Calendar className="text-dynamic-blue mr-3 mt-1" size={20} />
                   <div>
                     <p className="font-semibold">Virtual Career Fair</p>
-                    <p className="text-sm text-gray-600">March 15, 2025 • 2:00 PM EST</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">March 15, 2025 • 2:00 PM EST</p>
                   </div>
                 </div>
                 <div className="flex items-start">
                   <Calendar className="text-dynamic-blue mr-3 mt-1" size={20} />
                   <div>
                     <p className="font-semibold">Resume Workshop</p>
-                    <p className="text-sm text-gray-600">March 20, 2025 • 6:00 PM EST</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">March 20, 2025 • 6:00 PM EST</p>
                   </div>
                 </div>
               </div>

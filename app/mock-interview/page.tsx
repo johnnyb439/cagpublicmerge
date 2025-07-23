@@ -122,7 +122,7 @@ export default function MockInterviewPage() {
   }, [isInterviewing, selectedRole, currentQuestion, shuffledQuestions]);
 
   return (
-    <section className="relative min-h-screen bg-gray-50 py-20">
+    <section className="relative min-h-screen bg-gray-50 dark:bg-ops-charcoal py-20">
       <BinaryBackground />
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
@@ -230,7 +230,7 @@ export default function MockInterviewPage() {
                         Click to start interview →
                       </p>
                     ) : (
-                      <p className="text-sm text-gray-500 italic">
+                      <p className="text-sm text-gray-500 dark:text-gray-400 italic">
                         Coming soon...
                       </p>
                     )}
@@ -260,7 +260,7 @@ export default function MockInterviewPage() {
                 </button>
               </div>
               
-              <div className="bg-gray-50 rounded-lg p-4 mb-6">
+              <div className="bg-gray-50 dark:bg-ops-charcoal rounded-lg p-4 mb-6">
                 <p className="text-lg">{currentQuestion?.question}</p>
               </div>
               
@@ -277,7 +277,7 @@ export default function MockInterviewPage() {
                   <button
                     onClick={() => setIsRecording(!isRecording)}
                     className={`flex items-center px-4 py-2 rounded-lg transition-colors ${
-                      isRecording ? 'bg-red-500 text-white' : 'bg-gray-200 text-gray-700'
+                      isRecording ? 'bg-red-500 text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
                     }`}
                   >
                     {isRecording ? <MicOff className="w-5 h-5 mr-2" /> : <Mic className="w-5 h-5 mr-2" />}
@@ -304,13 +304,13 @@ export default function MockInterviewPage() {
                   {userAnswer && (
                     <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
                       <h4 className="font-semibold text-blue-700 mb-2">Your Answer:</h4>
-                      <p className="text-sm text-gray-700">{userAnswer}</p>
+                      <p className="text-sm text-gray-700 dark:text-gray-300">{userAnswer}</p>
                     </div>
                   )}
                   
                   <div className="p-4 bg-emerald-green/10 border border-emerald-green/30 rounded-lg">
                     <h4 className="font-semibold text-emerald-green mb-2">✓ Example Answer:</h4>
-                    <p className="text-sm text-gray-700">{exampleAnswer}</p>
+                    <p className="text-sm text-gray-700 dark:text-gray-300">{exampleAnswer}</p>
                   </div>
                   
                   <div className="flex justify-end">

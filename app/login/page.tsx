@@ -36,21 +36,21 @@ export default function LoginPage() {
   }
 
   return (
-    <section className="min-h-screen bg-gray-50 py-20 flex items-center justify-center">
+    <section className="min-h-screen bg-gray-50 dark:bg-ops-charcoal py-20 flex items-center justify-center">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         className="max-w-md w-full mx-4"
       >
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="bg-white dark:bg-command-black rounded-lg shadow-lg p-8">
           {/* Header */}
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-dynamic-green to-dynamic-blue rounded-full mb-4">
               <Shield size={32} className="text-white" />
             </div>
             <h1 className="text-2xl font-montserrat font-bold mb-2">Welcome Back</h1>
-            <p className="text-gray-600">Log in to your Cleared Advisory account</p>
+            <p className="text-gray-600 dark:text-gray-400">Log in to your Cleared Advisory account</p>
           </div>
 
           {/* Form */}
@@ -60,7 +60,7 @@ export default function LoginPage() {
                 Email Address
               </label>
               <div className="relative">
-                <User className="absolute left-3 top-3 text-gray-400" size={20} />
+                <User className="absolute left-3 top-3 text-gray-400 dark:text-gray-500" size={20} />
                 <input
                   type="email"
                   id="email"
@@ -78,7 +78,7 @@ export default function LoginPage() {
                 Password
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-3 text-gray-400" size={20} />
+                <Lock className="absolute left-3 top-3 text-gray-400 dark:text-gray-500" size={20} />
                 <input
                   type="password"
                   id="password"
@@ -105,7 +105,7 @@ export default function LoginPage() {
             <div className="flex items-center justify-between">
               <label className="flex items-center">
                 <input type="checkbox" className="mr-2" />
-                <span className="text-sm text-gray-600">Remember me</span>
+                <span className="text-sm text-gray-600 dark:text-gray-400">Remember me</span>
               </label>
               <Link href="/forgot-password" className="text-sm text-dynamic-green hover:text-emerald-green">
                 Forgot password?
@@ -122,8 +122,8 @@ export default function LoginPage() {
           </form>
 
           {/* Security Notice */}
-          <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-            <p className="text-xs text-gray-600 text-center">
+          <div className="mt-6 p-4 bg-gray-50 dark:bg-ops-charcoal rounded-lg">
+            <p className="text-xs text-gray-600 dark:text-gray-400 text-center">
               <strong>Security Notice:</strong> We never store sensitive clearance information. 
               Your privacy is our priority.
             </p>
@@ -131,7 +131,7 @@ export default function LoginPage() {
 
           {/* Sign Up Link */}
           <div className="mt-6 text-center">
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-gray-400">
               Don't have an account?{' '}
               <Link href="/register" className="text-dynamic-green hover:text-emerald-green font-semibold">
                 Sign up free

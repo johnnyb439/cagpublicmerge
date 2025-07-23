@@ -236,10 +236,10 @@ export default function JobDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 py-20 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-ops-charcoal py-20 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-dynamic-green mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading job details...</p>
+          <p className="mt-4 text-gray-600 dark:text-gray-400">Loading job details...</p>
         </div>
       </div>
     )
@@ -247,10 +247,10 @@ export default function JobDetailPage() {
 
   if (!job) {
     return (
-      <div className="min-h-screen bg-gray-50 py-20">
+      <div className="min-h-screen bg-gray-50 dark:bg-ops-charcoal py-20">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h1 className="text-2xl font-montserrat font-bold mb-4">Job Not Found</h1>
-          <p className="text-gray-600 mb-8">This job posting may have been removed or expired.</p>
+          <p className="text-gray-600 dark:text-gray-400 mb-8">This job posting may have been removed or expired.</p>
           <Link href="/jobs" className="btn-primary">
             Back to Job Board
           </Link>
@@ -260,14 +260,14 @@ export default function JobDetailPage() {
   }
 
   return (
-    <section className="min-h-screen bg-gray-50 py-20">
+    <section className="min-h-screen bg-gray-50 dark:bg-ops-charcoal py-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back Button */}
         <motion.button
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           onClick={() => router.back()}
-          className="flex items-center text-gray-600 hover:text-dynamic-green mb-6 transition-colors"
+          className="flex items-center text-gray-600 dark:text-gray-400 hover:text-dynamic-green dark:hover:text-dynamic-green mb-6 transition-colors">
         >
           <ArrowLeft size={20} className="mr-2" />
           Back to Jobs
@@ -278,37 +278,37 @@ export default function JobDetailPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="bg-white rounded-lg shadow-md p-8 mb-8"
+          className="bg-white dark:bg-command-black rounded-lg shadow-md p-8 mb-8">
         >
           <div className="flex justify-between items-start mb-6">
             <div>
               <h1 className="text-3xl font-montserrat font-bold mb-2">{job.title}</h1>
-              <p className="text-xl text-gray-600 flex items-center">
+              <p className="text-xl text-gray-600 dark:text-gray-400 flex items-center">
                 <Building size={20} className="mr-2" />
                 {job.company}
               </p>
             </div>
-            <span className="text-sm text-gray-500 flex items-center">
+            <span className="text-sm text-gray-500 dark:text-gray-400 flex items-center">
               <Calendar size={16} className="mr-1" />
               Posted {job.posted}
             </span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            <div className="flex items-center text-gray-700">
-              <MapPin size={20} className="mr-2 text-gray-500" />
+            <div className="flex items-center text-gray-700 dark:text-gray-300">
+              <MapPin size={20} className="mr-2 text-gray-500 dark:text-gray-400" />
               {job.location}
             </div>
             <div className="flex items-center text-dynamic-green font-semibold">
               <Shield size={20} className="mr-2" />
               {job.clearance}
             </div>
-            <div className="flex items-center text-gray-700">
-              <DollarSign size={20} className="mr-2 text-gray-500" />
+            <div className="flex items-center text-gray-700 dark:text-gray-300">
+              <DollarSign size={20} className="mr-2 text-gray-500 dark:text-gray-400" />
               {job.salary}
             </div>
-            <div className="flex items-center text-gray-700">
-              <Clock size={20} className="mr-2 text-gray-500" />
+            <div className="flex items-center text-gray-700 dark:text-gray-300">
+              <Clock size={20} className="mr-2 text-gray-500 dark:text-gray-400" />
               {job.type}
             </div>
           </div>
@@ -320,7 +320,7 @@ export default function JobDetailPage() {
             >
               Apply Now
             </Link>
-            <button className="px-6 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+            <button className="px-6 py-3 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
               Save Job
             </button>
           </div>
@@ -331,10 +331,10 @@ export default function JobDetailPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
-          className="bg-white rounded-lg shadow-md p-8 mb-8"
+          className="bg-white dark:bg-command-black rounded-lg shadow-md p-8 mb-8">
         >
           <h2 className="text-2xl font-montserrat font-bold mb-4">About This Role</h2>
-          <div className="prose max-w-none text-gray-700 whitespace-pre-line">
+          <div className="prose max-w-none text-gray-700 dark:text-gray-300 whitespace-pre-line">
             {job.fullDescription}
           </div>
         </motion.div>
@@ -344,14 +344,14 @@ export default function JobDetailPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="bg-white rounded-lg shadow-md p-8 mb-8"
+          className="bg-white dark:bg-command-black rounded-lg shadow-md p-8 mb-8">
         >
           <h2 className="text-2xl font-montserrat font-bold mb-4">Requirements</h2>
           <ul className="space-y-3">
             {job.requirements.map((req: string, index: number) => (
               <li key={index} className="flex items-start">
                 <CheckCircle size={20} className="text-dynamic-green mr-3 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-700">{req}</span>
+                <span className="text-gray-700 dark:text-gray-300">{req}</span>
               </li>
             ))}
           </ul>
@@ -362,14 +362,14 @@ export default function JobDetailPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
-          className="bg-white rounded-lg shadow-md p-8 mb-8"
+          className="bg-white dark:bg-command-black rounded-lg shadow-md p-8 mb-8">
         >
           <h2 className="text-2xl font-montserrat font-bold mb-4">Responsibilities</h2>
           <ul className="space-y-3">
             {job.responsibilities.map((resp: string, index: number) => (
               <li key={index} className="flex items-start">
                 <div className="w-2 h-2 bg-dynamic-blue rounded-full mr-3 mt-1.5 flex-shrink-0"></div>
-                <span className="text-gray-700">{resp}</span>
+                <span className="text-gray-700 dark:text-gray-300">{resp}</span>
               </li>
             ))}
           </ul>
@@ -380,14 +380,14 @@ export default function JobDetailPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="bg-white rounded-lg shadow-md p-8 mb-8"
+          className="bg-white dark:bg-command-black rounded-lg shadow-md p-8 mb-8">
         >
           <h2 className="text-2xl font-montserrat font-bold mb-4">Benefits & Perks</h2>
           <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {job.benefits.map((benefit: string, index: number) => (
               <li key={index} className="flex items-start">
                 <CheckCircle size={20} className="text-emerald-green mr-3 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-700">{benefit}</span>
+                <span className="text-gray-700 dark:text-gray-300">{benefit}</span>
               </li>
             ))}
           </ul>
@@ -408,7 +408,7 @@ export default function JobDetailPage() {
           </p>
           <Link
             href="/contact"
-            className="btn-primary bg-white text-command-black hover:bg-gray-100 inline-block"
+            className="btn-primary bg-white dark:bg-gray-800 text-command-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 inline-block"
           >
             Apply for This Position
           </Link>

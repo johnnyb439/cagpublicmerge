@@ -66,7 +66,7 @@ export default function AboutPage() {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-montserrat font-bold mb-6">
               About <span className="gradient-text">Cleared Advisory Group</span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-gray-300 dark:text-gray-400 max-w-3xl mx-auto">
               Your trusted bridge between military service and civilian IT success
             </p>
           </motion.div>
@@ -74,7 +74,7 @@ export default function AboutPage() {
       </section>
 
       {/* Mission Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-command-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -94,7 +94,7 @@ export default function AboutPage() {
                 We understand the unique challenges faced by National Guard members, Reservists, Veterans, and 
                 transitioning military personnel. Your service commitments don't limit your potential—they enhance it.
               </p>
-              <div className="bg-gray-50 rounded-lg p-6">
+              <div className="bg-gray-50 dark:bg-ops-charcoal rounded-lg p-6">
                 <h3 className="font-montserrat font-semibold text-xl mb-4">Our Purpose</h3>
                 <p className="text-intel-gray">
                   The Cleared Advisory Group exists to bridge the gap between America's security-cleared professionals 
@@ -137,7 +137,7 @@ export default function AboutPage() {
       </section>
 
       {/* Values Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gray-50 dark:bg-ops-charcoal">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -203,7 +203,7 @@ export default function AboutPage() {
                 <div className="text-4xl md:text-5xl font-montserrat font-bold mb-2 gradient-text">
                   {stat.number}
                 </div>
-                <p className="text-gray-300">{stat.label}</p>
+                <p className="text-gray-300 dark:text-gray-400">{stat.label}</p>
               </motion.div>
             ))}
           </div>
@@ -211,7 +211,7 @@ export default function AboutPage() {
       </section>
 
       {/* Team Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-command-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -265,7 +265,7 @@ export default function AboutPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gray-50 dark:bg-ops-charcoal">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}

@@ -31,7 +31,7 @@ export default function ContactPage() {
   }
 
   return (
-    <section className="relative min-h-screen bg-gray-50 py-20">
+    <section className="relative min-h-screen bg-gray-50 dark:bg-ops-charcoal py-20">
       <BinaryBackground />
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div

@@ -54,21 +54,21 @@ export default function RegisterPage() {
   }
 
   return (
-    <section className="min-h-screen bg-gray-50 py-20 flex items-center justify-center">
+    <section className="min-h-screen bg-gray-50 dark:bg-ops-charcoal py-20 flex items-center justify-center">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8 }}
         className="max-w-md w-full mx-4"
       >
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="bg-white dark:bg-command-black rounded-lg shadow-lg p-8">
           {/* Header */}
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r from-dynamic-green to-dynamic-blue rounded-full mb-4">
               <Shield size={32} className="text-white" />
             </div>
             <h1 className="text-2xl font-montserrat font-bold mb-2">Create Your Account</h1>
-            <p className="text-gray-600">Join the cleared professional community</p>
+            <p className="text-gray-600 dark:text-gray-400">Join the cleared professional community</p>
           </div>
 
           {/* Form */}
@@ -78,7 +78,7 @@ export default function RegisterPage() {
                 Full Name
               </label>
               <div className="relative">
-                <User className="absolute left-3 top-3 text-gray-400" size={20} />
+                <User className="absolute left-3 top-3 text-gray-400 dark:text-gray-500" size={20} />
                 <input
                   type="text"
                   id="name"
@@ -96,7 +96,7 @@ export default function RegisterPage() {
                 Email Address
               </label>
               <div className="relative">
-                <Mail className="absolute left-3 top-3 text-gray-400" size={20} />
+                <Mail className="absolute left-3 top-3 text-gray-400 dark:text-gray-500" size={20} />
                 <input
                   type="email"
                   id="email"
@@ -134,7 +134,7 @@ export default function RegisterPage() {
                 Password
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-3 text-gray-400" size={20} />
+                <Lock className="absolute left-3 top-3 text-gray-400 dark:text-gray-500" size={20} />
                 <input
                   type="password"
                   id="password"
@@ -145,7 +145,7 @@ export default function RegisterPage() {
                   required
                 />
               </div>
-              <p className="text-xs text-gray-500 mt-1">Must be at least 8 characters</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Must be at least 8 characters</p>
             </div>
 
             <div>
@@ -153,7 +153,7 @@ export default function RegisterPage() {
                 Confirm Password
               </label>
               <div className="relative">
-                <Lock className="absolute left-3 top-3 text-gray-400" size={20} />
+                <Lock className="absolute left-3 top-3 text-gray-400 dark:text-gray-500" size={20} />
                 <input
                   type="password"
                   id="confirmPassword"
@@ -185,7 +185,7 @@ export default function RegisterPage() {
                 onChange={(e) => setFormData({ ...formData, agreeToTerms: e.target.checked })}
                 className="mt-1 mr-2"
               />
-              <label htmlFor="terms" className="text-sm text-gray-600">
+              <label htmlFor="terms" className="text-sm text-gray-600 dark:text-gray-400">
                 I agree to the{' '}
                 <Link href="/terms" className="text-dynamic-green hover:text-emerald-green">
                   Terms of Service
@@ -207,10 +207,10 @@ export default function RegisterPage() {
           </form>
 
           {/* Security Notice */}
-          <div className="mt-6 p-4 bg-gray-50 rounded-lg">
+          <div className="mt-6 p-4 bg-gray-50 dark:bg-ops-charcoal rounded-lg">
             <div className="flex items-start">
               <Check className="text-green-600 mr-2 mt-0.5" size={16} />
-              <div className="text-xs text-gray-600">
+              <div className="text-xs text-gray-600 dark:text-gray-400">
                 <p className="font-semibold mb-1">Your Privacy is Protected</p>
                 <ul className="space-y-1">
                   <li>• We never store sensitive clearance details</li>
@@ -223,7 +223,7 @@ export default function RegisterPage() {
 
           {/* Login Link */}
           <div className="mt-6 text-center">
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-gray-400">
               Already have an account?{' '}
               <Link href="/login" className="text-dynamic-green hover:text-emerald-green font-semibold">
                 Log in

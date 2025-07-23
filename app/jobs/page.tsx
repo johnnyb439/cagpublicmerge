@@ -83,7 +83,7 @@ export default function JobsPage() {
   })
 
   return (
-    <section className="relative min-h-screen bg-gray-50 py-20">
+    <section className="relative min-h-screen bg-gray-50 dark:bg-ops-charcoal py-20">
       <BinaryBackground />
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
@@ -106,11 +106,11 @@ export default function JobsPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
-          className="bg-white rounded-lg shadow-md p-6 mb-8"
+          className="bg-white dark:bg-command-black rounded-lg shadow-md p-6 mb-8">
         >
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-3 text-gray-400" size={20} />
+              <Search className="absolute left-3 top-3 text-gray-400 dark:text-gray-500" size={20} />
               <input
                 type="text"
                 placeholder="Search job title or company..."
@@ -120,7 +120,7 @@ export default function JobsPage() {
               />
             </div>
             <div className="flex-1 relative">
-              <MapPin className="absolute left-3 top-3 text-gray-400" size={20} />
+              <MapPin className="absolute left-3 top-3 text-gray-400 dark:text-gray-500" size={20} />
               <input
                 type="text"
                 placeholder="Location..."
@@ -131,7 +131,7 @@ export default function JobsPage() {
             </div>
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className="px-6 py-3 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors flex items-center"
+              className="px-6 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center">
             >
               <Filter size={20} className="mr-2" />
               Filters
@@ -167,7 +167,7 @@ export default function JobsPage() {
 
         {/* Results Count */}
         <div className="mb-6">
-          <p className="text-gray-600">
+          <p className="text-gray-600 dark:text-gray-400">
             Showing <span className="font-semibold">{filteredJobs.length}</span> cleared positions
           </p>
         </div>
@@ -180,7 +180,7 @@ export default function JobsPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
+              className="bg-white dark:bg-command-black rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
             >
               <div className="flex flex-col md:flex-row justify-between">
                 <div className="flex-1">
@@ -189,11 +189,11 @@ export default function JobsPage() {
                       {job.title}
                     </Link>
                   </h3>
-                  <p className="text-gray-600 mb-2">{job.company}</p>
-                  <p className="text-gray-700 mb-4">{job.description}</p>
+                  <p className="text-gray-600 dark:text-gray-400 mb-2">{job.company}</p>
+                  <p className="text-gray-700 dark:text-gray-300 mb-4">{job.description}</p>
                   
                   <div className="flex flex-wrap gap-4 text-sm">
-                    <div className="flex items-center text-gray-600">
+                    <div className="flex items-center text-gray-600 dark:text-gray-400">
                       <MapPin size={16} className="mr-1" />
                       {job.location}
                     </div>
@@ -201,7 +201,7 @@ export default function JobsPage() {
                       <Shield size={16} className="mr-1" />
                       {job.clearance}
                     </div>
-                    <div className="flex items-center text-gray-600">
+                    <div className="flex items-center text-gray-600 dark:text-gray-400">
                       <DollarSign size={16} className="mr-1" />
                       {job.salary}
                     </div>
@@ -209,7 +209,7 @@ export default function JobsPage() {
                 </div>
                 
                 <div className="mt-4 md:mt-0 md:ml-6 flex flex-col justify-between items-end">
-                  <span className="text-sm text-gray-500 mb-4">{job.posted}</span>
+                  <span className="text-sm text-gray-500 dark:text-gray-400 mb-4">{job.posted}</span>
                   <Link
                     href={`/jobs/${job.id}`}
                     className="btn-primary flex items-center text-sm"
@@ -230,7 +230,7 @@ export default function JobsPage() {
             animate={{ opacity: 1 }}
             className="text-center py-12"
           >
-            <p className="text-gray-500 mb-4">No jobs found matching your criteria</p>
+            <p className="text-gray-500 dark:text-gray-400 mb-4">No jobs found matching your criteria</p>
             <button
               onClick={() => {
                 setSearchTerm('')
@@ -257,7 +257,7 @@ export default function JobsPage() {
           <p className="mb-6">
             Get notified when new cleared positions matching your skills are posted
           </p>
-          <Link href="/contact" className="btn-primary bg-white text-command-black hover:bg-gray-100">
+          <Link href="/contact" className="btn-primary bg-white dark:bg-gray-800 text-command-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
             Set Up Job Alerts
           </Link>
         </motion.div>

@@ -137,7 +137,7 @@ export default function ServicesPage() {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-montserrat font-bold mb-6">
               Our <span className="gradient-text">Services</span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-gray-300 dark:text-gray-400 max-w-3xl mx-auto">
               Comprehensive support designed specifically for cleared professionals entering the IT contracting world
             </p>
           </motion.div>
@@ -145,7 +145,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Services Grid */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-command-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service, index) => (
@@ -195,7 +195,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Process Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gray-50 dark:bg-ops-charcoal">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -265,7 +265,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Pricing Section */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-command-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -365,7 +365,7 @@ export default function ServicesPage() {
                   className={`block text-center py-3 px-6 rounded-lg font-semibold transition-all duration-300 ${
                     plan.featured
                       ? 'bg-dynamic-green text-white hover:bg-opacity-90'
-                      : 'bg-gray-100 text-command-black hover:bg-gray-200'
+                      : 'bg-gray-100 dark:bg-gray-800 text-command-black dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700'
                   }`}
                 >
                   {plan.cta}
@@ -393,7 +393,7 @@ export default function ServicesPage() {
               Take the first step toward your cleared IT career success
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/contact" className="btn-primary bg-white text-command-black hover:bg-gray-100">
+              <Link href="/contact" className="btn-primary bg-white dark:bg-gray-800 text-command-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                 Schedule Free Consultation
               </Link>
               <Link href="/mock-interview" className="btn-secondary border-white text-white hover:bg-white/10">

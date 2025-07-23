@@ -335,12 +335,12 @@ const ClearanceCalculator = ({ onClose }: { onClose: () => void }) => {
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
-        className="bg-white rounded-2xl max-w-lg w-full p-8"
+        className="bg-white dark:bg-command-black rounded-2xl max-w-lg w-full p-8"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between items-center mb-6">
           <h3 className="text-2xl font-montserrat font-bold">Clearance Timeline Calculator</h3>
-          <button onClick={onClose} className="text-gray-500 hover:text-gray-700">
+          <button onClick={onClose} className="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200">
             <X className="w-6 h-6" />
           </button>
         </div>
@@ -429,7 +429,7 @@ const ClearanceCalculator = ({ onClose }: { onClose: () => void }) => {
             </div>
           </div>
 
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-gray-600 dark:text-gray-400">
             Note: These are estimates based on current processing times. Actual timelines may vary based on investigation workload and individual circumstances.
           </p>
         </div>
@@ -512,7 +512,7 @@ export default function ResourcesPage() {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-montserrat font-bold mb-6">
               Resources & <span className="gradient-text">Knowledge Hub</span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-8">
+            <p className="text-xl md:text-2xl text-gray-300 dark:text-gray-400 max-w-3xl mx-auto mb-8">
               Free guides, tools, and insights to accelerate your cleared IT career
             </p>
 
@@ -557,7 +557,7 @@ export default function ResourcesPage() {
       </section>
 
       {/* Resources Grid */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-command-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Featured Resources */}
           {filteredResources.some(r => r.featured) && (
@@ -598,11 +598,11 @@ export default function ResourcesPage() {
                     <p className="text-intel-gray mb-4">{resource.description}</p>
                     
                     <div className="flex items-center justify-between mb-4">
-                      <span className="text-sm bg-gray-100 px-3 py-1 rounded-full capitalize">
+                      <span className="text-sm bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full capitalize">
                         {resource.type}
                       </span>
                       {resource.views && (
-                        <div className="flex items-center text-sm text-gray-500">
+                        <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
                           <Eye className="w-4 h-4 mr-1" />
                           {resource.views.toLocaleString()} views
                         </div>
@@ -702,11 +702,11 @@ export default function ResourcesPage() {
                       <p className="text-intel-gray mb-4">{resource.description}</p>
                       
                       <div className="flex items-center justify-between mb-4">
-                        <span className="text-sm bg-gray-100 px-3 py-1 rounded-full capitalize">
+                        <span className="text-sm bg-gray-100 dark:bg-gray-800 px-3 py-1 rounded-full capitalize">
                           {resource.type}
                         </span>
                         {resource.views && (
-                          <div className="flex items-center text-sm text-gray-500">
+                          <div className="flex items-center text-sm text-gray-500 dark:text-gray-400">
                             <Eye className="w-4 h-4 mr-1" />
                             {resource.views.toLocaleString()}
                           </div>
@@ -762,14 +762,14 @@ export default function ResourcesPage() {
       </section>
 
       {/* Newsletter Signup */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-16 bg-gray-50 dark:bg-ops-charcoal">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="bg-white rounded-3xl shadow-xl p-8 md:p-12"
+            className="bg-white dark:bg-command-black rounded-3xl shadow-xl p-8 md:p-12"
           >
             <div className="text-center mb-8">
               <h2 className="text-3xl font-montserrat font-bold mb-4">
@@ -807,7 +807,7 @@ export default function ResourcesPage() {
               )}
             </form>
 
-            <p className="text-sm text-gray-600 text-center mt-6">
+            <p className="text-sm text-gray-600 dark:text-gray-400 text-center mt-6">
               Join 5,000+ cleared professionals getting ahead in their careers
             </p>
           </motion.div>
@@ -831,7 +831,7 @@ export default function ResourcesPage() {
               Our experts are ready to help you navigate your unique career path
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link href="/contact" className="btn-primary bg-white text-command-black hover:bg-gray-100">
+              <Link href="/contact" className="btn-primary bg-white dark:bg-gray-800 text-command-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
                 Schedule Consultation
               </Link>
               <Link href="/mock-interview" className="btn-secondary border-white text-white hover:bg-white/10">
@@ -863,8 +863,8 @@ export default function ResourcesPage() {
               <div className="flex justify-between items-start mb-6">
                 <div>
                   <h2 className="text-3xl font-montserrat font-semibold mb-2">{selectedResource.title}</h2>
-                  <p className="text-gray-400">{selectedResource.description}</p>
-                  <div className="flex items-center gap-4 mt-2 text-sm text-gray-500">
+                  <p className="text-gray-400 dark:text-gray-500">{selectedResource.description}</p>
+                  <div className="flex items-center gap-4 mt-2 text-sm text-gray-500 dark:text-gray-400">
                     {selectedResource.readTime && (
                       <span className="flex items-center gap-1">
                         <Clock className="w-4 h-4" />
@@ -887,7 +887,7 @@ export default function ResourcesPage() {
                 </div>
                 <button
                   onClick={() => setSelectedResource(null)}
-                  className="text-gray-400 hover:text-white transition-colors"
+                  className="text-gray-400 dark:text-gray-500 hover:text-white dark:hover:text-gray-200 transition-colors"
                 >
                   <X className="w-6 h-6" />
                 </button>
@@ -899,7 +899,7 @@ export default function ResourcesPage() {
                   selectedResource.sections.map((section, index) => (
                     <div key={index} className="mb-8">
                       <h3 className="text-xl font-semibold text-dynamic-green mb-3">{section.title}</h3>
-                      <div className="text-gray-300 whitespace-pre-line">
+                      <div className="text-gray-300 dark:text-gray-400 whitespace-pre-line">
                         {section.content.split('\n').map((paragraph, pIndex) => (
                           <p key={pIndex} className="mb-2">
                             {paragraph.split(/(\*\*.*?\*\*)/).map((part, partIndex) => {
@@ -914,9 +914,9 @@ export default function ResourcesPage() {
                     </div>
                   ))
                 ) : selectedResource.content ? (
-                  <div className="text-gray-300 whitespace-pre-line">{selectedResource.content}</div>
+                  <div className="text-gray-300 dark:text-gray-400 whitespace-pre-line">{selectedResource.content}</div>
                 ) : (
-                  <div className="text-gray-400">
+                  <div className="text-gray-400 dark:text-gray-500">
                     <p className="mb-4">This resource is currently being developed. Check back soon for the full content!</p>
                     <p>In the meantime, feel free to:</p>
                     <ul className="list-disc list-inside mt-2">

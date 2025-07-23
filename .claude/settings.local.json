@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git push:*)",
+      "Bash(git remote set-url:*)",
+      "Bash(git ls-tree:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:caglive.vercel.app)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
+    ],
+    "deny": []
+  }
+}

@@ -32,7 +32,17 @@ const audiences = [
 
 export default function WhoWeServe() {
   return (
-    <section className="py-20 bg-gray-50">
+    <section className="py-20 bg-gradient-to-br from-command-black via-ops-charcoal to-command-black relative overflow-hidden">
+      {/* Binary background pattern */}
+      <div className="absolute inset-0 opacity-5">
+        <div className="text-dynamic-green font-mono text-sm leading-relaxed">
+          {Array(20).fill(null).map((_, i) => (
+            <div key={i} className="whitespace-nowrap">
+              {Array(10).fill('01101000 01100101 01101100 01110000 ').join('')}
+            </div>
+          ))}
+        </div>
+      </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -41,10 +51,10 @@ export default function WhoWeServe() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-montserrat font-bold mb-4">
+          <h2 className="text-4xl md:text-5xl font-montserrat font-bold mb-4 text-white">
             Who We <span className="gradient-text">Serve</span>
           </h2>
-          <p className="text-xl text-intel-gray max-w-3xl mx-auto">
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
             We specialize in helping cleared professionals navigate the complex world of government IT contracting
           </p>
         </motion.div>
@@ -57,13 +67,13 @@ export default function WhoWeServe() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className="card text-center group"
+              className="glass-card text-center group hover:scale-105"
             >
               <div className={`w-16 h-16 bg-${audience.color}/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}>
                 <audience.icon className={`w-8 h-8 text-${audience.color}`} />
               </div>
-              <h3 className="text-xl font-montserrat font-semibold mb-3">{audience.title}</h3>
-              <p className="text-intel-gray">{audience.description}</p>
+              <h3 className="text-xl font-montserrat font-semibold mb-3 text-white">{audience.title}</h3>
+              <p className="text-gray-300">{audience.description}</p>
             </motion.div>
           ))}
         </div>

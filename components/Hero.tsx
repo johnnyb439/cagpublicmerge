@@ -78,7 +78,7 @@ export default function Hero() {
 
           {/* Banner */}
           <div className="flex justify-center mb-8">
-            <div className="relative bg-white/10 backdrop-blur-sm rounded-full px-8 py-3 overflow-hidden">
+            <div className="relative glass rounded-full px-8 py-3 overflow-hidden">
               {/* Binary background decoration */}
               <div className="absolute inset-0 opacity-10">
                 <div className="text-xs font-mono leading-none whitespace-nowrap">
@@ -100,14 +100,14 @@ export default function Hero() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <Link href="/jobs" className="btn-primary inline-flex items-center">
+            <Link href="/jobs" className="glass-button text-white inline-flex items-center group">
               Browse Cleared Jobs
-              <ArrowRight className="ml-2" size={20} />
+              <ArrowRight className="ml-2 transition-transform group-hover:translate-x-1" size={20} />
             </Link>
-            <Link href="/mock-interview" className="btn-secondary inline-flex items-center">
+            <Link href="/mock-interview" className="glass-button text-white inline-flex items-center">
               Try AI Mock Interview
             </Link>
-            <Link href="/contact" className="btn-secondary inline-flex items-center">
+            <Link href="/contact" className="glass-button text-white inline-flex items-center">
               Schedule Consultation
             </Link>
           </div>
@@ -117,7 +117,7 @@ export default function Hero() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="bg-white/10 backdrop-blur-md rounded-lg p-6 border border-white/20"
+              className="glass-card"
             >
               <Shield className="w-12 h-12 text-dynamic-green mx-auto mb-4" />
               <h3 className="text-white font-semibold mb-2">SECRET+ Required</h3>
@@ -128,7 +128,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="bg-white/10 backdrop-blur-md rounded-lg p-6 border border-white/20"
+              className="glass-card"
             >
               <Users className="w-12 h-12 text-dynamic-blue mx-auto mb-4" />
               <h3 className="text-white font-semibold mb-2">Military-Friendly</h3>
@@ -139,7 +139,7 @@ export default function Hero() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="bg-white/10 backdrop-blur-md rounded-lg p-6 border border-white/20"
+              className="glass-card"
             >
               <Briefcase className="w-12 h-12 text-emerald-green mx-auto mb-4" />
               <h3 className="text-white font-semibold mb-2">IT Focus</h3>

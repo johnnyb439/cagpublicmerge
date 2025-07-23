@@ -28,7 +28,7 @@ export default function Navbar() {
   ]
 
   return (
-    <nav className="fixed top-0 w-full bg-command-black z-50">
+    <nav className="fixed top-0 w-full glass-nav z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20">
           <div className="flex items-center">
@@ -112,7 +112,7 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden bg-ops-charcoal rounded-lg mt-2 p-4">
+          <div className="md:hidden glass-card mt-2">
             {navLinks.map((link) => (
               <Link
                 key={link.href}

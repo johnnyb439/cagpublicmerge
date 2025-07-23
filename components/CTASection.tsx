@@ -13,7 +13,7 @@ export default function CTASection() {
           whileInView={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="bg-white/10 backdrop-blur-md rounded-3xl p-8 md:p-12 text-center border border-white/20"
+          className="glass-hero p-8 md:p-12 text-center"
         >
           <h2 className="text-4xl md:text-5xl font-montserrat font-bold text-white mb-4">
             Ready to Transform Your Career?
@@ -25,16 +25,16 @@ export default function CTASection() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link 
               href="/contact" 
-              className="bg-white text-command-black px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300 inline-flex items-center justify-center"
+              className="glass-button bg-white/20 text-white px-8 py-4 rounded-lg font-semibold hover:bg-white/30 transition-all duration-300 inline-flex items-center justify-center group"
             >
               <Calendar className="mr-2" size={20} />
               Schedule Free Consultation
-              <ArrowRight className="ml-2" size={20} />
+              <ArrowRight className="ml-2 transition-transform group-hover:translate-x-1" size={20} />
             </Link>
             
             <Link 
               href="/mock-interview" 
-              className="bg-transparent text-white border-2 border-white px-8 py-4 rounded-lg font-semibold hover:bg-white/10 transition-all duration-300 inline-flex items-center justify-center"
+              className="glass-button text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 inline-flex items-center justify-center"
             >
               <MessageCircle className="mr-2" size={20} />
               Try Mock Interview

@@ -33,4 +33,33 @@
   .card {
     @apply bg-white rounded-xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
   }
+  
+  /* Glass-morphism Effects */
+  .glass {
+    @apply backdrop-blur-md bg-white/10 border border-white/20 shadow-xl;
+  }
+  
+  .glass-dark {
+    @apply backdrop-blur-md bg-black/20 border border-white/10 shadow-xl;
+  }
+  
+  .glass-card {
+    @apply backdrop-blur-lg bg-white/10 border border-white/20 rounded-2xl shadow-2xl p-6 transition-all duration-300 hover:bg-white/15 hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] hover:border-white/30;
+  }
+  
+  .glass-button {
+    @apply backdrop-blur-md bg-white/10 border border-white/20 px-6 py-3 rounded-lg font-semibold transition-all duration-300 hover:bg-white/20 hover:border-white/30 hover:shadow-[0_8px_32px_0_rgba(31,38,135,0.37)];
+  }
+  
+  .glass-nav {
+    @apply backdrop-blur-xl bg-black/30 border-b border-white/10 shadow-lg;
+  }
+  
+  .glass-hero {
+    @apply backdrop-blur-sm bg-gradient-to-br from-white/10 via-white/5 to-transparent border border-white/10 rounded-3xl;
+  }
+  
+  .glass-input {
+    @apply backdrop-blur-md bg-white/10 border border-white/20 rounded-lg px-4 py-2 text-white placeholder-white/50 focus:bg-white/15 focus:border-white/30 focus:outline-none focus:ring-2 focus:ring-white/20;
+  }
 }

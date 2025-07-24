@@ -18,7 +18,17 @@
       "Bash(git commit --allow-empty -m \"Force Vercel redeployment\")",
       "Bash(git add deploy-to-vercel.bat)",
       "Bash(git commit -m \"Add Vercel deployment helper script\")",
-      "Bash(git commit --allow-empty -m \"Force Vercel rebuild - ensure all UI changes are deployed\")"
+      "Bash(git commit --allow-empty -m \"Force Vercel rebuild - ensure all UI changes are deployed\")",
+      "Bash(kill-ports.bat)",
+      "Bash(\"C:\\Users\\JohnnyBeast\\OneDrive - Miysis Alliance\\0_2_ClaudeCode_Live Project\\cleared-advisory-group-website\\kill-ports.bat\")",
+      "Bash(taskkill:*)",
+      "Bash(.kill-ports.bat)",
+      "Bash(cmd /c:*)",
+      "Bash(powershell:*)",
+      "Bash(start kill-ports.bat)",
+      "Bash(git fetch:*)",
+      "Bash(git merge:*)",
+      "Bash(mkdir:*)"
     ],
     "deny": []
   }

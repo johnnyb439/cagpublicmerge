@@ -269,7 +269,7 @@ export default function MockInterviewPage() {
                   value={userAnswer}
                   onChange={(e) => setUserAnswer(e.target.value)}
                   placeholder="Type your answer here..."
-                  className="w-full p-4 border border-gray-300 rounded-lg focus:border-cyber-cyan focus:outline-none resize-none"
+                  className="w-full p-4 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:border-cyber-cyan dark:focus:border-cyber-cyan focus:outline-none resize-none"
                   rows={6}
                 />
                 

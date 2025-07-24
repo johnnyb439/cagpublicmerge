@@ -116,7 +116,7 @@ export default function JobsPage() {
                 placeholder="Search job title or company..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:border-dynamic-green"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:border-dynamic-green dark:focus:border-dynamic-green"
               />
             </div>
             <div className="flex-1 relative">
@@ -126,7 +126,7 @@ export default function JobsPage() {
                 placeholder="Location..."
                 value={locationFilter}
                 onChange={(e) => setLocationFilter(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border rounded-lg focus:outline-none focus:border-dynamic-green"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:border-dynamic-green dark:focus:border-dynamic-green"
               />
             </div>
             <button
@@ -151,7 +151,7 @@ export default function JobsPage() {
                   <select
                     value={clearanceFilter}
                     onChange={(e) => setClearanceFilter(e.target.value)}
-                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-dynamic-green"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:border-dynamic-green dark:focus:border-dynamic-green"
                   >
                     <option value="">All Clearances</option>
                     <option value="PUBLIC">Public Trust</option>

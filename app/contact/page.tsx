@@ -129,7 +129,7 @@ export default function ContactPage() {
                       required
                       value={formData.name}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-sky-blue focus:outline-none"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:border-sky-blue dark:focus:border-sky-blue focus:outline-none"
                     />
                   </div>
                   
@@ -142,7 +142,7 @@ export default function ContactPage() {
                       required
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-sky-blue focus:outline-none"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:border-sky-blue dark:focus:border-sky-blue focus:outline-none"
                     />
                   </div>
                   
@@ -154,7 +154,7 @@ export default function ContactPage() {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-sky-blue focus:outline-none"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:border-sky-blue dark:focus:border-sky-blue focus:outline-none"
                     />
                   </div>
                   
@@ -166,7 +166,7 @@ export default function ContactPage() {
                       required
                       value={formData.service}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-sky-blue focus:outline-none"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:border-sky-blue dark:focus:border-sky-blue focus:outline-none"
                     >
                       <option value="">Select your affiliation</option>
                       <option value="national-guard">National Guard</option>
@@ -185,7 +185,7 @@ export default function ContactPage() {
                       required
                       value={formData.clearanceLevel}
                       onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-sky-blue focus:outline-none"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:border-sky-blue dark:focus:border-sky-blue focus:outline-none"
                     >
                       <option value="">Select clearance level</option>
                       <option value="secret">SECRET</option>
@@ -207,7 +207,7 @@ export default function ContactPage() {
                     rows={4}
                     value={formData.message}
                     onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:border-sky-blue focus:outline-none resize-none"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:border-sky-blue dark:focus:border-sky-blue focus:outline-none resize-none"
                     placeholder="What are your IT career goals? What challenges are you facing?"
                   />
                 </div>

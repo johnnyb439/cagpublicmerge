@@ -16,7 +16,7 @@ import ResumeToJobMatcher from '@/components/resume/ResumeToJobMatcher'
 interface Resume {
   id: string
   name: string
-  filename?: string
+  filename: string
   size: string
   uploadDate: string
   isDefault: boolean

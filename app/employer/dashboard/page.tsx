@@ -28,7 +28,7 @@ export default function EmployerDashboard() {
     }
     
     setUser(parsedUser)
-  }, [])
+  }, [router])
 
   const stats = {
     activeJobs: 8,

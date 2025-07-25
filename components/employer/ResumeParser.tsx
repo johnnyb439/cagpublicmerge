@@ -129,7 +129,7 @@ export default function ResumeParser() {
                   <p className="text-gray-400">AI is extracting candidate information</p>
                   <div className="max-w-xs mx-auto mt-4">
                     <div className="h-2 bg-gray-700 rounded-full overflow-hidden">
-                      <div className="h-full bg-gradient-to-r from-sky-blue to-neon-green animate-progress" />
+                      <div className="h-full bg-gradient-to-r from-sky-blue to-neon-green animate-pulse" style={{ width: '30%' }} />
                     </div>
                   </div>
                 </div>
@@ -298,18 +298,3 @@ export default function ResumeParser() {
     </div>
   )
 }
-
-<style jsx>{`
-  @keyframes progress {
-    0% {
-      transform: translateX(-100%);
-    }
-    100% {
-      transform: translateX(400%);
-    }
-  }
-  
-  .animate-progress {
-    animation: progress 2s ease-in-out infinite;
-  }
-`}</style>

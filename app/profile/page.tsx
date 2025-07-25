@@ -79,16 +79,16 @@ export default function ProfilePage() {
     
     const parsedUser = JSON.parse(userData)
     setUser(parsedUser)
-    setProfileData({
-      ...profileData,
+    setProfileData(prev => ({
+      ...prev,
       name: parsedUser.name || 'John Doe',
       email: parsedUser.email || 'john.doe@email.com',
       role: 'Senior Software Engineer',
       clearance: parsedUser.clearanceLevel || 'Top Secret/SCI',
       location: 'Arlington, VA',
       phone: '+1 (555) 123-4567',
-    })
-  }, [])
+    }))
+  }, [router])
 
   const handleSaveProfile = () => {
     setIsEditing(false)

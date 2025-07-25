@@ -258,16 +258,7 @@ export default function JobsPage() {
                   <span className="text-sm text-gray-500 dark:text-gray-400 mb-4">{job.posted}</span>
                   <Link
                     href={`/jobs/${job.id}`}
-                    className="btn-primary flex items-center text-sm"
-                    onClick={() => analytics.track({
-                      name: 'job_view',
-                      properties: {
-                        job_id: job.id,
-                        job_title: job.title,
-                        company: job.company,
-                        clearance: job.clearance
-                      }
-                    })}
+                    className="px-4 py-2 bg-sky-blue text-white rounded-lg hover:bg-opacity-90 transition-all flex items-center text-sm"
                   >
                     View Details
                     <ChevronRight size={16} className="ml-1" />
@@ -313,7 +304,7 @@ export default function JobsPage() {
           <p className="mb-6">
             Get notified when new cleared positions matching your skills are posted
           </p>
-          <Link href="/contact" className="btn-primary bg-white dark:bg-gray-800 text-command-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+          <Link href="/contact" className="px-6 py-3 bg-gradient-to-r from-sky-blue to-neon-green text-white rounded-lg hover:shadow-lg transition-all">
             Set Up Job Alerts
           </Link>
         </motion.div>

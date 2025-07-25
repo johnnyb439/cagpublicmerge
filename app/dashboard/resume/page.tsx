@@ -402,7 +402,7 @@ export default function UpdateResumePage() {
                 animate={{ opacity: 1, y: 0 }}
               >
                 <ResumeCard
-                  resume={currentResume}
+                  currentResume={currentResume}
                   onUpload={handleFileUpload}
                   onDelete={handleDeleteResume}
                   onSetDefault={handleSetDefault}
@@ -510,7 +510,13 @@ export default function UpdateResumePage() {
                 </div>
 
                 {/* Keywords Analysis */}
-                <ResumeInsightsPanel insights={insights} />
+                <ResumeInsightsPanel 
+                  insights={{
+                    ...insights,
+                    suggestions: insights.suggestions.map(s => s.text)
+                  }}
+                  isAnalyzing={isAnalyzing}
+                />
               </motion.div>
             )}
 
@@ -519,7 +525,7 @@ export default function UpdateResumePage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
               >
-                <ResumeToJobMatcher jobMatches={jobMatches} />
+                <ResumeToJobMatcher jobMatches={jobMatches} isAnalyzing={isAnalyzing} />
               </motion.div>
             )}
           </div>

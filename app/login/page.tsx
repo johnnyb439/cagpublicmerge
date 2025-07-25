@@ -5,34 +5,76 @@ import { motion } from 'framer-motion'
 import { User, Lock, Shield, AlertCircle } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { useFormValidation } from '@/hooks/useFormValidation'
+import FormInput from '@/components/ui/FormInput'
+import Spinner from '@/components/ui/Spinner'
+import { useAnalytics } from '@/hooks/useAnalytics'
 
 export default function LoginPage() {
   const router = useRouter()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const analytics = useAnalytics()
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+
+  const validation = useFormValidation(
+    { email: '', password: '' },
+    {
+      email: {
+        required: true,
+        pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        message: 'Please enter a valid email address'
+      },
+      password: {
+        required: true,
+        minLength: 6,
+        message: 'Password must be at least 6 characters'
+      }
+    }
+  )
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
+    
+    if (!validation.validateAll()) {
+      return
+    }
+
     setLoading(true)
+    
+    // Track login attempt
+    analytics.trackFormSubmit('login', {
+      email: validation.values.email,
+    })
 
     // Simulate login - in production this would connect to your auth system
     setTimeout(() => {
-      if (email && password) {
+      // Simulate authentication check
+      if (validation.values.email === 'demo@cleared.gov' && validation.values.password === 'secret123') {
+        // Track successful login
+        analytics.track({
+          name: 'login_success',
+          properties: { email: validation.values.email }
+        })
+        
         // Store minimal user data in localStorage for demo
         localStorage.setItem('user', JSON.stringify({
-          email,
-          name: email.split('@')[0],
+          email: validation.values.email,
+          name: validation.values.email.split('@')[0],
           clearanceLevel: 'SECRET'
         }))
         router.push('/dashboard')
       } else {
-        setError('Please enter both email and password')
+        // Track failed login
+        analytics.track({
+          name: 'login_failed',
+          properties: { email: validation.values.email }
+        })
+        
+        setError('Invalid email or password. Try demo@cleared.gov / secret123')
         setLoading(false)
       }
-    }, 1000)
+    }, 1500)
   }
 
   return (
@@ -55,41 +97,33 @@ export default function LoginPage() {
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium mb-2">
-                Email Address
-              </label>
-              <div className="relative">
-                <User className="absolute left-3 top-3 text-gray-400 dark:text-gray-500" size={20} />
-                <input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:border-dynamic-green dark:focus:border-dynamic-green"
-                  placeholder="john.doe@email.com"
-                  required
-                />
-              </div>
-            </div>
+            <FormInput
+              id="email"
+              type="email"
+              label="Email Address"
+              value={validation.values.email}
+              onChange={(e) => validation.handleChange('email', e.target.value)}
+              onBlur={() => validation.handleBlur('email')}
+              error={validation.errors.email}
+              touched={validation.touched.email}
+              icon={<User size={20} />}
+              placeholder="john.doe@email.com"
+              success={validation.touched.email && !validation.errors.email && !!validation.values.email}
+            />
 
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium mb-2">
-                Password
-              </label>
-              <div className="relative">
-                <Lock className="absolute left-3 top-3 text-gray-400 dark:text-gray-500" size={20} />
-                <input
-                  type="password"
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:border-dynamic-green dark:focus:border-dynamic-green"
-                  placeholder="••••••••"
-                  required
-                />
-              </div>
-            </div>
+            <FormInput
+              id="password"
+              type="password"
+              label="Password"
+              value={validation.values.password}
+              onChange={(e) => validation.handleChange('password', e.target.value)}
+              onBlur={() => validation.handleBlur('password')}
+              error={validation.errors.password}
+              touched={validation.touched.password}
+              icon={<Lock size={20} />}
+              placeholder="••••••••"
+              success={validation.touched.password && !validation.errors.password && !!validation.values.password}
+            />
 
             {error && (
               <motion.div
@@ -114,10 +148,17 @@ export default function LoginPage() {
 
             <button
               type="submit"
-              disabled={loading}
-              className="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={loading || !validation.isValid}
+              className="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
             >
-              {loading ? 'Logging in...' : 'Log In'}
+              {loading ? (
+                <>
+                  <Spinner size="sm" className="mr-2" />
+                  Logging in...
+                </>
+              ) : (
+                'Log In'
+              )}
             </button>
           </form>
 

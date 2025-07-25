@@ -28,7 +28,20 @@
       "Bash(start kill-ports.bat)",
       "Bash(git fetch:*)",
       "Bash(git merge:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(git tag:*)",
+      "Bash(npm install:*)",
+      "Bash(ctrl+c)",
+      "Bash(lsof:*)",
+      "Bash(ls:*)",
+      "Bash(timeout 15s npm run dev)",
+      "Bash(lsof:*)",
+      "Bash(pkill:*)",
+      "Bash(true)",
+      "Bash(ls:*)",
+      "Bash(pkill:*)",
+      "Bash(true)",
+      "Bash(./kill-ports.bat)"
     ],
     "deny": []
   }

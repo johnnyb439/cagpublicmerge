@@ -4,8 +4,10 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, Shield, Users, Briefcase } from 'lucide-react'
+import { useAnalytics } from '@/hooks/useAnalytics'
 
 export default function Hero() {
+  const analytics = useAnalytics()
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Gradient */}
@@ -67,6 +69,7 @@ export default function Hero() {
                 alt="Cleared Advisory Group Logo" 
                 width={450} 
                 height={350}
+                priority
                 className="relative object-contain opacity-90 mix-blend-screen"
                 style={{
                   filter: 'drop-shadow(0 0 60px rgba(255, 255, 255, 0.2)) drop-shadow(0 0 120px rgba(135, 206, 235, 0.1)) brightness(1.1) contrast(0.9)',
@@ -101,18 +104,30 @@ export default function Hero() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link href="/jobs" className="glass-button text-white inline-flex items-center group hover-glow">
+              <Link 
+                href="/jobs" 
+                className="glass-button text-white inline-flex items-center group hover-glow"
+                onClick={() => analytics.trackClick('hero_browse_jobs')}
+              >
                 Browse Cleared Jobs
                 <ArrowRight className="ml-2 transition-transform group-hover:translate-x-2" size={20} />
               </Link>
             </motion.div>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link href="/mock-interview" className="glass-button text-white inline-flex items-center hover-glow">
+              <Link 
+                href="/mock-interview" 
+                className="glass-button text-white inline-flex items-center hover-glow"
+                onClick={() => analytics.trackClick('hero_mock_interview')}
+              >
                 Try AI Mock Interview
               </Link>
             </motion.div>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link href="/contact" className="glass-button text-white inline-flex items-center hover-glow">
+              <Link 
+                href="/contact" 
+                className="glass-button text-white inline-flex items-center hover-glow"
+                onClick={() => analytics.trackClick('hero_consultation')}
+              >
                 Schedule Consultation
               </Link>
             </motion.div>

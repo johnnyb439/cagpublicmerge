@@ -5,8 +5,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: '/api/',
+      disallow: ['/api/', '/dashboard/'],
     },
-    sitemap: 'https://clearedadvisorygroup.com/sitemap.xml',
+    sitemap: 'https://caglive.vercel.app/sitemap.xml',
   }
 }

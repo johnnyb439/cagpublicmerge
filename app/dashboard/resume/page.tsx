@@ -11,6 +11,7 @@ import Toast from '@/components/ui/Toast'
 interface Resume {
   id: string
   name: string
+  filename?: string
   size: string
   uploadDate: string
   isDefault: boolean
@@ -75,6 +76,7 @@ export default function UpdateResumePage() {
     const newResume: Resume = {
       id: Date.now().toString(),
       name: file.name,
+      filename: file.name,
       size: `${(file.size / 1024 / 1024).toFixed(2)} MB`,
       uploadDate: new Date().toISOString(),
       isDefault: false,
@@ -265,7 +267,7 @@ export default function UpdateResumePage() {
           {/* Left Sidebar - Version History */}
           <div className="lg:col-span-1">
             <ResumeVersionList
-              versions={resumeHistory}
+              versions={resumeHistory.map(r => ({ ...r, filename: r.filename || r.name }))}
               onRestore={handleRestoreVersion}
               onPreview={handlePreviewVersion}
               onUpdateNotes={handleUpdateNotes}

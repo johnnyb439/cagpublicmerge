@@ -5,6 +5,9 @@ import { motion } from 'framer-motion'
 import { Search, MapPin, Shield, DollarSign, Filter, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import BinaryBackground from '@/components/BinaryBackground'
+import Spinner from '@/components/ui/Spinner'
+import ErrorBoundary from '@/components/ErrorBoundary'
+import { useAnalytics } from '@/hooks/useAnalytics'
 
 // Sample job data - in production this would come from a database
 const sampleJobs = [
@@ -66,11 +69,22 @@ const sampleJobs = [
 ]
 
 export default function JobsPage() {
+  const analytics = useAnalytics()
   const [jobs, setJobs] = useState(sampleJobs)
   const [searchTerm, setSearchTerm] = useState('')
   const [locationFilter, setLocationFilter] = useState('')
   const [clearanceFilter, setClearanceFilter] = useState('')
   const [showFilters, setShowFilters] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+
+  // Simulate loading when filters change
+  useEffect(() => {
+    setIsLoading(true)
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 300)
+    return () => clearTimeout(timer)
+  }, [searchTerm, locationFilter, clearanceFilter])
 
   // Filter jobs based on search criteria
   const filteredJobs = jobs.filter(job => {
@@ -81,6 +95,24 @@ export default function JobsPage() {
     
     return matchesSearch && matchesLocation && matchesClearance
   })
+
+  // Track search interactions
+  useEffect(() => {
+    if (searchTerm) {
+      const searchTimer = setTimeout(() => {
+        analytics.track({
+          name: 'job_search',
+          properties: {
+            search_term: searchTerm,
+            location_filter: locationFilter,
+            clearance_filter: clearanceFilter,
+            results_count: filteredJobs.length
+          }
+        })
+      }, 1000)
+      return () => clearTimeout(searchTimer)
+    }
+  }, [searchTerm, locationFilter, clearanceFilter, filteredJobs.length, analytics])
 
   return (
     <section className="relative min-h-screen bg-gray-50 dark:bg-ops-charcoal py-20">
@@ -173,8 +205,14 @@ export default function JobsPage() {
         </div>
 
         {/* Job Listings */}
-        <div className="space-y-4">
-          {filteredJobs.map((job, index) => (
+        <ErrorBoundary>
+          {isLoading ? (
+            <div className="flex items-center justify-center py-12">
+              <Spinner size="lg" />
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {filteredJobs.map((job, index) => (
             <motion.div
               key={job.id}
               initial={{ opacity: 0, y: 20 }}
@@ -213,6 +251,15 @@ export default function JobsPage() {
                   <Link
                     href={`/jobs/${job.id}`}
                     className="btn-primary flex items-center text-sm"
+                    onClick={() => analytics.track({
+                      name: 'job_view',
+                      properties: {
+                        job_id: job.id,
+                        job_title: job.title,
+                        company: job.company,
+                        clearance: job.clearance
+                      }
+                    })}
                   >
                     View Details
                     <ChevronRight size={16} className="ml-1" />
@@ -221,7 +268,9 @@ export default function JobsPage() {
               </div>
             </motion.div>
           ))}
-        </div>
+            </div>
+          )}
+        </ErrorBoundary>
 
         {/* Empty State */}
         {filteredJobs.length === 0 && (

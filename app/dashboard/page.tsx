@@ -16,6 +16,10 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import Analytics from '@/components/dashboard/Analytics'
+import ActivityTimeline from '@/components/dashboard/ActivityTimeline'
+import GoalTracking from '@/components/dashboard/GoalTracking'
+import PersonalizedRecommendations from '@/components/dashboard/PersonalizedRecommendations'
 
 interface UserData {
   email: string
@@ -119,10 +123,40 @@ export default function DashboardPage() {
           ))}
         </div>
 
-        {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column */}
-          <div className="lg:col-span-2 space-y-8">
+        {/* Navigation Tabs */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          className="bg-white dark:bg-command-black rounded-lg shadow-md p-2 mb-8"
+        >
+          <div className="flex space-x-1">
+            {[
+              { id: 'overview', label: 'Overview' },
+              { id: 'analytics', label: 'Analytics' },
+              { id: 'goals', label: 'Goals' },
+              { id: 'recommendations', label: 'Recommendations' }
+            ].map((tab) => (
+              <button
+                key={tab.id}
+                onClick={() => setActiveTab(tab.id)}
+                className={`flex-1 px-4 py-2 text-sm font-medium rounded-lg transition-colors ${
+                  activeTab === tab.id
+                    ? 'bg-dynamic-green text-white'
+                    : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Tab Content */}
+        {activeTab === 'overview' && (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Left Column */}
+            <div className="lg:col-span-2 space-y-8">
             {/* Quick Actions */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -172,29 +206,21 @@ export default function DashboardPage() {
                     <p className="text-sm text-gray-600 dark:text-gray-400">Military translation</p>
                   </div>
                 </Link>
+                <Link
+                  href="/dashboard/applications"
+                  className="flex items-center p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                >
+                  <Briefcase className="text-orange-500 mr-3" size={24} />
+                  <div>
+                    <p className="font-semibold">Track Applications</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">Manage job applications</p>
+                  </div>
+                </Link>
               </div>
             </motion.div>
 
-            {/* Recent Activity */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="bg-white dark:bg-command-black rounded-lg shadow-md p-6"
-            >
-              <h2 className="text-xl font-montserrat font-bold mb-6">Recent Activity</h2>
-              <div className="space-y-4">
-                {recentActivity.map((activity, index) => (
-                  <div key={index} className="flex items-start">
-                    <div className="w-2 h-2 bg-dynamic-green rounded-full mt-2 mr-3"></div>
-                    <div className="flex-1">
-                      <p className="text-gray-800 dark:text-gray-200">{activity.title}</p>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">{activity.time}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
+            {/* Recent Activity - Use new Timeline component */}
+            <ActivityTimeline />
           </div>
 
           {/* Right Column */}
@@ -277,7 +303,23 @@ export default function DashboardPage() {
               </button>
             </motion.div>
           </div>
-        </div>
+          </div>
+        )}
+
+        {/* Analytics Tab */}
+        {activeTab === 'analytics' && (
+          <Analytics />
+        )}
+
+        {/* Goals Tab */}
+        {activeTab === 'goals' && (
+          <GoalTracking />
+        )}
+
+        {/* Recommendations Tab */}
+        {activeTab === 'recommendations' && (
+          <PersonalizedRecommendations />
+        )}
       </div>
     </section>
   )

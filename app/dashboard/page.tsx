@@ -216,6 +216,16 @@ export default function DashboardPage() {
                     <p className="text-sm text-gray-600 dark:text-gray-400">Manage job applications</p>
                   </div>
                 </Link>
+                <Link
+                  href="/dashboard/certifications"
+                  className="flex items-center p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                >
+                  <Award className="text-purple-500 mr-3" size={24} />
+                  <div>
+                    <p className="font-semibold">Certifications</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">Track credentials</p>
+                  </div>
+                </Link>
               </div>
             </motion.div>
 

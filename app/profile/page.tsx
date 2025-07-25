@@ -177,6 +177,18 @@ export default function ProfilePage() {
                     <MapPin size={16} className="text-neon-green" />
                     {profileData.location}
                   </span>
+                  {profileData.linkedinUrl && !isEditing && (
+                    <a 
+                      href={profileData.linkedinUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-1 text-sky-blue hover:text-neon-green transition-colors"
+                    >
+                      <Linkedin size={16} />
+                      LinkedIn
+                      <ExternalLink size={12} />
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
@@ -294,6 +306,52 @@ export default function ProfilePage() {
             ))}
           </div>
         </div>
+
+        {/* Contact Information */}
+        {isEditing && (
+          <div className="glass-card rounded-xl p-6 mb-8">
+            <h2 className="text-xl font-bold mb-4">Contact Information</h2>
+            <div className="grid md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium mb-2">Email</label>
+                <input
+                  type="email"
+                  value={profileData.email}
+                  onChange={(e) => setProfileData({...profileData, email: e.target.value})}
+                  className="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none focus:border-sky-blue border border-gray-600"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Phone</label>
+                <input
+                  type="tel"
+                  value={profileData.phone}
+                  onChange={(e) => setProfileData({...profileData, phone: e.target.value})}
+                  className="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none focus:border-sky-blue border border-gray-600"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">Location</label>
+                <input
+                  type="text"
+                  value={profileData.location}
+                  onChange={(e) => setProfileData({...profileData, location: e.target.value})}
+                  className="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none focus:border-sky-blue border border-gray-600"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium mb-2">LinkedIn Profile</label>
+                <input
+                  type="url"
+                  value={profileData.linkedinUrl}
+                  onChange={(e) => setProfileData({...profileData, linkedinUrl: e.target.value})}
+                  placeholder="https://linkedin.com/in/yourprofile"
+                  className="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none focus:border-sky-blue border border-gray-600"
+                />
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Dream Job Settings */}
         <div className="glass-card rounded-xl p-6">

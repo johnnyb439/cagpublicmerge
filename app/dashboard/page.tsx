@@ -12,7 +12,9 @@ import {
   Bell,
   LogOut,
   ChevronRight,
-  BookOpen
+  BookOpen,
+  MessageSquare,
+  FolderOpen
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -20,6 +22,7 @@ import Analytics from '@/components/dashboard/Analytics'
 import ActivityTimeline from '@/components/dashboard/ActivityTimeline'
 import GoalTracking from '@/components/dashboard/GoalTracking'
 import PersonalizedRecommendations from '@/components/dashboard/PersonalizedRecommendations'
+import MessagingCenter from '@/components/MessagingCenter'
 
 interface UserData {
   email: string
@@ -31,6 +34,7 @@ export default function DashboardPage() {
   const router = useRouter()
   const [user, setUser] = useState<UserData | null>(null)
   const [activeTab, setActiveTab] = useState('overview')
+  const [isMessageCenterOpen, setIsMessageCenterOpen] = useState(false)
 
   useEffect(() => {
     // Check if user is logged in
@@ -226,6 +230,26 @@ export default function DashboardPage() {
                     <p className="text-sm text-gray-600 dark:text-gray-400">Track credentials</p>
                   </div>
                 </Link>
+                <button
+                  onClick={() => setIsMessageCenterOpen(true)}
+                  className="flex items-center p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                >
+                  <MessageSquare className="text-cyan-500 mr-3" size={24} />
+                  <div>
+                    <p className="font-semibold">Messages</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">Chat with recruiters</p>
+                  </div>
+                </button>
+                <Link
+                  href="/dashboard/documents"
+                  className="flex items-center p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                >
+                  <FolderOpen className="text-indigo-500 mr-3" size={24} />
+                  <div>
+                    <p className="font-semibold">Documents</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">Manage files</p>
+                  </div>
+                </Link>
               </div>
             </motion.div>
 
@@ -331,6 +355,26 @@ export default function DashboardPage() {
           <PersonalizedRecommendations />
         )}
       </div>
+
+      {/* Messaging Center Modal */}
+      {isMessageCenterOpen && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white dark:bg-gray-800 rounded-lg max-w-4xl w-full max-h-[80vh] overflow-hidden">
+            <div className="p-4 border-b border-gray-300 dark:border-gray-700 flex items-center justify-between">
+              <h2 className="text-xl font-bold">Messages</h2>
+              <button
+                onClick={() => setIsMessageCenterOpen(false)}
+                className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <MessagingCenter />
+          </div>
+        </div>
+      )}
     </section>
   )
 }

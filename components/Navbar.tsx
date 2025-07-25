@@ -25,6 +25,7 @@ export default function Navbar() {
     { href: '/jobs', label: 'Jobs' },
     { href: '/mock-interview', label: 'Mock Interview' },
     { href: '/resources', label: 'Resources' },
+    { href: '/demo/communications', label: 'Communications' },
     { href: '/register', label: 'Create Account' },
   ]
 
@@ -56,7 +57,7 @@ export default function Navbar() {
             {/* User Account Links */}
             {user ? (
               <Link
-                href="/dashboard"
+                href={user.type === 'employer' ? '/employer/dashboard' : '/dashboard'}
                 className="flex items-center text-white hover:text-sky-blue transition-colors duration-300"
               >
                 <User size={20} className="mr-2" />
@@ -138,7 +139,7 @@ export default function Navbar() {
             <div className="border-t border-gray-700 mt-4 pt-4">
               {user ? (
                 <Link
-                  href="/dashboard"
+                  href={user.type === 'employer' ? '/employer/dashboard' : '/dashboard'}
                   className="flex items-center text-white hover:text-sky-blue py-2 transition-colors duration-300"
                   onClick={() => setIsOpen(false)}
                 >

@@ -4,10 +4,7 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Search, MapPin, Shield, DollarSign, Filter, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
-import BinaryBackground from '@/components/BinaryBackground'
-import Spinner from '@/components/ui/Spinner'
-import ErrorBoundary from '@/components/ErrorBoundary'
-import { useAnalytics } from '@/hooks/useAnalytics'
+import JobHeatMap from '@/components/JobHeatMap'
 
 // Sample job data - in production this would come from a database
 const sampleJobs = [
@@ -69,13 +66,13 @@ const sampleJobs = [
 ]
 
 export default function JobsPage() {
-  const analytics = useAnalytics()
   const [jobs, setJobs] = useState(sampleJobs)
   const [searchTerm, setSearchTerm] = useState('')
   const [locationFilter, setLocationFilter] = useState('')
   const [clearanceFilter, setClearanceFilter] = useState('')
   const [showFilters, setShowFilters] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [showHeatMap, setShowHeatMap] = useState(false)
 
   // Simulate loading when filters change
   useEffect(() => {
@@ -96,27 +93,9 @@ export default function JobsPage() {
     return matchesSearch && matchesLocation && matchesClearance
   })
 
-  // Track search interactions
-  useEffect(() => {
-    if (searchTerm) {
-      const searchTimer = setTimeout(() => {
-        analytics.track({
-          name: 'job_search',
-          properties: {
-            search_term: searchTerm,
-            location_filter: locationFilter,
-            clearance_filter: clearanceFilter,
-            results_count: filteredJobs.length
-          }
-        })
-      }, 1000)
-      return () => clearTimeout(searchTimer)
-    }
-  }, [searchTerm, locationFilter, clearanceFilter, filteredJobs.length, analytics])
 
   return (
-    <section className="relative min-h-screen bg-gray-50 dark:bg-ops-charcoal py-20">
-      <BinaryBackground />
+    <section className="relative min-h-screen glass-bg py-20">
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -125,20 +104,50 @@ export default function JobsPage() {
           transition={{ duration: 0.8 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl md:text-5xl font-montserrat font-bold mb-4">
-            Cleared IT <span className="gradient-text">Job Board</span>
+          <h1 className="text-4xl md:text-5xl font-montserrat font-bold mb-4 text-white">
+            Cleared IT <span className="text-sky-blue">Job Board</span>
           </h1>
-          <p className="text-xl text-intel-gray">
+          <p className="text-xl text-gray-300">
             Exclusive opportunities for security cleared professionals
           </p>
+          <div className="mt-6 flex justify-center gap-4">
+            <button
+              onClick={() => setShowHeatMap(false)}
+              className={`px-6 py-2 rounded-lg transition-all ${
+                !showHeatMap ? 'bg-sky-blue text-white' : 'glass-card hover:bg-gray-700'
+              }`}
+            >
+              Job Listings
+            </button>
+            <button
+              onClick={() => setShowHeatMap(true)}
+              className={`px-6 py-2 rounded-lg transition-all flex items-center gap-2 ${
+                showHeatMap ? 'bg-sky-blue text-white' : 'glass-card hover:bg-gray-700'
+              }`}
+            >
+              <MapPin size={20} />
+              Heat Map View
+            </button>
+          </div>
         </motion.div>
 
-        {/* Search Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          className="bg-white dark:bg-command-black rounded-lg shadow-md p-6 mb-8"
+        {/* Show either Heat Map or Job Listings */}
+        {showHeatMap ? (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <JobHeatMap />
+          </motion.div>
+        ) : (
+          <>
+            {/* Search Bar */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.1 }}
+              className="glass-card rounded-lg shadow-md p-6 mb-8"
         >
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1 relative">
@@ -148,7 +157,7 @@ export default function JobsPage() {
                 placeholder="Search job title or company..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:border-dynamic-green dark:focus:border-dynamic-green"
+                className="w-full pl-10 pr-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:border-sky-blue"
               />
             </div>
             <div className="flex-1 relative">
@@ -158,7 +167,7 @@ export default function JobsPage() {
                 placeholder="Location..."
                 value={locationFilter}
                 onChange={(e) => setLocationFilter(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:outline-none focus:border-dynamic-green dark:focus:border-dynamic-green"
+                className="w-full pl-10 pr-4 py-3 border border-gray-600 bg-gray-700 text-white rounded-lg focus:outline-none focus:border-sky-blue"
               />
             </div>
             <button
@@ -205,12 +214,11 @@ export default function JobsPage() {
         </div>
 
         {/* Job Listings */}
-        <ErrorBoundary>
-          {isLoading ? (
-            <div className="flex items-center justify-center py-12">
-              <Spinner size="lg" />
-            </div>
-          ) : (
+        {isLoading ? (
+          <div className="flex items-center justify-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-blue"></div>
+          </div>
+        ) : (
             <div className="space-y-4">
               {filteredJobs.map((job, index) => (
             <motion.div
@@ -270,7 +278,6 @@ export default function JobsPage() {
           ))}
             </div>
           )}
-        </ErrorBoundary>
 
         {/* Empty State */}
         {filteredJobs.length === 0 && (
@@ -310,6 +317,8 @@ export default function JobsPage() {
             Set Up Job Alerts
           </Link>
         </motion.div>
+        </>
+        )}
       </div>
     </section>
   )

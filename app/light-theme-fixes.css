@@ -1,0 +1,215 @@
+/* Light Theme Visibility Fixes */
+
+/* Fix text colors in light mode */
+.light-theme,
+:root:not(.dark) {
+  /* Primary text colors */
+  --text-primary: #1a202c; /* Very dark gray, almost black */
+  --text-secondary: #2d3748; /* Dark gray */
+  --text-tertiary: #4a5568; /* Medium gray */
+  --text-muted: #718096; /* Light gray */
+  
+  /* Background colors */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f7fafc;
+  --bg-tertiary: #edf2f7;
+  
+  /* Border colors */
+  --border-primary: #e2e8f0;
+  --border-secondary: #cbd5e0;
+}
+
+/* Override gray text that's too light in light mode */
+:root:not(.dark) .text-gray-400 {
+  color: #718096 !important; /* Darker gray for better readability */
+}
+
+:root:not(.dark) .text-gray-500 {
+  color: #4a5568 !important;
+}
+
+:root:not(.dark) .text-gray-600 {
+  color: #2d3748 !important;
+}
+
+:root:not(.dark) .text-gray-300 {
+  color: #718096 !important;
+}
+
+/* Fix navbar in light mode */
+:root:not(.dark) .glass-nav {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+:root:not(.dark) .glass-nav a,
+:root:not(.dark) .glass-nav span {
+  color: #1a202c !important;
+}
+
+:root:not(.dark) .glass-nav a:hover {
+  color: #0ea5e9 !important;
+}
+
+/* Fix glass cards in light mode */
+:root:not(.dark) .glass-card {
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+:root:not(.dark) .glass-card:hover {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  border-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Fix text on glass backgrounds */
+:root:not(.dark) .glass-bg {
+  background-color: #f7fafc !important;
+}
+
+/* Override text-white in light mode where inappropriate */
+:root:not(.dark) .text-white:not(.bg-gradient-to-r):not(.btn-primary):not(.bg-sky-blue):not(.bg-neon-green):not(.bg-dynamic-green) {
+  color: #1a202c !important;
+}
+
+/* Fix headings in light mode */
+:root:not(.dark) h1,
+:root:not(.dark) h2,
+:root:not(.dark) h3,
+:root:not(.dark) h4,
+:root:not(.dark) h5,
+:root:not(.dark) h6 {
+  color: #1a202c !important;
+}
+
+/* Fix paragraphs and general text */
+:root:not(.dark) p {
+  color: #2d3748;
+}
+
+/* Fix input fields in light mode */
+:root:not(.dark) input:not(.glass-input),
+:root:not(.dark) textarea:not(.glass-input),
+:root:not(.dark) select:not(.glass-input) {
+  background-color: #f7fafc !important;
+  border-color: #e2e8f0 !important;
+  color: #1a202c !important;
+}
+
+:root:not(.dark) input::placeholder,
+:root:not(.dark) textarea::placeholder {
+  color: #a0aec0 !important;
+}
+
+/* Fix buttons that should maintain their colors */
+.bg-gradient-to-r,
+.btn-primary,
+.bg-sky-blue,
+.bg-neon-green,
+.bg-dynamic-green,
+.bg-emerald-green,
+.bg-red-500,
+.bg-yellow-500,
+.bg-purple-500 {
+  color: white !important;
+}
+
+/* Dashboard specific fixes */
+:root:not(.dark) .bg-command-black {
+  background-color: #ffffff !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+:root:not(.dark) .dark\:bg-command-black {
+  background-color: #ffffff !important;
+}
+
+:root:not(.dark) .dark\:bg-gray-800 {
+  background-color: #f7fafc !important;
+}
+
+:root:not(.dark) .dark\:bg-gray-700 {
+  background-color: #edf2f7 !important;
+}
+
+:root:not(.dark) .dark\:text-white {
+  color: #1a202c !important;
+}
+
+:root:not(.dark) .dark\:text-gray-300 {
+  color: #4a5568 !important;
+}
+
+:root:not(.dark) .dark\:text-gray-400 {
+  color: #718096 !important;
+}
+
+/* Fix hover states in light mode */
+:root:not(.dark) .hover\:bg-gray-50:hover {
+  background-color: #f7fafc !important;
+}
+
+:root:not(.dark) .dark\:hover\:bg-gray-800:hover {
+  background-color: #edf2f7 !important;
+}
+
+:root:not(.dark) .hover\:bg-gray-700:hover {
+  background-color: #e2e8f0 !important;
+}
+
+/* Fix border colors in light mode */
+:root:not(.dark) .border-gray-700 {
+  border-color: #e2e8f0 !important;
+}
+
+:root:not(.dark) .dark\:border-gray-700 {
+  border-color: #e2e8f0 !important;
+}
+
+:root:not(.dark) .border-gray-600 {
+  border-color: #cbd5e0 !important;
+}
+
+/* Fix specific component text colors */
+:root:not(.dark) .bg-gray-700 {
+  background-color: #edf2f7 !important;
+  color: #1a202c !important;
+}
+
+:root:not(.dark) .bg-gray-800 {
+  background-color: #f7fafc !important;
+  color: #1a202c !important;
+}
+
+/* Ensure proper contrast for stats and numbers */
+:root:not(.dark) .text-2xl,
+:root:not(.dark) .text-3xl,
+:root:not(.dark) .text-4xl {
+  color: #1a202c !important;
+  font-weight: 600;
+}
+
+/* Fix theme toggle button visibility */
+:root:not(.dark) .theme-toggle {
+  background-color: #edf2f7 !important;
+  color: #1a202c !important;
+}
+
+/* Fix AI Resume Reviewer in light mode */
+:root:not(.dark) .bg-red-500\/10 {
+  background-color: rgba(239, 68, 68, 0.1) !important;
+}
+
+:root:not(.dark) .bg-green-500\/10 {
+  background-color: rgba(34, 197, 94, 0.1) !important;
+}
+
+:root:not(.dark) .bg-yellow-500\/10 {
+  background-color: rgba(234, 179, 8, 0.1) !important;
+}
+
+:root:not(.dark) .bg-blue-500\/10 {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+}

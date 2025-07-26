@@ -69,7 +69,7 @@ export function useABTest<T = any>(experimentId: string): ABTestResult<T> {
     variant,
     isLoading,
     trackConversion,
-    changes: variant?.changes || {} as T
+    changes: (variant?.changes || {}) as T
   }
 }
 

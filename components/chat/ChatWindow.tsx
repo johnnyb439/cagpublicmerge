@@ -33,7 +33,7 @@ export default function ChatWindow({ recipientId, recipientName, recipientAvatar
   const [typing, setTypingState] = useState(false);
   const [recipientTyping, setRecipientTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const typingTimeoutRef = useRef<ReturnType<typeof setTimeout>>();
+  const typingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const recipientStatus = onlineUsers.get(recipientId);
   const isOnline = recipientStatus?.status === 'online';

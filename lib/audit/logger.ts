@@ -102,6 +102,10 @@ class AuditLogger {
 
     try {
       const serviceSupabase = getServiceSupabase()
+      if (!serviceSupabase) {
+        console.warn('Service Supabase not configured, skipping audit log flush')
+        return
+      }
       const { error } = await serviceSupabase
         .from('audit_logs')
         .insert(logsToInsert)
@@ -245,7 +249,12 @@ class AuditLogger {
         await backupAuditLogs(oldLogs)
 
         // Delete from database
-        const { error } = await getServiceSupabase()
+        const serviceSupabase = getServiceSupabase()
+        if (!serviceSupabase) {
+          console.warn('Service Supabase not configured, skipping audit log cleanup')
+          return
+        }
+        const { error } = await serviceSupabase
           .from('audit_logs')
           .delete()
           .lte('created_at', cutoffDate.toISOString())

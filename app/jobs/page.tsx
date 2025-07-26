@@ -534,7 +534,7 @@ export default function JobsPage() {
         {/* Saved Searches Modal */}
         {showSavedSearches && (
           <SavedSearches
-            onClose={() => setShowSavedSearches(false)}
+            currentFilters={filters}
             onLoadSearch={(savedFilters) => {
               setFilters(savedFilters)
               setShowSavedSearches(false)

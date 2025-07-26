@@ -323,7 +323,7 @@ export class OptimizationService {
       .filter(word => !this.isStopWord(word))
 
     // Return unique words
-    return [...new Set(words)]
+    return Array.from(new Set(words))
   }
 
   private isStopWord(word: string): boolean {

@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Cleared Advisory Group',
     description: 'Your Gateway to Cleared IT Opportunities',
-    url: 'https://caglive.vercel.app',
+    url: 'https://clearedadvisorygroup.com',
     siteName: 'Cleared Advisory Group',
     images: [
       {

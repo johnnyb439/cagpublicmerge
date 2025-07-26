@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import { secureStorage } from '@/lib/security/secureStorage'
 import { 
   User, 
   Briefcase, 
@@ -41,46 +42,63 @@ export default function DashboardPage() {
   const [mockInterviews, setMockInterviews] = useState(0)
 
   useEffect(() => {
-    // Check if user is logged in
-    const userData = localStorage.getItem('user')
-    if (userData) {
-      setUser(JSON.parse(userData))
-      
-      // Calculate profile completion
-      const profile = JSON.parse(userData)
-      let completed = 25 // Base for having an account
-      if (profile.name) completed += 15
-      if (profile.email) completed += 15
-      if (profile.clearanceLevel) completed += 15
-      if (localStorage.getItem('currentResume')) completed += 15
-      if (localStorage.getItem('certifications')) completed += 15
-      setProfileCompletion(completed)
-      
-      // Get certifications count
-      const certs = localStorage.getItem('certifications')
-      if (certs) {
-        setCertCount(JSON.parse(certs).length)
+    const loadUserData = async () => {
+      try {
+        // Check if user is logged in
+        const userData = await secureStorage.getItem('user')
+        if (userData) {
+          setUser(userData)
+          
+          // Calculate profile completion
+          let completed = 25 // Base for having an account
+          if (userData.name) completed += 15
+          if (userData.email) completed += 15
+          if (userData.clearanceLevel) completed += 15
+          
+          const currentResume = await secureStorage.getItem('currentResume')
+          if (currentResume) completed += 15
+          
+          const certifications = await secureStorage.getItem('certifications')
+          if (certifications) {
+            completed += 15
+            setCertCount(certifications.length)
+          }
+          
+          setProfileCompletion(completed)
+          
+          // Get job applications count
+          const applications = await secureStorage.getItem('jobApplications')
+          if (applications) {
+            setJobApplications(applications.length)
+          }
+          
+          // Get mock interviews count
+          const interviews = await secureStorage.getItem('mockInterviews')
+          if (interviews) {
+            setMockInterviews(interviews.length)
+          }
+        } else {
+          router.push('/login')
+        }
+      } catch (error) {
+        console.error('Error loading dashboard data:', error)
+        // If secure storage not initialized, redirect to secure login
+        router.push('/secure-login')
       }
-      
-      // Get job applications count
-      const applications = localStorage.getItem('jobApplications')
-      if (applications) {
-        setJobApplications(JSON.parse(applications).length)
-      }
-      
-      // Get mock interviews count
-      const interviews = localStorage.getItem('mockInterviews')
-      if (interviews) {
-        setMockInterviews(JSON.parse(interviews).length)
-      }
-    } else {
-      router.push('/login')
     }
+    
+    loadUserData()
   }, [router])
 
-  const handleLogout = () => {
-    localStorage.removeItem('user')
-    router.push('/login')
+  const handleLogout = async () => {
+    try {
+      await secureStorage.removeItem('user')
+      await secureStorage.clear()
+      router.push('/login')
+    } catch (error) {
+      console.error('Logout error:', error)
+      router.push('/login')
+    }
   }
 
   if (!user) {

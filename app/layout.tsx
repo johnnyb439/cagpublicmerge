@@ -4,6 +4,8 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import LiveChat from '@/components/LiveChat'
 import AnalyticsProvider from '@/components/AnalyticsProvider'
+import { SecurityProvider } from '@/contexts/SecurityContext'
+import { ThemeProvider } from '@/components/ThemeProvider'
 
 export const metadata: Metadata = {
   title: 'Cleared Advisory Group - Your Gateway to Cleared IT Opportunities',
@@ -57,14 +59,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen bg-white dark:bg-command-black">
-        <AnalyticsProvider>
-          <Navbar />
-          <main className="pt-20">
-            {children}
-          </main>
-          <Footer />
-          <LiveChat />
-        </AnalyticsProvider>
+        <ThemeProvider>
+          <SecurityProvider>
+            <AnalyticsProvider>
+              <Navbar />
+              <main className="pt-20">
+                {children}
+              </main>
+              <Footer />
+              <LiveChat />
+            </AnalyticsProvider>
+          </SecurityProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

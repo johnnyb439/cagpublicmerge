@@ -42,7 +42,12 @@
       "Bash(pkill:*)",
       "Bash(true)",
       "Bash(./kill-ports.bat)",
-      "Bash(npx vercel:*)"
+      "Bash(npx vercel:*)",
+      "Bash(cmd.exe:*)",
+      "Bash(git describe:*)",
+      "Bash(cleanup-ports.bat)",
+      "Bash(./cleanup-ports.bat)",
+      "Bash(node:*)"
     ],
     "deny": []
   }

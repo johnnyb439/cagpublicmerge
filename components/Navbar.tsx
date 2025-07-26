@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Menu, X, User } from 'lucide-react'
+import { Menu, X, User, Shield } from 'lucide-react'
 import ThemeToggle from './ThemeToggle'
 
 export default function Navbar() {
@@ -64,10 +64,11 @@ export default function Navbar() {
             ) : (
               <>
                 <Link
-                  href="/login"
-                  className="text-white hover:text-sky-blue transition-colors duration-300 text-sm font-medium whitespace-nowrap"
+                  href="/secure-login"
+                  className="text-white hover:text-sky-blue transition-colors duration-300 text-sm font-medium whitespace-nowrap flex items-center"
                 >
-                  Sign In
+                  <Shield size={16} className="mr-1" />
+                  Secure Login
                 </Link>
                 <Link
                   href="/register"
@@ -155,11 +156,12 @@ export default function Navbar() {
               ) : (
                 <>
                   <Link
-                    href="/login"
-                    className="block text-white hover:text-sky-blue py-2 transition-colors duration-300"
+                    href="/secure-login"
+                    className="flex items-center text-white hover:text-sky-blue py-2 transition-colors duration-300"
                     onClick={() => setIsOpen(false)}
                   >
-                    Sign In
+                    <Shield size={16} className="mr-1" />
+                    Secure Login
                   </Link>
                   <Link
                     href="/register"

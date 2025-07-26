@@ -107,7 +107,7 @@ export function validateInput<T>(
 // JWT token generation
 export function generateToken(payload: any, expiresIn: string = '1h'): string {
   const secret = process.env.JWT_SECRET || 'development-secret'
-  return jwt.sign(payload, secret, { expiresIn })
+  return jwt.sign(payload, secret, { expiresIn } as jwt.SignOptions)
 }
 
 // JWT token verification

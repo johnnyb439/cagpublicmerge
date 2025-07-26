@@ -87,8 +87,7 @@ export const authOptions: NextAuthOptions = {
           await createAuditLog({
             user_id: user.id,
             action: 'LOGIN',
-            resource_type: 'auth',
-            ip_address: credentials.ip || null
+            resource_type: 'auth'
           })
 
           return {
@@ -125,20 +124,20 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user, account }) {
       if (user) {
         token.id = user.id
-        token.role = user.role
-        token.clearanceLevel = user.clearanceLevel
-        token.clearanceVerified = user.clearanceVerified
-        token.mfaEnabled = user.mfaEnabled
+        token.role = (user as any).role
+        token.clearanceLevel = (user as any).clearanceLevel
+        token.clearanceVerified = (user as any).clearanceVerified
+        token.mfaEnabled = (user as any).mfaEnabled
       }
       return token
     },
     async session({ session, token }) {
       if (token && session.user) {
-        session.user.id = token.id as string
-        session.user.role = token.role as string
-        session.user.clearanceLevel = token.clearanceLevel as string
-        session.user.clearanceVerified = token.clearanceVerified as boolean
-        session.user.mfaEnabled = token.mfaEnabled as boolean
+        (session.user as any).id = token.id as string
+        (session.user as any).role = token.role as string
+        (session.user as any).clearanceLevel = token.clearanceLevel as string
+        (session.user as any).clearanceVerified = token.clearanceVerified as boolean
+        (session.user as any).mfaEnabled = token.mfaEnabled as boolean
       }
       return session
     }

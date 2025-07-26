@@ -177,7 +177,7 @@ export default function GoalTracking() {
         const updatedGoal = {
           ...goal,
           progress: newProgress,
-          status: newProgress >= goal.target ? 'completed' : 'active'
+          status: (newProgress >= goal.target ? 'completed' : 'active') as Goal['status']
         }
         return updatedGoal
       }

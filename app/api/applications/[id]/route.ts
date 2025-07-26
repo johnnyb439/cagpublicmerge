@@ -5,10 +5,11 @@ import { mockDatabase } from '@/lib/mock-db'
 // GET /api/applications/[id] - Get specific application
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
-    const application = mockDatabase.applications.find(app => app.id === params.id)
+    const application = mockDatabase.applications.find(app => app.id === id)
     
     if (!application) {
       return NextResponse.json(
@@ -33,11 +34,12 @@ export async function GET(
 // PUT /api/applications/[id] - Update application
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const body = await request.json()
-    const applicationIndex = mockDatabase.applications.findIndex(app => app.id === params.id)
+    const applicationIndex = mockDatabase.applications.findIndex(app => app.id === id)
     
     if (applicationIndex === -1) {
       return NextResponse.json(
@@ -52,7 +54,7 @@ export async function PUT(
     const updatedApplication: JobApplication = {
       ...existingApp,
       ...body,
-      id: params.id, // Ensure ID doesn't change
+      id: id, // Ensure ID doesn't change
       lastUpdated: new Date().toISOString().split('T')[0]
     }
 
@@ -85,10 +87,11 @@ export async function PUT(
 // DELETE /api/applications/[id] - Delete specific application
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
-    const applicationIndex = mockDatabase.applications.findIndex(app => app.id === params.id)
+    const applicationIndex = mockDatabase.applications.findIndex(app => app.id === id)
     
     if (applicationIndex === -1) {
       return NextResponse.json(

@@ -1,111 +1,153 @@
+==================================================
 MILITARY TO CIVILIAN RESUME TRANSLATION WORKSHEET
-Cleared Advisory Group - Your Gateway to Opportunities
+==================================================
 
-=================================================
-PERSONAL INFORMATION
-=================================================
+This worksheet will help you translate your military experience into civilian IT terminology that resonates with cleared contractor employers.
+
+PART 1: BASIC INFORMATION
+=========================
+
 Name: _________________________________
-Current/Last Rank: ____________________
 Branch of Service: ____________________
-Years of Service: _____________________
-Clearance Level: ______________________
-Clearance Date: _______________________
+Years of Service: ____________________
+Highest Rank: ________________________
+Security Clearance: __________________
+Clearance Date: ______________________
 
-=================================================
-MILITARY OCCUPATIONAL SPECIALTY (MOS/AFSC/NEC/RATE)
-=================================================
-Military Job Title: ___________________
-Civilian Equivalent: __________________
+PART 2: MILITARY OCCUPATIONAL SPECIALTY (MOS) TRANSLATION
+=========================================================
 
-Key Responsibilities (Military Terms):
-1. ____________________________________
-2. ____________________________________
-3. ____________________________________
+Your MOS/AFSC/Rate: ___________________
 
-Translated to Civilian Terms:
-1. ____________________________________
-2. ____________________________________
-3. ____________________________________
+Civilian Equivalent Title(s):
+□ Network Administrator
+□ Systems Administrator  
+□ Cybersecurity Analyst
+□ IT Project Manager
+□ Database Administrator
+□ Cloud Engineer
+□ DevOps Engineer
+□ Information Systems Manager
+□ Other: _____________________________
 
-=================================================
-TECHNICAL SKILLS TRANSLATION
-=================================================
-Military System/Technology → Civilian Equivalent
+PART 3: LEADERSHIP EXPERIENCE TRANSLATION
+========================================
 
-Example: SIPR/JWICS → Secure Network Administration
-1. _________________ → _________________
-2. _________________ → _________________
-3. _________________ → _________________
-4. _________________ → _________________
-5. _________________ → _________________
+Military Leadership Role | Civilian Equivalent | Number of Personnel
+-----------------------------------------------------------------
+Squad Leader          | Team Lead           | _____ team members
+Platoon Sergeant      | Department Manager  | _____ employees  
+Company Commander     | Division Director   | _____ staff
+Other: _________      | ________________   | _____ personnel
 
-=================================================
-LEADERSHIP EXPERIENCE
-=================================================
-Number of Personnel Led: ______________
-Budget Managed: $______________________
+PART 4: TECHNICAL SKILLS INVENTORY
+==================================
 
-Military Leadership Role → Civilian Title
-Example: Squad Leader → Team Lead/Supervisor
-1. _________________ → _________________
-2. _________________ → _________________
-3. _________________ → _________________
+Check all that apply and add civilian terminology:
 
-=================================================
-KEY ACHIEVEMENTS
-=================================================
-Military Achievement → Civilian Impact
+NETWORKING
+□ Configured routers/switches → Network Infrastructure Management
+□ Maintained SIPR/NIPR networks → Classified Network Administration
+□ Network troubleshooting → Network Diagnostics & Resolution
+□ VPN management → Secure Remote Access Configuration
 
-Example: "Reduced maintenance downtime by 40%" → 
-"Improved system availability from 60% to 100%, saving $200K annually"
+SECURITY
+□ IA/Cybersecurity duties → Information Assurance Compliance
+□ Security clearance adjudication → Personnel Security Management
+□ Incident response → Security Incident Response & Mitigation
+□ RMF/DIACAP experience → Risk Management Framework Implementation
 
-1. Military: __________________________
-   Civilian: __________________________
-   
-2. Military: __________________________
-   Civilian: __________________________
-   
-3. Military: __________________________
-   Civilian: __________________________
+SYSTEMS ADMINISTRATION
+□ Server maintenance → Windows/Linux Server Administration
+□ User account management → Active Directory Administration
+□ System backups → Disaster Recovery Planning
+□ Software deployment → Enterprise Software Distribution
 
-=================================================
-CERTIFICATIONS & TRAINING
-=================================================
-Military Training → Industry Certification
+PART 5: KEY ACCOMPLISHMENTS TRANSLATION
+======================================
 
-Example: Information Assurance Technician Level II → CompTIA Security+
-1. _________________ → _________________
-2. _________________ → _________________
-3. _________________ → _________________
+Use the CAR (Challenge-Action-Result) format:
 
-=================================================
-ACTION VERBS TRANSLATION GUIDE
-=================================================
-Instead of...          Use...
-Commanded          →   Directed, Led, Managed
-Deployed           →   Implemented, Launched
-Mission planning   →   Project planning
-Combat operations  →   High-pressure operations
-Tactical           →   Strategic
+Military Accomplishment:
+_____________________________________________________________________
+_____________________________________________________________________
 
-=================================================
-COMMON ACRONYM TRANSLATIONS
-=================================================
-OPSEC   → Operational Security
-COMSEC  → Communications Security
-C4ISR   → Command, Control, Communications, Intelligence, Surveillance
-NCO     → Mid-level Manager
-OIC     → Department Head/Director
+Civilian Translation:
+Challenge: __________________________________________________________
+Action: _____________________________________________________________
+Result: _____________________________________________________________
+Quantifiable Impact: ________________________________________________
 
-=================================================
-NOTES & ADDITIONAL TRANSLATIONS
-=================================================
-_______________________________________
-_______________________________________
-_______________________________________
-_______________________________________
-_______________________________________
+PART 6: MILITARY ACRONYM DECODER
+================================
 
-Remember: Quantify your achievements with numbers, percentages, and dollar amounts whenever possible!
+Replace these common military terms:
 
-© 2025 Cleared Advisory Group - Empowering Cleared Professionals
+COMSEC → Communications Security
+OPSEC → Operational Security Procedures
+C4ISR → Command, Control, Communications, Intelligence Systems
+TOC → Operations Center
+AOR → Area of Responsibility → Geographic Business Region
+SME → Subject Matter Expert
+OIC/NCOIC → Department Lead/Manager
+
+PART 7: SOFT SKILLS TRANSLATION
+===============================
+
+Military Trait → Civilian Business Skill
+
+Mission-focused → Results-oriented professional
+Attention to detail → Quality assurance mindset
+Works well under pressure → Thrives in fast-paced environments
+Military bearing → Professional demeanor
+Chain of command → Organizational hierarchy navigation
+Mission planning → Strategic project planning
+
+PART 8: EDUCATION & TRAINING TRANSLATION
+========================================
+
+Military School/Training → Civilian Equivalent
+
+Basic Leadership Course → Management Fundamentals
+Advanced Leadership Course → Executive Leadership Training
+Military Intelligence School → Data Analysis & Intelligence Training
+Signal School → Telecommunications & IT Training
+Cyber School → Cybersecurity Professional Development
+
+PART 9: CLEARANCE & COMPLIANCE HIGHLIGHTS
+=========================================
+
+Emphasize these cleared-professional advantages:
+
+□ Current security clearance (level and date)
+□ Polygraph status (CI/Lifestyle)
+□ Understanding of classified environments
+□ Experience with government compliance standards
+□ Ability to work in SCIFs
+□ Foreign disclosure awareness
+□ OPSEC/INFOSEC practices
+
+PART 10: ACTION ITEMS
+====================
+
+□ Remove military jargon and acronyms
+□ Quantify achievements with numbers/percentages
+□ Use civilian job titles from job postings
+□ Highlight transferable technical skills
+□ Emphasize leadership in business terms
+□ Include relevant certifications
+□ Tailor resume for each application
+□ Have a civilian review your resume
+
+NOTES:
+======
+- Use active voice and strong action verbs
+- Focus on achievements, not duties
+- Include keywords from job descriptions
+- Keep technical terms industry-standard
+- Highlight clearance prominently
+- Show continuous learning mindset
+
+==================================================
+© 2025 Cleared Advisory Group - All Rights Reserved
+==================================================

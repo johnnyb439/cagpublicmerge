@@ -7,7 +7,13 @@ const nextConfig = {
         hostname: '**',
       },
     ],
+    // CDN configuration for images
+    loader: process.env.NEXT_PUBLIC_CDN_URL ? 'custom' : 'default',
+    loaderFile: process.env.NEXT_PUBLIC_CDN_URL ? './lib/cdn/imageLoader.js' : undefined,
   },
+  // CDN configuration
+  assetPrefix: process.env.NEXT_PUBLIC_CDN_URL || '',
+  
   // Performance optimizations
   compress: true,
   poweredByHeader: false,

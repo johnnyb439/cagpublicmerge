@@ -1,4 +1,5 @@
 import { Redis } from 'ioredis'
+import { cacheMonitor, withMetrics } from '@/lib/cache/metrics'
 
 // Create Redis client with environment config
 const createRedisClient = () => {
@@ -127,19 +128,16 @@ export function Cacheable(ttl: number = 3600) {
   }
 }
 
-// Cache middleware for API routes
+// Cache middleware for API routes with metrics
 export async function withCache<T>(
   key: string,
   fn: () => Promise<T>,
   ttl: number = 3600
 ): Promise<T> {
-  const cached = await cache.get<T>(key)
-  if (cached !== null) {
-    return cached
-  }
-  
-  const result = await fn()
-  await cache.set(key, result, ttl)
-  
-  return result
+  return withMetrics(
+    key,
+    fn,
+    () => cache.get<T>(key),
+    (value: T) => cache.set(key, value, ttl)
+  )
 }

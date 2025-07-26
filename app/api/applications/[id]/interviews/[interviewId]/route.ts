@@ -1,17 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { JobApplication } from '@/types/job-application'
-
-// Mock database - replace with actual database in production
-let applications: JobApplication[] = []
+import { mockDatabase } from '@/lib/mock-db'
 
 // PUT /api/applications/[id]/interviews/[interviewId] - Update interview
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string; interviewId: string } }
+  { params }: { params: Promise<{ id: string; interviewId: string }> }
 ) {
+  const { id, interviewId } = await params;
   try {
     const body = await request.json()
-    const applicationIndex = applications.findIndex(app => app.id === params.id)
+    const applicationIndex = mockDatabase.applications.findIndex(app => app.id === id)
     
     if (applicationIndex === -1) {
       return NextResponse.json(
@@ -20,9 +19,9 @@ export async function PUT(
       )
     }
 
-    const application = applications[applicationIndex]
+    const application = mockDatabase.applications[applicationIndex]
     const interviewIndex = application.interviews.findIndex(
-      interview => interview.id === params.interviewId
+      interview => interview.id === interviewId
     )
 
     if (interviewIndex === -1) {
@@ -38,11 +37,11 @@ export async function PUT(
     const updatedInterview = {
       ...existingInterview,
       ...body,
-      id: params.interviewId // Ensure ID doesn't change
+      id: interviewId // Ensure ID doesn't change
     }
 
-    applications[applicationIndex].interviews[interviewIndex] = updatedInterview
-    applications[applicationIndex].lastUpdated = new Date().toISOString().split('T')[0]
+    mockDatabase.applications[applicationIndex].interviews[interviewIndex] = updatedInterview
+    mockDatabase.applications[applicationIndex].lastUpdated = new Date().toISOString().split('T')[0]
 
     // Add timeline entry if interview was completed
     if (body.completed && !existingInterview.completed) {
@@ -52,13 +51,13 @@ export async function PUT(
         event: `${existingInterview.type.replace(/_/g, ' ')} interview completed`,
         description: `Outcome: ${outcome}`
       }
-      applications[applicationIndex].timeline.push(timelineEntry)
+      mockDatabase.applications[applicationIndex].timeline.push(timelineEntry)
 
       // Update application status based on interview outcome
-      if (outcome === 'passed' && applications[applicationIndex].status === 'interviewing') {
-        applications[applicationIndex].status = 'interview_scheduled' // Ready for next round
+      if (outcome === 'passed' && mockDatabase.applications[applicationIndex].status === 'interviewing') {
+        mockDatabase.applications[applicationIndex].status = 'interview_scheduled' // Ready for next round
       } else if (outcome === 'failed') {
-        applications[applicationIndex].status = 'rejected'
+        mockDatabase.applications[applicationIndex].status = 'rejected'
       }
     }
 
@@ -79,10 +78,11 @@ export async function PUT(
 // DELETE /api/applications/[id]/interviews/[interviewId] - Cancel interview
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string; interviewId: string } }
+  { params }: { params: Promise<{ id: string; interviewId: string }> }
 ) {
+  const { id, interviewId } = await params;
   try {
-    const applicationIndex = applications.findIndex(app => app.id === params.id)
+    const applicationIndex = mockDatabase.applications.findIndex(app => app.id === id)
     
     if (applicationIndex === -1) {
       return NextResponse.json(
@@ -91,9 +91,9 @@ export async function DELETE(
       )
     }
 
-    const application = applications[applicationIndex]
+    const application = mockDatabase.applications[applicationIndex]
     const interviewIndex = application.interviews.findIndex(
-      interview => interview.id === params.interviewId
+      interview => interview.id === interviewId
     )
 
     if (interviewIndex === -1) {
@@ -104,8 +104,8 @@ export async function DELETE(
     }
 
     const deletedInterview = application.interviews[interviewIndex]
-    applications[applicationIndex].interviews.splice(interviewIndex, 1)
-    applications[applicationIndex].lastUpdated = new Date().toISOString().split('T')[0]
+    mockDatabase.applications[applicationIndex].interviews.splice(interviewIndex, 1)
+    mockDatabase.applications[applicationIndex].lastUpdated = new Date().toISOString().split('T')[0]
 
     // Add timeline entry
     const timelineEntry = {
@@ -113,12 +113,12 @@ export async function DELETE(
       event: `${deletedInterview.type.replace(/_/g, ' ')} interview cancelled`,
       description: 'Interview removed from schedule'
     }
-    applications[applicationIndex].timeline.push(timelineEntry)
+    mockDatabase.applications[applicationIndex].timeline.push(timelineEntry)
 
     // Update status if no more interviews scheduled
-    if (applications[applicationIndex].interviews.length === 0 && 
-        applications[applicationIndex].status === 'interview_scheduled') {
-      applications[applicationIndex].status = 'applied'
+    if (mockDatabase.applications[applicationIndex].interviews.length === 0 && 
+        mockDatabase.applications[applicationIndex].status === 'interview_scheduled') {
+      mockDatabase.applications[applicationIndex].status = 'applied'
     }
 
     return NextResponse.json({

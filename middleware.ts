@@ -83,6 +83,23 @@ export async function middleware(request: NextRequest) {
     response.headers.set('x-audit-required', 'true')
   }
   
+  // Cache headers for static assets
+  const staticExtensions = ['.js', '.css', '.jpg', '.jpeg', '.png', '.gif', '.svg', '.ico', '.woff', '.woff2']
+  const isStaticAsset = staticExtensions.some(ext => pathname.endsWith(ext))
+  
+  if (isStaticAsset) {
+    response.headers.set('Cache-Control', 'public, max-age=31536000, immutable')
+  } else if (pathname.startsWith('/_next/static/')) {
+    // Next.js static files
+    response.headers.set('Cache-Control', 'public, max-age=31536000, immutable')
+  } else if (pathname.startsWith('/api/')) {
+    // API routes - shorter cache
+    response.headers.set('Cache-Control', 'public, max-age=300, s-maxage=300, stale-while-revalidate=60')
+  } else {
+    // HTML pages - cache with revalidation
+    response.headers.set('Cache-Control', 'public, max-age=0, s-maxage=86400, stale-while-revalidate=3600')
+  }
+  
   return response
 }
 

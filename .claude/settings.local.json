@@ -52,7 +52,10 @@
       "WebFetch(domain:localhost)",
       "Bash(node:*)",
       "WebFetch(domain:localhost)",
-      "Bash(npx kill-port:*)"
+      "Bash(npx kill-port:*)",
+      "Bash(vercel:*)",
+      "Bash(node:*)",
+      "Bash(npm run analyze:*)"
     ],
     "deny": []
   }

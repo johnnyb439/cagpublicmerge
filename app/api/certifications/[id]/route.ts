@@ -21,14 +21,15 @@ function getCertificationStatus(expiryDate?: string): 'active' | 'expired' | 'ex
 // GET /api/certifications/[id] - Get specific certification
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const { searchParams } = new URL(request.url)
     const userId = searchParams.get('userId') || '1'
     
     const certification = certifications.find(cert => 
-      cert.id === params.id && cert.userId === userId
+      cert.id === id && cert.userId === userId
     )
     
     if (!certification) {
@@ -60,14 +61,15 @@ export async function GET(
 // PUT /api/certifications/[id] - Update certification
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const body = await request.json()
     const userId = body.userId || '1'
     
     const certificationIndex = certifications.findIndex(cert => 
-      cert.id === params.id && cert.userId === userId
+      cert.id === id && cert.userId === userId
     )
     
     if (certificationIndex === -1) {
@@ -83,7 +85,7 @@ export async function PUT(
     const updatedCertification: Certification = {
       ...existingCert,
       ...body,
-      id: params.id, // Ensure ID doesn't change
+      id: id, // Ensure ID doesn't change
       userId, // Ensure user ID doesn't change
       status: getCertificationStatus(body.expiryDate || existingCert.expiryDate),
       updatedAt: new Date().toISOString().split('T')[0]
@@ -108,14 +110,15 @@ export async function PUT(
 // DELETE /api/certifications/[id] - Delete specific certification
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const { searchParams } = new URL(request.url)
     const userId = searchParams.get('userId') || '1'
     
     const certificationIndex = certifications.findIndex(cert => 
-      cert.id === params.id && cert.userId === userId
+      cert.id === id && cert.userId === userId
     )
     
     if (certificationIndex === -1) {
@@ -145,14 +148,15 @@ export async function DELETE(
 // PATCH /api/certifications/[id] - Verify certification
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const body = await request.json()
     const userId = body.userId || '1'
     
     const certificationIndex = certifications.findIndex(cert => 
-      cert.id === params.id && cert.userId === userId
+      cert.id === id && cert.userId === userId
     )
     
     if (certificationIndex === -1) {

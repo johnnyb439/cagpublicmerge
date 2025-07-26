@@ -160,8 +160,7 @@ export async function listUserFiles(
     return (response.Contents || []).map(item => ({
       key: item.Key!,
       size: item.Size || 0,
-      lastModified: item.LastModified!,
-      metadata: item.Metadata
+      lastModified: item.LastModified!
     }))
   } catch (error) {
     console.error('S3 list error:', error)

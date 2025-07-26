@@ -5,10 +5,11 @@ import { mockDatabase } from '@/lib/mock-db'
 // GET /api/applications/[id]/interviews - Get all interviews for application
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
-    const application = mockDatabase.applications.find(app => app.id === params.id)
+    const application = mockDatabase.applications.find(app => app.id === id)
     
     if (!application) {
       return NextResponse.json(
@@ -33,11 +34,12 @@ export async function GET(
 // POST /api/applications/[id]/interviews - Add new interview
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
+  const { id } = await params;
   try {
     const body = await request.json()
-    const applicationIndex = mockDatabase.applications.findIndex(app => app.id === params.id)
+    const applicationIndex = mockDatabase.applications.findIndex(app => app.id === id)
     
     if (applicationIndex === -1) {
       return NextResponse.json(

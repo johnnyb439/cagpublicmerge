@@ -87,8 +87,8 @@ export class EncryptionService {
       
       return {
         encrypted: this.bufferToBase64(encryptedBuffer),
-        salt: this.bufferToBase64(salt.buffer),
-        iv: this.bufferToBase64(iv.buffer)
+        salt: this.bufferToBase64(salt.buffer as ArrayBuffer),
+        iv: this.bufferToBase64(iv.buffer as ArrayBuffer)
       };
     } catch (error) {
       console.error('Encryption failed:', error);

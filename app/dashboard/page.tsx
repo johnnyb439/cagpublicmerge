@@ -24,6 +24,8 @@ import ActivityTimeline from '@/components/dashboard/ActivityTimeline'
 import GoalTracking from '@/components/dashboard/GoalTracking'
 import PersonalizedRecommendations from '@/components/dashboard/PersonalizedRecommendations'
 import MessagingCenter from '@/components/MessagingCenter'
+import ErrorBoundary from '@/components/ErrorBoundary'
+import { SkeletonDashboardCard } from '@/components/ui/Skeleton'
 
 interface UserData {
   email: string
@@ -40,6 +42,7 @@ export default function DashboardPage() {
   const [certCount, setCertCount] = useState(0)
   const [jobApplications, setJobApplications] = useState(0)
   const [mockInterviews, setMockInterviews] = useState(0)
+  const [isDataLoading, setIsDataLoading] = useState(true)
 
   useEffect(() => {
     const loadUserData = async () => {
@@ -84,6 +87,8 @@ export default function DashboardPage() {
         console.error('Error loading dashboard data:', error)
         // If secure storage not initialized, redirect to secure login
         router.push('/secure-login')
+      } finally {
+        setIsDataLoading(false)
       }
     }
     
@@ -178,19 +183,35 @@ export default function DashboardPage() {
                 Clearance Level: <span className="text-dynamic-green font-semibold">{user.clearanceLevel}</span>
               </p>
             </div>
-            <button
-              onClick={handleLogout}
-              className="flex items-center text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors"
-            >
-              <LogOut size={20} className="mr-2" />
-              Log Out
-            </button>
+            <div className="flex items-center gap-4">
+              <Link
+                href="/dashboard/settings"
+                className="flex items-center text-gray-600 dark:text-gray-400 hover:text-dynamic-green transition-colors"
+              >
+                <User size={20} className="mr-2" />
+                Settings
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="flex items-center text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors"
+              >
+                <LogOut size={20} className="mr-2" />
+                Log Out
+              </button>
+            </div>
           </div>
         </motion.div>
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          {stats.map((stat, index) => (
+          {isDataLoading ? (
+            <>
+              {[1, 2, 3, 4].map((i) => (
+                <SkeletonDashboardCard key={i} />
+              ))}
+            </>
+          ) : (
+            stats.map((stat, index) => (
             <Link
               key={stat.label}
               href={stat.href}
@@ -224,7 +245,7 @@ export default function DashboardPage() {
                 </div>
               </motion.div>
             </Link>
-          ))}
+          )))}
         </div>
 
         {/* Navigation Tabs */}
@@ -442,17 +463,23 @@ export default function DashboardPage() {
 
         {/* Analytics Tab */}
         {activeTab === 'analytics' && (
-          <Analytics />
+          <ErrorBoundary>
+            <Analytics />
+          </ErrorBoundary>
         )}
 
         {/* Goals Tab */}
         {activeTab === 'goals' && (
-          <GoalTracking />
+          <ErrorBoundary>
+            <GoalTracking />
+          </ErrorBoundary>
         )}
 
         {/* Recommendations Tab */}
         {activeTab === 'recommendations' && (
-          <PersonalizedRecommendations />
+          <ErrorBoundary>
+            <PersonalizedRecommendations />
+          </ErrorBoundary>
         )}
       </div>
 

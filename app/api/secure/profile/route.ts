@@ -11,6 +11,7 @@ import { auditLogger, logUserAction } from '@/lib/audit/logger'
 import { supabase } from '@/lib/supabase/client'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth/config'
+import { cache, withCache } from '@/lib/redis/client'
 
 // Validation schema for profile updates
 const updateProfileSchema = z.object({
@@ -40,32 +41,43 @@ export async function GET(req: NextRequest) {
       return createErrorResponse('Unauthorized', 401)
     }
 
-    // Get user profile from database
-    const { data: profile, error } = await supabase
-      .from('users')
-      .select(`
-        id,
-        email,
-        role,
-        first_name,
-        last_name,
-        phone,
-        clearance_level,
-        clearance_verified,
-        clearance_expiry,
-        bio,
-        skills,
-        years_experience,
-        linkedin_url,
-        github_url,
-        mfa_enabled,
-        created_at,
-        updated_at
-      `)
-      .eq('id', session.user.id)
-      .single()
+    // Get user profile from database with caching
+    const cacheKey = cache.generateKey('profile', session.user.id)
+    
+    const profile = await withCache(
+      cacheKey,
+      async () => {
+        const { data, error } = await supabase
+          .from('users')
+          .select(`
+            id,
+            email,
+            role,
+            first_name,
+            last_name,
+            phone,
+            clearance_level,
+            clearance_verified,
+            clearance_expiry,
+            bio,
+            skills,
+            years_experience,
+            linkedin_url,
+            github_url,
+            mfa_enabled,
+            created_at,
+            updated_at
+          `)
+          .eq('id', session.user.id)
+          .single()
+        
+        if (error || !data) throw new Error('Profile not found')
+        return data
+      },
+      300 // 5 minute cache
+    ).catch(() => null)
 
-    if (error || !profile) {
+    if (!profile) {
       return createErrorResponse('Profile not found', 404)
     }
 
@@ -149,6 +161,9 @@ export async function PUT(req: NextRequest) {
     if (error) {
       return createErrorResponse('Failed to update profile', 500)
     }
+    
+    // Invalidate cache
+    await cache.delete(cache.generateKey('profile', session.user.id))
 
     // Audit log with old and new data
     if (requiresAudit(req)) {

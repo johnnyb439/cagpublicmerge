@@ -16,8 +16,8 @@ export class SessionManager {
   private static instance: SessionManager;
   private sessionTimeout = 30 * 60 * 1000; // 30 minutes
   private warningTime = 5 * 60 * 1000; // 5 minutes before timeout
-  private activityTimer: NodeJS.Timeout | null = null;
-  private warningTimer: NodeJS.Timeout | null = null;
+  private activityTimer: ReturnType<typeof setTimeout> | null = null;
+  private warningTimer: ReturnType<typeof setTimeout> | null = null;
   private onTimeout: (() => void) | null = null;
   private onWarning: (() => void) | null = null;
   

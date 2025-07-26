@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
+// import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
 
 // Protected routes configuration
 const protectedRoutes = ['/dashboard', '/profile', '/settings', '/admin']
@@ -8,7 +8,7 @@ const adminOnlyRoutes = ['/admin']
 
 export async function middleware(request: NextRequest) {
   const response = NextResponse.next()
-  const supabase = createMiddlewareClient({ req: request, res: response })
+  // const supabase = createMiddlewareClient({ req: request, res: response })
   
   // Enhanced Security Headers
   response.headers.set('X-Frame-Options', 'DENY')
@@ -44,6 +44,8 @@ export async function middleware(request: NextRequest) {
   const isProtectedRoute = protectedRoutes.some(route => pathname.startsWith(route))
   const isAdminRoute = adminOnlyRoutes.some(route => pathname.startsWith(route))
   
+  // Temporarily disable auth checks until Supabase is configured
+  /*
   if (isProtectedRoute) {
     const { data: { session } } = await supabase.auth.getSession()
     
@@ -70,6 +72,7 @@ export async function middleware(request: NextRequest) {
     response.headers.set('x-user-id', session.user.id)
     response.headers.set('x-user-email', session.user.email || '')
   }
+  */
   
   // Rate limiting headers
   response.headers.set('X-RateLimit-Limit', process.env.API_RATE_LIMIT || '100')

@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Menu, X, User, Shield } from 'lucide-react'
 import ThemeToggle from './ThemeToggle'
+import NotificationBell from './NotificationBell'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -51,6 +52,9 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
+            
+            {/* Notification Bell for logged in users */}
+            {user && <NotificationBell />}
             
             {/* User Account Links */}
             {user ? (
@@ -144,6 +148,12 @@ export default function Navbar() {
             
             {/* User Account Links in Mobile */}
             <div className="border-t border-gray-700 mt-4 pt-4">
+              {user && (
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-white">Notifications</span>
+                  <NotificationBell />
+                </div>
+              )}
               {user ? (
                 <Link
                   href={user.type === 'employer' ? '/employer/dashboard' : '/dashboard'}

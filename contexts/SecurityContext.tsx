@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { sessionManager } from '@/lib/security/sessionManager'
 import { secureStorage } from '@/lib/security/secureStorage'
 import { validation } from '@/lib/security/validation'
+import { supabaseAuth } from '@/lib/supabase/auth'
 
 interface User {
   id: string
@@ -62,12 +63,9 @@ export function SecurityProvider({ children }: { children: ReactNode }) {
 
   const checkSession = async () => {
     try {
-      const session = await sessionManager.getSession()
-      if (session) {
-        const userData = await secureStorage.getItem('user')
-        if (userData) {
-          setUser(userData)
-        }
+      const currentUser = await supabaseAuth.getCurrentUser()
+      if (currentUser) {
+        setUser(currentUser)
       }
     } catch (error) {
       console.error('Session check failed:', error)
@@ -88,39 +86,14 @@ export function SecurityProvider({ children }: { children: ReactNode }) {
         return { success: false, error: 'Invalid email format' }
       }
 
-      // In a real app, this would be an API call
-      // For now, we'll check against stored user data
-      const storedUsers = localStorage.getItem('users')
-      const users = storedUsers ? JSON.parse(storedUsers) : []
+      // Use Supabase auth service
+      const result = await supabaseAuth.signIn(email, password)
       
-      const user = users.find((u: any) => u.email === email)
-      if (!user) {
-        return { success: false, error: 'Invalid email or password' }
+      if (!result.success) {
+        return { success: false, error: result.error || 'Login failed' }
       }
-
-      // Verify password (in real app, this would be done server-side)
-      // For demo, we'll use a simple check
-      const expectedPassword = await secureStorage.hashPassword(password)
-      if (user.password !== expectedPassword) {
-        // Try with plain password for legacy users
-        if (user.password !== password) {
-          return { success: false, error: 'Invalid email or password' }
-        }
-      }
-
-      // Create session
-      await sessionManager.createSession(user.id || email, email, password)
       
-      // Store user data securely
-      const userData = {
-        id: user.id || email,
-        email: user.email,
-        name: user.name,
-        clearanceLevel: user.clearanceLevel
-      }
-      await secureStorage.setItem('user', userData, true)
-      
-      setUser(userData)
+      setUser(result.user!)
       return { success: true }
     } catch (error) {
       console.error('Login failed:', error)
@@ -154,29 +127,16 @@ export function SecurityProvider({ children }: { children: ReactNode }) {
         return { success: false, error: 'Invalid clearance level' }
       }
 
-      // Check if user already exists
-      const storedUsers = localStorage.getItem('users')
-      const users = storedUsers ? JSON.parse(storedUsers) : []
-      
-      if (users.find((u: any) => u.email === email)) {
-        return { success: false, error: 'Email already registered' }
-      }
-
-      // Hash password
-      const hashedPassword = await secureStorage.hashPassword(password)
-      
-      // Create new user
-      const newUser = {
-        id: `user_${Date.now()}`,
-        email,
-        password: hashedPassword,
+      // Use Supabase auth service
+      const result = await supabaseAuth.signUp(email, password, {
         name: validation.sanitizeInput(name),
         clearanceLevel,
-        createdAt: Date.now()
-      }
+        role: 'jobseeker'
+      })
       
-      users.push(newUser)
-      localStorage.setItem('users', JSON.stringify(users))
+      if (!result.success) {
+        return { success: false, error: result.error || 'Registration failed' }
+      }
       
       // Auto-login after registration
       return await login(email, password)
@@ -188,7 +148,7 @@ export function SecurityProvider({ children }: { children: ReactNode }) {
 
   const logout = async () => {
     try {
-      await sessionManager.destroySession()
+      await supabaseAuth.signOut()
       setUser(null)
       router.push('/login')
     } catch (error) {
@@ -211,17 +171,11 @@ export function SecurityProvider({ children }: { children: ReactNode }) {
         return { success: false, error: passwordValidation.errors[0] }
       }
 
-      // Change password in secure storage
-      await secureStorage.changeMasterPassword(currentPassword, newPassword)
+      // Use Supabase auth service
+      const result = await supabaseAuth.updatePassword(currentPassword, newPassword)
       
-      // Update user password in storage
-      const storedUsers = localStorage.getItem('users')
-      const users = storedUsers ? JSON.parse(storedUsers) : []
-      const userIndex = users.findIndex((u: any) => u.email === user.email)
-      
-      if (userIndex !== -1) {
-        users[userIndex].password = await secureStorage.hashPassword(newPassword)
-        localStorage.setItem('users', JSON.stringify(users))
+      if (!result.success) {
+        return { success: false, error: result.error || 'Failed to update password' }
       }
       
       return { success: true }

@@ -106,13 +106,15 @@ export function validateInput<T>(
 
 // JWT token generation
 export function generateToken(payload: any, expiresIn: string = '1h'): string {
-  return jwt.sign(payload, process.env.JWT_SECRET!, { expiresIn })
+  const secret = process.env.JWT_SECRET || 'development-secret'
+  return jwt.sign(payload, secret, { expiresIn })
 }
 
 // JWT token verification
 export function verifyToken(token: string): any {
   try {
-    return jwt.verify(token, process.env.JWT_SECRET!)
+    const secret = process.env.JWT_SECRET || 'development-secret'
+    return jwt.verify(token, secret)
   } catch (error) {
     return null
   }

@@ -6,6 +6,7 @@ export type AuditAction =
   | 'LOGOUT'
   | 'REGISTER'
   | 'UPDATE_PROFILE'
+  | 'VIEW_PROFILE'
   | 'DELETE_ACCOUNT'
   | 'VIEW_JOB'
   | 'APPLY_JOB'

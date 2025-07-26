@@ -87,8 +87,8 @@ export class EncryptionService {
       
       return {
         encrypted: this.bufferToBase64(encryptedBuffer),
-        salt: this.bufferToBase64(salt),
-        iv: this.bufferToBase64(iv)
+        salt: this.bufferToBase64(salt.buffer),
+        iv: this.bufferToBase64(iv.buffer)
       };
     } catch (error) {
       console.error('Encryption failed:', error);
@@ -110,12 +110,12 @@ export class EncryptionService {
       const saltBuffer = this.base64ToBuffer(salt);
       const ivBuffer = this.base64ToBuffer(iv);
       
-      const key = await this.deriveKey(password, saltBuffer);
+      const key = await this.deriveKey(password, new Uint8Array(saltBuffer));
       
       const decryptedBuffer = await crypto.subtle.decrypt(
         {
           name: this.algorithm,
-          iv: ivBuffer
+          iv: new Uint8Array(ivBuffer)
         },
         key,
         encryptedBuffer

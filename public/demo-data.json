@@ -1,0 +1,68 @@
+{
+  "users": [
+    {
+      "id": "demo-jobseeker-1",
+      "email": "john.doe@example.com",
+      "password": "Test123!@#",
+      "name": "John Doe",
+      "clearanceLevel": "SECRET",
+      "role": "jobseeker",
+      "createdAt": "2025-07-26T15:30:56.351Z"
+    },
+    {
+      "id": "demo-employer-1",
+      "email": "recruiter@techcorp.com",
+      "password": "Test123!@#",
+      "name": "Sarah Recruiter",
+      "clearanceLevel": null,
+      "role": "employer",
+      "company": "TechCorp Federal",
+      "createdAt": "2025-07-26T15:30:56.352Z"
+    },
+    {
+      "id": "demo-admin-1",
+      "email": "admin@clearedadvisory.com",
+      "password": "Admin123!@#",
+      "name": "Admin User",
+      "clearanceLevel": "TS/SCI",
+      "role": "admin",
+      "createdAt": "2025-07-26T15:30:56.352Z"
+    }
+  ],
+  "jobs": [
+    {
+      "id": "job-1",
+      "title": "Senior Cloud Engineer",
+      "company": "AWS Federal",
+      "location": "Arlington, VA",
+      "clearanceRequired": "SECRET",
+      "salary": "$120,000 - $160,000",
+      "description": "Looking for experienced cloud engineers...",
+      "postedDate": "2025-07-26T15:30:56.352Z"
+    },
+    {
+      "id": "job-2",
+      "title": "DevOps Engineer",
+      "company": "Raytheon",
+      "location": "Chantilly, VA",
+      "clearanceRequired": "TS/SCI",
+      "salary": "$130,000 - $180,000",
+      "description": "DevOps engineer with Kubernetes experience...",
+      "postedDate": "2025-07-26T15:30:56.352Z"
+    }
+  ],
+  "certifications": [
+    {
+      "id": "cert-1",
+      "name": "Security+",
+      "issuer": "CompTIA",
+      "date": "2024-01-15"
+    },
+    {
+      "id": "cert-2",
+      "name": "AWS Solutions Architect",
+      "issuer": "AWS",
+      "date": "2024-03-20"
+    }
+  ]
+}

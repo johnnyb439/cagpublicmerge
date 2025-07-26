@@ -47,7 +47,12 @@
       "Bash(git describe:*)",
       "Bash(cleanup-ports.bat)",
       "Bash(./cleanup-ports.bat)",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "Bash(del test-api.js)",
+      "WebFetch(domain:localhost)",
+      "Bash(node:*)",
+      "WebFetch(domain:localhost)",
+      "Bash(npx kill-port:*)"
     ],
     "deny": []
   }

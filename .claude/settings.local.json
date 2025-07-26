@@ -41,7 +41,8 @@
       "Bash(ls:*)",
       "Bash(pkill:*)",
       "Bash(true)",
-      "Bash(./kill-ports.bat)"
+      "Bash(./kill-ports.bat)",
+      "Bash(npx vercel:*)"
     ],
     "deny": []
   }

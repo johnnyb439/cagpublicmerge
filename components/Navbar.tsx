@@ -25,16 +25,14 @@ export default function Navbar() {
     { href: '/jobs', label: 'Jobs' },
     { href: '/mock-interview', label: 'Mock Interview' },
     { href: '/resources', label: 'Resources' },
-    { href: '/demo/communications', label: 'Communications' },
-    { href: '/register', label: 'Create Account' },
   ]
 
   return (
     <nav className="fixed top-0 w-full glass-nav z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20">
           <div className="flex items-center">
-            <Link href="/" className="flex items-center">
+            <Link href="/" className="flex items-center mr-8">
               <div>
                 <span className="text-white font-montserrat font-bold text-xl whitespace-nowrap">Cleared Advisory Group</span>
                 <p className="text-sky-blue text-xs">Your Gateway to Opportunities</p>
@@ -43,12 +41,12 @@ export default function Navbar() {
           </div>
           
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-6">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-white hover:text-sky-blue transition-colors duration-300"
+                className="text-white hover:text-sky-blue transition-colors duration-300 text-sm font-medium whitespace-nowrap"
               >
                 {link.label}
               </Link>
@@ -58,18 +56,26 @@ export default function Navbar() {
             {user ? (
               <Link
                 href={user.type === 'employer' ? '/employer/dashboard' : '/dashboard'}
-                className="flex items-center text-white hover:text-sky-blue transition-colors duration-300"
+                className="flex items-center text-white hover:text-sky-blue transition-colors duration-300 text-sm font-medium whitespace-nowrap"
               >
-                <User size={20} className="mr-2" />
+                <User size={18} className="mr-1" />
                 Dashboard
               </Link>
             ) : (
-              <Link
-                href="/login"
-                className="text-white hover:text-sky-blue transition-colors duration-300"
-              >
-                Sign In
-              </Link>
+              <>
+                <Link
+                  href="/login"
+                  className="text-white hover:text-sky-blue transition-colors duration-300 text-sm font-medium whitespace-nowrap"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  href="/register"
+                  className="bg-sky-blue text-white px-4 py-2 rounded-lg hover:bg-neon-green transition-colors duration-300 text-sm font-medium whitespace-nowrap"
+                >
+                  Create Account
+                </Link>
+              </>
             )}
             
             {/* Theme Toggle */}
@@ -104,7 +110,7 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center">
+          <div className="lg:hidden flex items-center">
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-white hover:text-sky-blue"
@@ -117,7 +123,7 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden glass-card mt-2">
+          <div className="lg:hidden glass-card mt-2">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -147,13 +153,22 @@ export default function Navbar() {
                   Dashboard
                 </Link>
               ) : (
-                <Link
-                  href="/login"
-                  className="block text-white hover:text-sky-blue py-2 transition-colors duration-300"
-                  onClick={() => setIsOpen(false)}
-                >
-                  Sign In
-                </Link>
+                <>
+                  <Link
+                    href="/login"
+                    className="block text-white hover:text-sky-blue py-2 transition-colors duration-300"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Sign In
+                  </Link>
+                  <Link
+                    href="/register"
+                    className="block bg-sky-blue text-white px-4 py-2 rounded-lg hover:bg-neon-green transition-colors duration-300 text-center mt-2"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Create Account
+                  </Link>
+                </>
               )}
             </div>
           </div>

@@ -12,6 +12,7 @@ import ResumeCard from '@/components/resume/ResumeCard'
 import ResumeVersionList from '@/components/resume/ResumeVersionList'
 import ResumeInsightsPanel from '@/components/resume/ResumeInsightsPanel'
 import ResumeToJobMatcher from '@/components/resume/ResumeToJobMatcher'
+import AIResumeReviewer from '@/components/resume/AIResumeReviewer'
 
 interface Resume {
   id: string
@@ -61,7 +62,7 @@ export default function UpdateResumePage() {
   const [isUploading, setIsUploading] = useState(false)
   const [isAnalyzing, setIsAnalyzing] = useState(false)
   const [hasAIReview, setHasAIReview] = useState(false)
-  const [activeTab, setActiveTab] = useState<'upload' | 'insights' | 'matches'>('upload')
+  const [activeTab, setActiveTab] = useState<'upload' | 'insights' | 'matches' | 'reviewer'>('upload')
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -336,7 +337,7 @@ export default function UpdateResumePage() {
 
         {/* Tab Navigation */}
         {currentResume && (
-          <div className="flex gap-4 mb-8">
+          <div className="flex gap-4 mb-8 flex-wrap">
             <button
               onClick={() => setActiveTab('upload')}
               className={`px-6 py-2 rounded-lg transition-all ${
@@ -366,6 +367,16 @@ export default function UpdateResumePage() {
               }`}
             >
               Job Matches
+            </button>
+            <button
+              onClick={() => setActiveTab('reviewer')}
+              className={`px-6 py-2 rounded-lg transition-all ${
+                activeTab === 'reviewer'
+                  ? 'bg-sky-blue text-white'
+                  : 'glass-card hover:bg-gray-700'
+              }`}
+            >
+              AI Reviewer
             </button>
           </div>
         )}
@@ -526,6 +537,21 @@ export default function UpdateResumePage() {
                 animate={{ opacity: 1, y: 0 }}
               >
                 <ResumeToJobMatcher jobMatches={jobMatches} isAnalyzing={isAnalyzing} />
+              </motion.div>
+            )}
+
+            {activeTab === 'reviewer' && currentResume && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="lg:col-span-2"
+              >
+                <AIResumeReviewer 
+                  resumeContent={currentResume.name}
+                  onReviewComplete={(result) => {
+                    console.log('AI Review completed:', result)
+                  }}
+                />
               </motion.div>
             )}
           </div>

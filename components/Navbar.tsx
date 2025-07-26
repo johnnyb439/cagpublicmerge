@@ -26,6 +26,7 @@ export default function Navbar() {
     { href: '/jobs', label: 'Jobs' },
     { href: '/mock-interview', label: 'Mock Interview' },
     { href: '/resources', label: 'Resources' },
+    { href: '/networking', label: 'Network' },
   ]
 
   return (

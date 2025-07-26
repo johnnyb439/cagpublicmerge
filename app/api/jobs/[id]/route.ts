@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { withRateLimit } from '@/lib/api/withRateLimit'
 
 // Expanded job details - in production this would come from a database
 const jobDatabase = {
@@ -54,10 +55,10 @@ The ideal candidate will have experience with:
   // Add more detailed job entries as needed
 }
 
-export async function GET(
+export const GET = withRateLimit(async (
   request: Request,
   props: { params: Promise<{ id: string }> }
-) {
+) => {
   const params = await props.params;
   const id = parseInt(params.id)
   const job = jobDatabase[id as keyof typeof jobDatabase]
@@ -72,10 +73,15 @@ export async function GET(
   return NextResponse.json(job)
 }
 
-export async function PUT(
+}, {
+  interval: 60 * 1000, // 1 minute
+  uniqueTokenPerInterval: 60 // 60 requests per minute for reading job details
+})
+
+export const PUT = withRateLimit(async (
   request: Request,
   props: { params: Promise<{ id: string }> }
-) {
+) => {
   const params = await props.params;
   // In production, this would update a job posting
   const body = await request.json()
@@ -87,10 +93,15 @@ export async function PUT(
   })
 }
 
-export async function DELETE(
+}, {
+  interval: 60 * 1000, // 1 minute
+  uniqueTokenPerInterval: 20 // 20 requests per minute for updating jobs
+})
+
+export const DELETE = withRateLimit(async (
   request: Request,
   props: { params: Promise<{ id: string }> }
-) {
+) => {
   const params = await props.params;
   // In production, this would delete a job posting
   
@@ -99,4 +110,7 @@ export async function DELETE(
     message: 'Job deleted successfully',
     id: params.id
   })
-}
+}, {
+  interval: 60 * 1000, // 1 minute
+  uniqueTokenPerInterval: 10 // 10 requests per minute for deleting jobs
+})

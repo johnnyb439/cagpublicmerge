@@ -218,7 +218,33 @@ export async function DELETE(req: NextRequest) {
       return createErrorResponse('Password confirmation required', 400)
     }
 
-    // TODO: Verify password against hash
+    // Verify password against hash
+    const { data: userData } = await supabase
+      .from('users')
+      .select('password_hash')
+      .eq('id', session.user.id)
+      .single()
+
+    if (!userData?.password_hash) {
+      return createErrorResponse('User not found or invalid password setup', 400)
+    }
+
+    // Import bcrypt for password verification
+    const bcrypt = require('bcryptjs')
+    const isPasswordValid = await bcrypt.compare(password, userData.password_hash)
+    
+    if (!isPasswordValid) {
+      await auditLogger.log({
+        user_id: session.user.id,
+        action: 'FAILED_DELETE_ATTEMPT',
+        resource_type: 'user',
+        resource_id: session.user.id,
+        metadata: { reason: 'Invalid password' },
+        ip_address: req.headers.get('x-forwarded-for') || 'unknown',
+        user_agent: req.headers.get('user-agent') || 'unknown'
+      })
+      return createErrorResponse('Invalid password', 401)
+    }
 
     // Soft delete approach - anonymize data instead of hard delete
     const anonymizedData = {

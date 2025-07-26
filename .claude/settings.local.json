@@ -55,7 +55,10 @@
       "Bash(npx kill-port:*)",
       "Bash(vercel:*)",
       "Bash(node:*)",
-      "Bash(npm run analyze:*)"
+      "Bash(npm run analyze:*)",
+      "Bash(npx playwright:*)",
+      "Bash(rg:*)",
+      "Bash(npm run test:e2e:*)"
     ],
     "deny": []
   }

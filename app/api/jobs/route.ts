@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { withRateLimit } from '@/lib/api/withRateLimit'
 
 export interface Job {
   id: string
@@ -265,7 +266,7 @@ const mockJobs: Job[] = [
 ]
 
 // GET /api/jobs - Get filtered jobs
-export async function GET(request: NextRequest) {
+export const GET = withRateLimit(async (request: NextRequest) => {
   try {
     const { searchParams } = new URL(request.url)
     
@@ -477,8 +478,13 @@ export async function GET(request: NextRequest) {
   }
 }
 
+}, {
+  interval: 60 * 1000, // 1 minute
+  uniqueTokenPerInterval: 30 // 30 requests per minute for job searches
+})
+
 // POST /api/jobs - Create job alert
-export async function POST(request: NextRequest) {
+export const POST = withRateLimit(async (request: NextRequest) => {
   try {
     const body = await request.json()
     
@@ -505,4 +511,7 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     )
   }
-}
+}, {
+  interval: 60 * 1000, // 1 minute
+  uniqueTokenPerInterval: 10 // 10 requests per minute for creating job alerts
+})

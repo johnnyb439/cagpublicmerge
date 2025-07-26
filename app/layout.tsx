@@ -15,6 +15,13 @@ import SessionProvider from '@/components/providers/SessionProvider'
 import { SocketProvider } from '@/contexts/SocketContext'
 import KeyboardShortcuts from '@/components/KeyboardShortcuts'
 import BugReporter from '@/components/BugReporter'
+import PerformanceProvider from '@/components/providers/PerformanceProvider'
+import dynamic from 'next/dynamic'
+
+const PerformanceDashboard = dynamic(
+  () => import('@/components/performance/PerformanceDashboard'),
+  { ssr: false }
+)
 
 export const metadata: Metadata = {
   title: 'Cleared Advisory Group - Your Gateway to Cleared IT Opportunities',
@@ -79,18 +86,21 @@ export default function RootLayout({
               <SecurityProvider>
                 <SocketProvider>
                   <AnalyticsProvider>
-                    <Navbar />
-                    <main className="pt-20">
-                      {children}
-                    </main>
-                    <Footer />
-                    <LiveChat />
-                    <KeyboardShortcuts />
-                    <BugReporter />
-                    <Analytics />
-                    <SupabaseStatus />
-                    <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ''} />
-                    <Hotjar siteId={process.env.NEXT_PUBLIC_HOTJAR_SITE_ID || ''} />
+                    <PerformanceProvider>
+                      <Navbar />
+                      <main className="pt-20">
+                        {children}
+                      </main>
+                      <Footer />
+                      <LiveChat />
+                      <KeyboardShortcuts />
+                      <BugReporter />
+                      {process.env.NODE_ENV === 'development' && <PerformanceDashboard />}
+                      <Analytics />
+                      <SupabaseStatus />
+                      <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ''} />
+                      <Hotjar siteId={process.env.NEXT_PUBLIC_HOTJAR_SITE_ID || ''} />
+                    </PerformanceProvider>
                   </AnalyticsProvider>
                 </SocketProvider>
               </SecurityProvider>

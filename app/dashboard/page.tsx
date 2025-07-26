@@ -26,11 +26,13 @@ import PersonalizedRecommendations from '@/components/dashboard/PersonalizedReco
 import MessagingCenter from '@/components/MessagingCenter'
 import ErrorBoundary from '@/components/ErrorBoundary'
 import { SkeletonDashboardCard } from '@/components/ui/Skeleton'
+import OnboardingModal from '@/components/OnboardingModal'
 
 interface UserData {
   email: string
   name: string
   clearanceLevel: string
+  onboardingCompleted?: boolean
 }
 
 export default function DashboardPage() {
@@ -43,6 +45,7 @@ export default function DashboardPage() {
   const [jobApplications, setJobApplications] = useState(0)
   const [mockInterviews, setMockInterviews] = useState(0)
   const [isDataLoading, setIsDataLoading] = useState(true)
+  const [showOnboarding, setShowOnboarding] = useState(false)
 
   useEffect(() => {
     const loadUserData = async () => {
@@ -51,6 +54,12 @@ export default function DashboardPage() {
         const userData = await secureStorage.getItem('user')
         if (userData) {
           setUser(userData)
+          
+          // Check if user needs onboarding
+          const onboardingStatus = await secureStorage.getItem('onboardingCompleted')
+          if (!onboardingStatus && !userData.onboardingCompleted) {
+            setShowOnboarding(true)
+          }
           
           // Calculate profile completion
           let completed = 25 // Base for having an account
@@ -362,13 +371,13 @@ export default function DashboardPage() {
                   </div>
                 </button>
                 <Link
-                  href="/dashboard/documents"
+                  href="/networking"
                   className="flex items-center p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
                 >
-                  <FolderOpen className="text-indigo-500 mr-3" size={24} />
+                  <Users className="text-violet-500 mr-3" size={24} />
                   <div>
-                    <p className="font-semibold">Documents</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Manage files</p>
+                    <p className="font-semibold">Network</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">Connect with professionals</p>
                   </div>
                 </Link>
               </div>
@@ -502,6 +511,46 @@ export default function DashboardPage() {
           </div>
         </div>
       )}
+
+      {/* Onboarding Modal */}
+      <OnboardingModal
+        isOpen={showOnboarding}
+        onClose={() => setShowOnboarding(false)}
+        onComplete={async (data) => {
+          try {
+            // Save onboarding data
+            await secureStorage.setItem('onboardingCompleted', true)
+            
+            // Update user data with onboarding info
+            const updatedUser = {
+              ...user,
+              ...data,
+              onboardingCompleted: true
+            }
+            
+            await secureStorage.setItem('user', updatedUser)
+            setUser(updatedUser)
+            setShowOnboarding(false)
+            
+            // Recalculate profile completion
+            let completed = 25
+            if (updatedUser.firstName && updatedUser.lastName) completed += 15
+            if (updatedUser.email) completed += 15
+            if (updatedUser.clearanceLevel) completed += 15
+            if (updatedUser.phone && updatedUser.location) completed += 15
+            
+            const currentResume = await secureStorage.getItem('currentResume')
+            if (currentResume) completed += 15
+            
+            setProfileCompletion(completed)
+            
+            // Show success message (you could add a toast notification here)
+            console.log('Onboarding completed successfully!')
+          } catch (error) {
+            console.error('Error saving onboarding data:', error)
+          }
+        }}
+      />
     </section>
   )
 }

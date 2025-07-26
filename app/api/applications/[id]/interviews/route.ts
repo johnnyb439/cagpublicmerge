@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { JobApplication, Interview } from '@/types/job-application'
 import { mockDatabase } from '@/lib/mock-db'
+import { withRateLimit } from '@/lib/api/withRateLimit'
 
 // GET /api/applications/[id]/interviews - Get all interviews for application
-export async function GET(
+export const GET = withRateLimit(async (
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
@@ -31,8 +32,13 @@ export async function GET(
   }
 }
 
+}, {
+  interval: 60 * 1000, // 1 minute
+  uniqueTokenPerInterval: 60 // 60 requests per minute for reading
+})
+
 // POST /api/applications/[id]/interviews - Add new interview
-export async function POST(
+export const POST = withRateLimit(async (
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
@@ -99,4 +105,7 @@ export async function POST(
       { status: 500 }
     )
   }
-}
+}, {
+  interval: 60 * 1000, // 1 minute
+  uniqueTokenPerInterval: 20 // 20 requests per minute for scheduling interviews
+})

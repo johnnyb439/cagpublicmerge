@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { JobApplication, ApplicationStats } from '@/types/job-application'
 import { mockDatabase } from '@/lib/mock-db'
+import { withRateLimit } from '@/lib/api/withRateLimit'
 
 // GET /api/applications/stats - Get application statistics
-export async function GET(request: NextRequest) {
+export const GET = withRateLimit(async (request: NextRequest) => {
   try {
     const { searchParams } = new URL(request.url)
     const dateRange = searchParams.get('range') // '30d', '90d', '1y', 'all'
@@ -116,4 +117,7 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     )
   }
-}
+}, {
+  interval: 60 * 1000, // 1 minute
+  uniqueTokenPerInterval: 60 // 60 requests per minute for stats
+})

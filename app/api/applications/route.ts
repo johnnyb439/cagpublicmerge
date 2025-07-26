@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { JobApplication } from '@/types/job-application'
 import { mockDatabase } from '@/lib/mock-db'
+import { withRateLimit } from '@/lib/api/withRateLimit'
 
 // GET /api/applications - Get all applications for user
-export async function GET(request: NextRequest) {
+export const GET = withRateLimit(async (request: NextRequest) => {
   try {
     // In production, get userId from authentication
     const { searchParams } = new URL(request.url)
@@ -46,10 +47,13 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     )
   }
-}
+}, {
+  interval: 60 * 1000, // 1 minute
+  uniqueTokenPerInterval: 30 // 30 requests per minute
+})
 
 // POST /api/applications - Create new application
-export async function POST(request: NextRequest) {
+export const POST = withRateLimit(async (request: NextRequest) => {
   try {
     const body = await request.json()
     
@@ -109,10 +113,13 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     )
   }
-}
+}, {
+  interval: 60 * 1000, // 1 minute
+  uniqueTokenPerInterval: 20 // 20 requests per minute for creating applications
+})
 
 // DELETE /api/applications - Delete multiple applications
-export async function DELETE(request: NextRequest) {
+export const DELETE = withRateLimit(async (request: NextRequest) => {
   try {
     const { searchParams } = new URL(request.url)
     const ids = searchParams.get('ids')?.split(',') || []
@@ -141,4 +148,7 @@ export async function DELETE(request: NextRequest) {
       { status: 500 }
     )
   }
-}
+}, {
+  interval: 60 * 1000, // 1 minute
+  uniqueTokenPerInterval: 10 // 10 requests per minute for bulk delete
+})

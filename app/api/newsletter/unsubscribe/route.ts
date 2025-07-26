@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { newsletterService } from '@/lib/newsletter'
+import { withRateLimit } from '@/lib/api/withRateLimit'
 
-export async function POST(request: NextRequest) {
+export const POST = withRateLimit(async (request: NextRequest) => {
   try {
     const body = await request.json()
     const { email } = body
@@ -33,9 +34,12 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     )
   }
-}
+}, {
+  interval: 60 * 1000, // 1 minute
+  uniqueTokenPerInterval: 10 // 10 requests per minute for unsubscribing
+})
 
-export async function GET(request: NextRequest) {
+export const GET = withRateLimit(async (request: NextRequest) => {
   try {
     const { searchParams } = new URL(request.url)
     const email = searchParams.get('email')
@@ -67,4 +71,7 @@ export async function GET(request: NextRequest) {
       { status: 500 }
     )
   }
-}
+}, {
+  interval: 60 * 1000, // 1 minute
+  uniqueTokenPerInterval: 10 // 10 requests per minute for unsubscribing via GET
+})

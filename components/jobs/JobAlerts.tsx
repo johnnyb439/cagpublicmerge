@@ -77,9 +77,46 @@ export default function JobAlerts({ currentFilters }: JobAlertsProps) {
       
       await secureStorage.setItem('jobAlerts', updatedAlerts, true)
       setAlerts(updatedAlerts)
+      
+      // Send welcome email for new alerts if email delivery is enabled
+      if (!editingId && newAlert.deliveryMethods.email) {
+        await sendAlertConfirmationEmail(newAlert)
+      }
+      
       resetForm()
     } catch (error) {
       console.error('Error saving alert:', error)
+    }
+  }
+
+  const sendAlertConfirmationEmail = async (alert: JobAlert) => {
+    try {
+      const user = await secureStorage.getItem('user')
+      if (!user?.email) return
+
+      await fetch('/api/notifications/email', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          type: 'custom',
+          data: {
+            userEmail: user.email,
+            userName: user.name || 'User',
+            subject: `Job Alert Created: ${alert.name}`,
+            html: `
+              <h2>Job Alert Created Successfully</h2>
+              <p>Your job alert "${alert.name}" has been created and is now active.</p>
+              <p><strong>Frequency:</strong> ${alert.frequency}</p>
+              <p>You'll receive notifications when new jobs match your criteria.</p>
+              <p><a href="${window.location.origin}/dashboard/alerts">Manage your alerts</a></p>
+            `
+          }
+        })
+      })
+    } catch (error) {
+      console.error('Error sending confirmation email:', error)
     }
   }
 

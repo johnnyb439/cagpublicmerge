@@ -124,12 +124,115 @@ async function syncApplications() {
   }
 }
 
-// Helper functions for IndexedDB (implementation needed)
+// Helper functions for IndexedDB
+function openDB() {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open('CAG_DB', 1);
+    
+    request.onerror = () => reject(request.error);
+    request.onsuccess = () => resolve(request.result);
+    
+    request.onupgradeneeded = (event) => {
+      const db = event.target.result;
+      
+      // Create object stores
+      if (!db.objectStoreNames.contains('pendingApplications')) {
+        const store = db.createObjectStore('pendingApplications', { keyPath: 'id' });
+        store.createIndex('timestamp', 'timestamp', { unique: false });
+      }
+      
+      if (!db.objectStoreNames.contains('offlineData')) {
+        db.createObjectStore('offlineData', { keyPath: 'key' });
+      }
+    };
+  });
+}
+
 async function getPendingApplications() {
-  // TODO: Implement IndexedDB retrieval
-  return [];
+  try {
+    const db = await openDB();
+    const transaction = db.transaction(['pendingApplications'], 'readonly');
+    const store = transaction.objectStore('pendingApplications');
+    
+    return new Promise((resolve, reject) => {
+      const request = store.getAll();
+      request.onsuccess = () => resolve(request.result || []);
+      request.onerror = () => reject(request.error);
+    });
+  } catch (error) {
+    console.error('Error getting pending applications:', error);
+    return [];
+  }
 }
 
 async function removePendingApplication(id) {
-  // TODO: Implement IndexedDB removal
+  try {
+    const db = await openDB();
+    const transaction = db.transaction(['pendingApplications'], 'readwrite');
+    const store = transaction.objectStore('pendingApplications');
+    
+    return new Promise((resolve, reject) => {
+      const request = store.delete(id);
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error);
+    });
+  } catch (error) {
+    console.error('Error removing pending application:', error);
+  }
+}
+
+async function addPendingApplication(application) {
+  try {
+    const db = await openDB();
+    const transaction = db.transaction(['pendingApplications'], 'readwrite');
+    const store = transaction.objectStore('pendingApplications');
+    
+    const applicationWithTimestamp = {
+      ...application,
+      timestamp: Date.now()
+    };
+    
+    return new Promise((resolve, reject) => {
+      const request = store.add(applicationWithTimestamp);
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error);
+    });
+  } catch (error) {
+    console.error('Error adding pending application:', error);
+  }
+}
+
+// Store data for offline use
+async function storeOfflineData(key, data) {
+  try {
+    const db = await openDB();
+    const transaction = db.transaction(['offlineData'], 'readwrite');
+    const store = transaction.objectStore('offlineData');
+    
+    return new Promise((resolve, reject) => {
+      const request = store.put({ key, data, timestamp: Date.now() });
+      request.onsuccess = () => resolve();
+      request.onerror = () => reject(request.error);
+    });
+  } catch (error) {
+    console.error('Error storing offline data:', error);
+  }
+}
+
+// Retrieve offline data
+async function getOfflineData(key) {
+  try {
+    const db = await openDB();
+    const transaction = db.transaction(['offlineData'], 'readonly');
+    const store = transaction.objectStore('offlineData');
+    
+    return new Promise((resolve, reject) => {
+      const request = store.get(key);
+      request.onsuccess = () => resolve(request.result?.data || null);
+      request.onerror = () => reject(request.error);
+    });
+  } catch (error) {
+    console.error('Error getting offline data:', error);
+    return null;
+  }
 }

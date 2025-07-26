@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { JobApplication } from '@/types/job-application'
 import { mockDatabase } from '@/lib/mock-db'
+import { withRateLimit } from '@/lib/api/withRateLimit'
 
 // GET /api/applications/[id] - Get specific application
-export async function GET(
+export const GET = withRateLimit(async (
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
@@ -31,8 +32,13 @@ export async function GET(
   }
 }
 
+}, {
+  interval: 60 * 1000, // 1 minute
+  uniqueTokenPerInterval: 60 // 60 requests per minute for reading
+})
+
 // PUT /api/applications/[id] - Update application
-export async function PUT(
+export const PUT = withRateLimit(async (
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
@@ -84,8 +90,13 @@ export async function PUT(
   }
 }
 
+}, {
+  interval: 60 * 1000, // 1 minute
+  uniqueTokenPerInterval: 30 // 30 requests per minute for updates
+})
+
 // DELETE /api/applications/[id] - Delete specific application
-export async function DELETE(
+export const DELETE = withRateLimit(async (
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
@@ -115,4 +126,7 @@ export async function DELETE(
       { status: 500 }
     )
   }
-}
+}, {
+  interval: 60 * 1000, // 1 minute
+  uniqueTokenPerInterval: 20 // 20 requests per minute for deletes
+})

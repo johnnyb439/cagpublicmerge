@@ -5,9 +5,23 @@ import Link from 'next/link'
 import OptimizedImage from '@/components/ui/OptimizedImage'
 import { ArrowRight, Shield, Users, Briefcase } from 'lucide-react'
 import { useAnalytics } from '@/hooks/useAnalytics'
+import { useLoadingPerformance, useInteractionTracking } from '@/hooks/useLoadingPerformance'
 
 export default function Hero() {
   const analytics = useAnalytics()
+  const { trackImageLoad } = useLoadingPerformance({ 
+    componentName: 'Hero',
+    trackRender: true,
+    trackImages: true 
+  })
+  const { startInteraction, endInteraction } = useInteractionTracking()
+
+  const handleCTAClick = () => {
+    startInteraction('hero_cta_click')
+    analytics.track('cta_click', { location: 'hero', action: 'get_started' })
+    setTimeout(() => endInteraction('hero_cta_click'), 100)
+  }
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Gradient */}
@@ -107,7 +121,10 @@ export default function Hero() {
               <Link 
                 href="/jobs" 
                 className="glass-button text-white inline-flex items-center group hover-glow"
-                onClick={() => analytics.trackClick('hero_browse_jobs')}
+                onClick={() => {
+                  analytics.trackClick('hero_browse_jobs')
+                  handleCTAClick()
+                }}
               >
                 Browse Cleared Jobs
                 <ArrowRight className="ml-2 transition-transform group-hover:translate-x-2" size={20} />

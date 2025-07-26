@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { newsletterService } from '@/lib/newsletter'
+import { withRateLimit } from '@/lib/api/withRateLimit'
 
-export async function POST(request: NextRequest) {
+export const POST = withRateLimit(async (request: NextRequest) => {
   try {
     const body = await request.json()
     const { email, categories, frequency, userId } = body
@@ -56,4 +57,7 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     )
   }
-}
+}, {
+  interval: 60 * 1000, // 1 minute
+  uniqueTokenPerInterval: 10 // 10 requests per minute for newsletter subscriptions
+})

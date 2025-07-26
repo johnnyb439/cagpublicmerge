@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { resumeAnalyzer } from '@/lib/ai/resume-analyzer'
 import { ResumeAnalysisRequest } from '@/types/ai-resume'
+import { withRateLimit } from '@/lib/api/withRateLimit'
 
-export async function POST(request: NextRequest) {
+export const POST = withRateLimit(async (request: NextRequest) => {
   try {
     const body: ResumeAnalysisRequest = await request.json()
 
@@ -32,9 +33,12 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     )
   }
-}
+}, {
+  interval: 60 * 60 * 1000, // 1 hour
+  uniqueTokenPerInterval: 10 // 10 requests per hour
+})
 
-export async function GET(request: NextRequest) {
+export const GET = withRateLimit(async (request: NextRequest) => {
   try {
     const { searchParams } = new URL(request.url)
     const demo = searchParams.get('demo')
@@ -93,4 +97,7 @@ JavaScript, Python, React, Node.js, AWS, Docker, SQL, Git
       { status: 500 }
     )
   }
-}
+}, {
+  interval: 60 * 60 * 1000, // 1 hour  
+  uniqueTokenPerInterval: 20 // 20 requests per hour for GET (demo)
+})

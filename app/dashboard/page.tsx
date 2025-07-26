@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import { secureStorage } from '@/lib/security/secureStorage'
 import { 
   User, 
   Briefcase, 
@@ -23,6 +24,8 @@ import ActivityTimeline from '@/components/dashboard/ActivityTimeline'
 import GoalTracking from '@/components/dashboard/GoalTracking'
 import PersonalizedRecommendations from '@/components/dashboard/PersonalizedRecommendations'
 import MessagingCenter from '@/components/MessagingCenter'
+import ErrorBoundary from '@/components/ErrorBoundary'
+import { SkeletonDashboardCard } from '@/components/ui/Skeleton'
 
 interface UserData {
   email: string
@@ -35,20 +38,72 @@ export default function DashboardPage() {
   const [user, setUser] = useState<UserData | null>(null)
   const [activeTab, setActiveTab] = useState('overview')
   const [isMessageCenterOpen, setIsMessageCenterOpen] = useState(false)
+  const [profileCompletion, setProfileCompletion] = useState(0)
+  const [certCount, setCertCount] = useState(0)
+  const [jobApplications, setJobApplications] = useState(0)
+  const [mockInterviews, setMockInterviews] = useState(0)
+  const [isDataLoading, setIsDataLoading] = useState(true)
 
   useEffect(() => {
-    // Check if user is logged in
-    const userData = localStorage.getItem('user')
-    if (userData) {
-      setUser(JSON.parse(userData))
-    } else {
-      router.push('/login')
+    const loadUserData = async () => {
+      try {
+        // Check if user is logged in
+        const userData = await secureStorage.getItem('user')
+        if (userData) {
+          setUser(userData)
+          
+          // Calculate profile completion
+          let completed = 25 // Base for having an account
+          if (userData.name) completed += 15
+          if (userData.email) completed += 15
+          if (userData.clearanceLevel) completed += 15
+          
+          const currentResume = await secureStorage.getItem('currentResume')
+          if (currentResume) completed += 15
+          
+          const certifications = await secureStorage.getItem('certifications')
+          if (certifications) {
+            completed += 15
+            setCertCount(certifications.length)
+          }
+          
+          setProfileCompletion(completed)
+          
+          // Get job applications count
+          const applications = await secureStorage.getItem('jobApplications')
+          if (applications) {
+            setJobApplications(applications.length)
+          }
+          
+          // Get mock interviews count
+          const interviews = await secureStorage.getItem('mockInterviews')
+          if (interviews) {
+            setMockInterviews(interviews.length)
+          }
+        } else {
+          router.push('/login')
+        }
+      } catch (error) {
+        console.error('Error loading dashboard data:', error)
+        // If secure storage not initialized, redirect to secure login
+        router.push('/secure-login')
+      } finally {
+        setIsDataLoading(false)
+      }
     }
+    
+    loadUserData()
   }, [router])
 
-  const handleLogout = () => {
-    localStorage.removeItem('user')
-    router.push('/login')
+  const handleLogout = async () => {
+    try {
+      await secureStorage.removeItem('user')
+      await secureStorage.clear()
+      router.push('/login')
+    } catch (error) {
+      console.error('Logout error:', error)
+      router.push('/login')
+    }
   }
 
   if (!user) {
@@ -60,10 +115,40 @@ export default function DashboardPage() {
   }
 
   const stats = [
-    { label: 'Profile Completion', value: '75%', icon: User, color: 'text-dynamic-green' },
-    { label: 'Jobs Applied', value: '12', icon: Briefcase, color: 'text-dynamic-blue' },
-    { label: 'Certifications', value: '3', icon: Award, color: 'text-emerald-green' },
-    { label: 'Mock Interviews', value: '5', icon: Target, color: 'text-sky-blue' }
+    { 
+      label: 'Profile Completion', 
+      value: `${profileCompletion}%`, 
+      icon: User, 
+      color: profileCompletion === 100 ? 'text-dynamic-green' : profileCompletion >= 75 ? 'text-yellow-500' : 'text-orange-500',
+      href: '/profile',
+      description: profileCompletion === 100 ? 'Profile complete!' : 'Complete your profile',
+      progress: true,
+      progressValue: profileCompletion
+    },
+    { 
+      label: 'Jobs Applied', 
+      value: jobApplications.toString(), 
+      icon: Briefcase, 
+      color: 'text-dynamic-blue',
+      href: '/dashboard/applications',
+      description: jobApplications > 0 ? 'View applications' : 'Start applying'
+    },
+    { 
+      label: 'Certifications', 
+      value: certCount.toString(), 
+      icon: Award, 
+      color: 'text-emerald-green',
+      href: '/dashboard/certifications',
+      description: certCount > 0 ? 'Manage certifications' : 'Add certifications'
+    },
+    { 
+      label: 'Mock Interviews', 
+      value: mockInterviews.toString(), 
+      icon: Target, 
+      color: 'text-sky-blue',
+      href: '/mock-interview',
+      description: mockInterviews > 0 ? 'Practice more' : 'Start practicing'
+    }
   ]
 
   const recentActivity = [
@@ -98,33 +183,69 @@ export default function DashboardPage() {
                 Clearance Level: <span className="text-dynamic-green font-semibold">{user.clearanceLevel}</span>
               </p>
             </div>
-            <button
-              onClick={handleLogout}
-              className="flex items-center text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors"
-            >
-              <LogOut size={20} className="mr-2" />
-              Log Out
-            </button>
+            <div className="flex items-center gap-4">
+              <Link
+                href="/dashboard/settings"
+                className="flex items-center text-gray-600 dark:text-gray-400 hover:text-dynamic-green transition-colors"
+              >
+                <User size={20} className="mr-2" />
+                Settings
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="flex items-center text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors"
+              >
+                <LogOut size={20} className="mr-2" />
+                Log Out
+              </button>
+            </div>
           </div>
         </motion.div>
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          {stats.map((stat, index) => (
-            <motion.div
+          {isDataLoading ? (
+            <>
+              {[1, 2, 3, 4].map((i) => (
+                <SkeletonDashboardCard key={i} />
+              ))}
+            </>
+          ) : (
+            stats.map((stat, index) => (
+            <Link
               key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
-              className="bg-white dark:bg-command-black rounded-lg shadow-md p-6"
+              href={stat.href}
+              passHref
+              className="block relative z-10"
             >
-              <div className="flex items-center justify-between mb-4">
-                <stat.icon size={24} className={stat.color} />
-                <span className="text-2xl font-bold">{stat.value}</span>
-              </div>
-              <p className="text-gray-600 dark:text-gray-400 text-sm">{stat.label}</p>
-            </motion.div>
-          ))}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: index * 0.1 }}
+                className="bg-white dark:bg-command-black rounded-lg shadow-md p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer group relative"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <stat.icon size={24} className={`${stat.color} group-hover:scale-110 transition-transform`} />
+                  <span className="text-2xl font-bold">{stat.value}</span>
+                </div>
+                <p className="text-gray-600 dark:text-gray-400 text-sm font-medium">{stat.label}</p>
+                {stat.progress && (
+                  <div className="mt-2 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-gradient-to-r from-sky-blue to-neon-green transition-all duration-500"
+                      style={{ width: `${stat.progressValue}%` }}
+                    />
+                  </div>
+                )}
+                <p className="text-xs text-gray-500 dark:text-gray-500 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                  {stat.description}
+                </p>
+                <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <ChevronRight size={16} className="text-gray-400" />
+                </div>
+              </motion.div>
+            </Link>
+          )))}
         </div>
 
         {/* Navigation Tabs */}
@@ -342,17 +463,23 @@ export default function DashboardPage() {
 
         {/* Analytics Tab */}
         {activeTab === 'analytics' && (
-          <Analytics />
+          <ErrorBoundary>
+            <Analytics />
+          </ErrorBoundary>
         )}
 
         {/* Goals Tab */}
         {activeTab === 'goals' && (
-          <GoalTracking />
+          <ErrorBoundary>
+            <GoalTracking />
+          </ErrorBoundary>
         )}
 
         {/* Recommendations Tab */}
         {activeTab === 'recommendations' && (
-          <PersonalizedRecommendations />
+          <ErrorBoundary>
+            <PersonalizedRecommendations />
+          </ErrorBoundary>
         )}
       </div>
 

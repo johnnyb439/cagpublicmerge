@@ -4,6 +4,17 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import LiveChat from '@/components/LiveChat'
 import AnalyticsProvider from '@/components/AnalyticsProvider'
+import { SecurityProvider } from '@/contexts/SecurityContext'
+import { ThemeProvider } from '@/components/ThemeProvider'
+import ServiceWorkerProvider from '@/components/ServiceWorkerProvider'
+import { Analytics } from '@vercel/analytics/react'
+import SupabaseStatus from '@/components/SupabaseStatus'
+import GoogleAnalytics from '@/components/analytics/GoogleAnalytics'
+import Hotjar from '@/components/analytics/Hotjar'
+import SessionProvider from '@/components/providers/SessionProvider'
+import { SocketProvider } from '@/contexts/SocketContext'
+import KeyboardShortcuts from '@/components/KeyboardShortcuts'
+import BugReporter from '@/components/BugReporter'
 
 export const metadata: Metadata = {
   title: 'Cleared Advisory Group - Your Gateway to Cleared IT Opportunities',
@@ -12,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Cleared Advisory Group',
     description: 'Your Gateway to Cleared IT Opportunities',
-    url: 'https://caglive.vercel.app',
+    url: 'https://clearedadvisorygroup.com',
     siteName: 'Cleared Advisory Group',
     images: [
       {
@@ -46,6 +57,7 @@ export const metadata: Metadata = {
     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
     { media: '(prefers-color-scheme: dark)', color: '#0a0a0a' }
   ],
+  manifest: '/manifest.json',
 }
 
 export const viewport: Viewport = {
@@ -61,14 +73,30 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen bg-white dark:bg-command-black">
-        <AnalyticsProvider>
-          <Navbar />
-          <main className="pt-20">
-            {children}
-          </main>
-          <Footer />
-          <LiveChat />
-        </AnalyticsProvider>
+        <ServiceWorkerProvider>
+          <ThemeProvider>
+            <SessionProvider>
+              <SecurityProvider>
+                <SocketProvider>
+                  <AnalyticsProvider>
+                    <Navbar />
+                    <main className="pt-20">
+                      {children}
+                    </main>
+                    <Footer />
+                    <LiveChat />
+                    <KeyboardShortcuts />
+                    <BugReporter />
+                    <Analytics />
+                    <SupabaseStatus />
+                    <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || ''} />
+                    <Hotjar siteId={process.env.NEXT_PUBLIC_HOTJAR_SITE_ID || ''} />
+                  </AnalyticsProvider>
+                </SocketProvider>
+              </SecurityProvider>
+            </SessionProvider>
+          </ThemeProvider>
+        </ServiceWorkerProvider>
       </body>
     </html>
   )

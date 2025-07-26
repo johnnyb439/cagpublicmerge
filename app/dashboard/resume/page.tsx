@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
+import { secureStorage } from '@/lib/security/secureStorage'
+import { validation } from '@/lib/security/validation'
 import { 
   FileText, Upload, Sparkles, Brain, CheckCircle2, 
   AlertCircle, Download, Star, TrendingUp, Shield,
@@ -64,22 +66,30 @@ export default function UpdateResumePage() {
   const [hasAIReview, setHasAIReview] = useState(false)
   const [activeTab, setActiveTab] = useState<'upload' | 'insights' | 'matches' | 'reviewer'>('upload')
 
-  // Load from localStorage on mount
+  // Load from secure storage on mount
   useEffect(() => {
-    const savedResume = localStorage.getItem('currentResume')
-    const savedHistory = localStorage.getItem('resumeHistory')
-    const savedInsights = localStorage.getItem('resumeInsights')
+    const loadResumeData = async () => {
+      try {
+        const savedResume = await secureStorage.getItem('currentResume')
+        const savedHistory = await secureStorage.getItem('resumeHistory')
+        const savedInsights = await secureStorage.getItem('resumeInsights')
+        
+        if (savedResume) {
+          setCurrentResume(savedResume)
+        }
+        if (savedHistory) {
+          setResumeHistory(savedHistory)
+        }
+        if (savedInsights) {
+          setInsights(savedInsights)
+          setHasAIReview(true)
+        }
+      } catch (error) {
+        console.error('Error loading resume data:', error)
+      }
+    }
     
-    if (savedResume) {
-      setCurrentResume(JSON.parse(savedResume))
-    }
-    if (savedHistory) {
-      setResumeHistory(JSON.parse(savedHistory))
-    }
-    if (savedInsights) {
-      setInsights(JSON.parse(savedInsights))
-      setHasAIReview(true)
-    }
+    loadResumeData()
   }, [])
 
   const handleFileUpload = async (file: File) => {
@@ -99,15 +109,28 @@ export default function UpdateResumePage() {
       version: resumeHistory.length + 1,
     }
 
+    // Validate file
+    const fileValidation = validation.validateFileUpload(file, {
+      maxSize: 5 * 1024 * 1024, // 5MB
+      allowedTypes: ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
+      allowedExtensions: ['.pdf', '.doc', '.docx']
+    })
+    
+    if (!fileValidation.isValid) {
+      alert(fileValidation.error)
+      setIsUploading(false)
+      return
+    }
+
     // Move current to history
     if (currentResume) {
       const updatedHistory = [currentResume, ...resumeHistory].slice(0, 10)
       setResumeHistory(updatedHistory)
-      localStorage.setItem('resumeHistory', JSON.stringify(updatedHistory))
+      await secureStorage.setItem('resumeHistory', updatedHistory, true)
     }
 
     setCurrentResume(newResume)
-    localStorage.setItem('currentResume', JSON.stringify(newResume))
+    await secureStorage.setItem('currentResume', newResume, true)
     setIsUploading(false)
     setActiveTab('insights')
   }
@@ -192,7 +215,7 @@ export default function UpdateResumePage() {
     
     setInsights(mockInsights)
     setJobMatches(mockMatches)
-    localStorage.setItem('resumeInsights', JSON.stringify(mockInsights))
+    await secureStorage.setItem('resumeInsights', mockInsights, true)
     
     // Update resume with AI score
     const updatedResume = { 
@@ -201,7 +224,7 @@ export default function UpdateResumePage() {
       lastAIReview: new Date().toLocaleDateString()
     }
     setCurrentResume(updatedResume)
-    localStorage.setItem('currentResume', JSON.stringify(updatedResume))
+    await secureStorage.setItem('currentResume', updatedResume, true)
     
     setHasAIReview(true)
     setIsAnalyzing(false)
@@ -235,20 +258,28 @@ export default function UpdateResumePage() {
     URL.revokeObjectURL(url)
   }
 
-  const handleDeleteResume = () => {
-    setCurrentResume(null)
-    setInsights(null)
-    setJobMatches([])
-    setHasAIReview(false)
-    localStorage.removeItem('currentResume')
-    localStorage.removeItem('resumeInsights')
+  const handleDeleteResume = async () => {
+    try {
+      setCurrentResume(null)
+      setInsights(null)
+      setJobMatches([])
+      setHasAIReview(false)
+      await secureStorage.removeItem('currentResume')
+      await secureStorage.removeItem('resumeInsights')
+    } catch (error) {
+      console.error('Error deleting resume:', error)
+    }
   }
 
-  const handleSetDefault = (value: boolean) => {
+  const handleSetDefault = async (value: boolean) => {
     if (currentResume) {
-      const updatedResume = { ...currentResume, isDefault: value }
-      setCurrentResume(updatedResume)
-      localStorage.setItem('currentResume', JSON.stringify(updatedResume))
+      try {
+        const updatedResume = { ...currentResume, isDefault: value }
+        setCurrentResume(updatedResume)
+        await secureStorage.setItem('currentResume', updatedResume, true)
+      } catch (error) {
+        console.error('Error updating resume:', error)
+      }
     }
   }
 
@@ -386,21 +417,33 @@ export default function UpdateResumePage() {
           <div className="lg:col-span-1">
             <ResumeVersionList
               versions={resumeHistory}
-              onRestore={(id) => {
-                const versionToRestore = resumeHistory.find(r => r.id === id)
-                if (versionToRestore && currentResume) {
-                  setResumeHistory([currentResume, ...resumeHistory.filter(r => r.id !== id)])
-                  setCurrentResume(versionToRestore)
-                  setHasAIReview(false)
+              onRestore={async (id) => {
+                try {
+                  const versionToRestore = resumeHistory.find(r => r.id === id)
+                  if (versionToRestore && currentResume) {
+                    const newHistory = [currentResume, ...resumeHistory.filter(r => r.id !== id)]
+                    setResumeHistory(newHistory)
+                    setCurrentResume(versionToRestore)
+                    setHasAIReview(false)
+                    
+                    await secureStorage.setItem('resumeHistory', newHistory, true)
+                    await secureStorage.setItem('currentResume', versionToRestore, true)
+                  }
+                } catch (error) {
+                  console.error('Error restoring version:', error)
                 }
               }}
               onPreview={(id) => console.log('Preview', id)}
-              onUpdateNotes={(id, notes) => {
-                const updated = resumeHistory.map(r => 
-                  r.id === id ? { ...r, notes } : r
-                )
-                setResumeHistory(updated)
-                localStorage.setItem('resumeHistory', JSON.stringify(updated))
+              onUpdateNotes={async (id, notes) => {
+                try {
+                  const updated = resumeHistory.map(r => 
+                    r.id === id ? { ...r, notes: validation.sanitizeInput(notes) } : r
+                  )
+                  setResumeHistory(updated)
+                  await secureStorage.setItem('resumeHistory', updated, true)
+                } catch (error) {
+                  console.error('Error updating notes:', error)
+                }
               }}
             />
           </div>

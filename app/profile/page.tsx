@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { secureStorage } from '@/lib/security/secureStorage'
+import { validation } from '@/lib/security/validation'
 import { 
   User, Upload, FileText, Shield, Award, TrendingUp, MapPin, 
   DollarSign, Calendar, Mail, Search, Edit, Check, X, Star,
@@ -77,23 +79,69 @@ export default function ProfilePage() {
   )
 
   useEffect(() => {
-    const userData = localStorage.getItem('user')
-    if (!userData) {
-      router.push('/login')
-      return
+    const loadProfileData = async () => {
+      try {
+        const userData = await secureStorage.getItem('user')
+        if (!userData) {
+          router.push('/login')
+          return
+        }
+        
+        setUser(userData)
+        
+        // Load additional profile data
+        const profileDetails = await secureStorage.getItem('profileDetails')
+        
+        setProfileData(prev => ({
+          ...prev,
+          name: userData.name || 'John Doe',
+          email: userData.email || 'john.doe@email.com',
+          role: profileDetails?.role || 'Senior Software Engineer',
+          clearance: userData.clearanceLevel || 'Top Secret/SCI',
+          location: profileDetails?.location || 'Arlington, VA',
+          phone: profileDetails?.phone || '+1 (555) 123-4567',
+          linkedinUrl: profileDetails?.linkedinUrl || ''
+        }))
+      } catch (error) {
+        console.error('Error loading profile:', error)
+        router.push('/secure-login')
+      }
     }
     
-    const parsedUser = JSON.parse(userData)
-    setUser(parsedUser)
+    loadProfileData()
   }, [router])
 
-  const handleSaveProfile = () => {
-    setIsEditing(false)
-    localStorage.setItem('user', JSON.stringify({
-      ...user,
-      name: profileData.name,
-      clearanceLevel: profileData.clearance
-    }))
+  const handleSaveProfile = async () => {
+    try {
+      setIsEditing(false)
+      
+      // Validate and sanitize input
+      const sanitizedData = {
+        name: validation.sanitizeInput(profileData.name),
+        clearanceLevel: profileData.clearance,
+        email: profileData.email
+      }
+      
+      // Update user data
+      await secureStorage.setItem('user', {
+        ...user,
+        ...sanitizedData
+      }, true)
+      
+      // Save additional profile details
+      await secureStorage.setItem('profileDetails', {
+        role: validation.sanitizeInput(profileData.role),
+        location: validation.sanitizeInput(profileData.location),
+        phone: validation.sanitizeInput(profileData.phone),
+        linkedinUrl: validation.isValidLinkedInURL(profileData.linkedinUrl) ? profileData.linkedinUrl : '',
+        updatedAt: Date.now()
+      }, true)
+      
+      setUser({ ...user, ...sanitizedData })
+    } catch (error) {
+      console.error('Error saving profile:', error)
+      alert('Failed to save profile. Please try again.')
+    }
   }
 
   const getActivityColor = (count: number) => {

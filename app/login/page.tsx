@@ -5,6 +5,8 @@ import { motion } from 'framer-motion'
 import { User, Lock, Shield, AlertCircle, Building, UserCheck } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { secureStorage } from '@/lib/security/secureStorage'
+import { validation } from '@/lib/security/validation'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -19,24 +21,43 @@ export default function LoginPage() {
     setError('')
     setLoading(true)
 
-    // Simulate login - in production this would connect to your auth system
-    setTimeout(() => {
-      if (email && password) {
-        // Store user data with type
-        localStorage.setItem('user', JSON.stringify({
-          email,
-          name: email.split('@')[0],
-          type: userType,
-          clearanceLevel: userType === 'jobseeker' ? 'SECRET' : null
-        }))
-        
-        // Redirect based on user type
-        router.push(userType === 'employer' ? '/employer/dashboard' : '/dashboard')
-      } else {
+    try {
+      // Validate email
+      if (!validation.isValidEmail(email)) {
+        setError('Please enter a valid email address')
+        setLoading(false)
+        return
+      }
+
+      if (!email || !password) {
         setError('Please enter both email and password')
         setLoading(false)
+        return
       }
-    }, 1000)
+
+      // Initialize secure storage with password-derived key
+      await secureStorage.initialize(password)
+
+      // Store user data securely
+      const userData = {
+        email: validation.sanitizeInput(email),
+        name: email.split('@')[0],
+        type: userType,
+        clearanceLevel: userType === 'jobseeker' ? 'SECRET' : null,
+        loginTime: Date.now()
+      }
+
+      await secureStorage.setItem('user', userData, true)
+      
+      // Redirect based on user type
+      setTimeout(() => {
+        router.push(userType === 'employer' ? '/employer/dashboard' : '/dashboard')
+      }, 500)
+    } catch (error) {
+      console.error('Login error:', error)
+      setError('Login failed. Please try again.')
+      setLoading(false)
+    }
   }
 
   return (

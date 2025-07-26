@@ -3,8 +3,9 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Menu, X, User } from 'lucide-react'
+import { Menu, X, User, Shield } from 'lucide-react'
 import ThemeToggle from './ThemeToggle'
+import NotificationBell from './NotificationBell'
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -52,6 +53,9 @@ export default function Navbar() {
               </Link>
             ))}
             
+            {/* Notification Bell for logged in users */}
+            {user && <NotificationBell />}
+            
             {/* User Account Links */}
             {user ? (
               <Link
@@ -64,10 +68,11 @@ export default function Navbar() {
             ) : (
               <>
                 <Link
-                  href="/login"
-                  className="text-white hover:text-sky-blue transition-colors duration-300 text-sm font-medium whitespace-nowrap"
+                  href="/secure-login"
+                  className="text-white hover:text-sky-blue transition-colors duration-300 text-sm font-medium whitespace-nowrap flex items-center"
                 >
-                  Sign In
+                  <Shield size={16} className="mr-1" />
+                  Secure Login
                 </Link>
                 <Link
                   href="/register"
@@ -143,6 +148,12 @@ export default function Navbar() {
             
             {/* User Account Links in Mobile */}
             <div className="border-t border-gray-700 mt-4 pt-4">
+              {user && (
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-white">Notifications</span>
+                  <NotificationBell />
+                </div>
+              )}
               {user ? (
                 <Link
                   href={user.type === 'employer' ? '/employer/dashboard' : '/dashboard'}
@@ -155,11 +166,12 @@ export default function Navbar() {
               ) : (
                 <>
                   <Link
-                    href="/login"
-                    className="block text-white hover:text-sky-blue py-2 transition-colors duration-300"
+                    href="/secure-login"
+                    className="flex items-center text-white hover:text-sky-blue py-2 transition-colors duration-300"
                     onClick={() => setIsOpen(false)}
                   >
-                    Sign In
+                    <Shield size={16} className="mr-1" />
+                    Secure Login
                   </Link>
                   <Link
                     href="/register"

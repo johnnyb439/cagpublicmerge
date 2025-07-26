@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+@import './light-theme-fixes.css';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,7 +10,7 @@
   }
   
   body {
-    @apply font-inter text-ops-charcoal bg-white dark:bg-command-black dark:text-white transition-colors duration-300;
+    @apply font-inter text-gray-900 bg-gray-50 dark:bg-command-black dark:text-white transition-colors duration-300;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -57,7 +58,7 @@
   }
   
   .card {
-    @apply bg-white dark:bg-ops-charcoal dark:border dark:border-gray-700 rounded-xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
+    @apply bg-white text-gray-900 dark:bg-ops-charcoal dark:text-white border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg p-6 transition-all duration-300 hover:shadow-xl hover:-translate-y-1;
   }
   
   /* Glass-morphism Effects */
@@ -153,5 +154,45 @@
   }
   100% {
     background-position: 0% 50%;
+  }
+}
+@layer utilities {
+  /* Light theme text utilities */
+  .text-primary {
+    @apply text-gray-900 dark:text-white;
+  }
+  
+  .text-secondary {
+    @apply text-gray-700 dark:text-gray-300;
+  }
+  
+  .text-tertiary {
+    @apply text-gray-600 dark:text-gray-400;
+  }
+  
+  .text-muted {
+    @apply text-gray-500 dark:text-gray-500;
+  }
+  
+  /* Light theme background utilities */
+  .bg-primary {
+    @apply bg-white dark:bg-command-black;
+  }
+  
+  .bg-secondary {
+    @apply bg-gray-50 dark:bg-ops-charcoal;
+  }
+  
+  .bg-tertiary {
+    @apply bg-gray-100 dark:bg-gray-800;
+  }
+  
+  /* Better contrast for cards in light mode */
+  .card-light {
+    @apply bg-white text-gray-900 border border-gray-200 shadow-md;
+  }
+  
+  .dark .card-light {
+    @apply bg-ops-charcoal text-white border-gray-700;
   }
 }

@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import Image from 'next/image'
+import OptimizedImage from '@/components/ui/OptimizedImage'
 import { ArrowRight, Shield, Users, Briefcase } from 'lucide-react'
 import { useAnalytics } from '@/hooks/useAnalytics'
 
@@ -64,7 +64,7 @@ export default function Hero() {
               {/* Multiple blending layers for better integration */}
               <div className="absolute inset-0 bg-gradient-radial from-white/10 via-transparent to-transparent blur-3xl scale-150"></div>
               <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent blur-2xl"></div>
-              <Image 
+              <OptimizedImage 
                 src="/images/cag-logo.png" 
                 alt="Cleared Advisory Group Logo" 
                 width={450} 

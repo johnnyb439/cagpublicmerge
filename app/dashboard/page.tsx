@@ -35,12 +35,44 @@ export default function DashboardPage() {
   const [user, setUser] = useState<UserData | null>(null)
   const [activeTab, setActiveTab] = useState('overview')
   const [isMessageCenterOpen, setIsMessageCenterOpen] = useState(false)
+  const [profileCompletion, setProfileCompletion] = useState(0)
+  const [certCount, setCertCount] = useState(0)
+  const [jobApplications, setJobApplications] = useState(0)
+  const [mockInterviews, setMockInterviews] = useState(0)
 
   useEffect(() => {
     // Check if user is logged in
     const userData = localStorage.getItem('user')
     if (userData) {
       setUser(JSON.parse(userData))
+      
+      // Calculate profile completion
+      const profile = JSON.parse(userData)
+      let completed = 25 // Base for having an account
+      if (profile.name) completed += 15
+      if (profile.email) completed += 15
+      if (profile.clearanceLevel) completed += 15
+      if (localStorage.getItem('currentResume')) completed += 15
+      if (localStorage.getItem('certifications')) completed += 15
+      setProfileCompletion(completed)
+      
+      // Get certifications count
+      const certs = localStorage.getItem('certifications')
+      if (certs) {
+        setCertCount(JSON.parse(certs).length)
+      }
+      
+      // Get job applications count
+      const applications = localStorage.getItem('jobApplications')
+      if (applications) {
+        setJobApplications(JSON.parse(applications).length)
+      }
+      
+      // Get mock interviews count
+      const interviews = localStorage.getItem('mockInterviews')
+      if (interviews) {
+        setMockInterviews(JSON.parse(interviews).length)
+      }
     } else {
       router.push('/login')
     }
@@ -60,10 +92,40 @@ export default function DashboardPage() {
   }
 
   const stats = [
-    { label: 'Profile Completion', value: '75%', icon: User, color: 'text-dynamic-green' },
-    { label: 'Jobs Applied', value: '12', icon: Briefcase, color: 'text-dynamic-blue' },
-    { label: 'Certifications', value: '3', icon: Award, color: 'text-emerald-green' },
-    { label: 'Mock Interviews', value: '5', icon: Target, color: 'text-sky-blue' }
+    { 
+      label: 'Profile Completion', 
+      value: `${profileCompletion}%`, 
+      icon: User, 
+      color: profileCompletion === 100 ? 'text-dynamic-green' : profileCompletion >= 75 ? 'text-yellow-500' : 'text-orange-500',
+      href: '/profile',
+      description: profileCompletion === 100 ? 'Profile complete!' : 'Complete your profile',
+      progress: true,
+      progressValue: profileCompletion
+    },
+    { 
+      label: 'Jobs Applied', 
+      value: jobApplications.toString(), 
+      icon: Briefcase, 
+      color: 'text-dynamic-blue',
+      href: '/dashboard/applications',
+      description: jobApplications > 0 ? 'View applications' : 'Start applying'
+    },
+    { 
+      label: 'Certifications', 
+      value: certCount.toString(), 
+      icon: Award, 
+      color: 'text-emerald-green',
+      href: '/dashboard/certifications',
+      description: certCount > 0 ? 'Manage certifications' : 'Add certifications'
+    },
+    { 
+      label: 'Mock Interviews', 
+      value: mockInterviews.toString(), 
+      icon: Target, 
+      color: 'text-sky-blue',
+      href: '/mock-interview',
+      description: mockInterviews > 0 ? 'Practice more' : 'Start practicing'
+    }
   ]
 
   const recentActivity = [
@@ -111,19 +173,38 @@ export default function DashboardPage() {
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           {stats.map((stat, index) => (
-            <motion.div
+            <Link
               key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: index * 0.1 }}
-              className="bg-white dark:bg-command-black rounded-lg shadow-md p-6"
+              href={stat.href}
+              className="block"
             >
-              <div className="flex items-center justify-between mb-4">
-                <stat.icon size={24} className={stat.color} />
-                <span className="text-2xl font-bold">{stat.value}</span>
-              </div>
-              <p className="text-gray-600 dark:text-gray-400 text-sm">{stat.label}</p>
-            </motion.div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: index * 0.1 }}
+                className="bg-white dark:bg-command-black rounded-lg shadow-md p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer group relative"
+              >
+                <div className="flex items-center justify-between mb-4">
+                  <stat.icon size={24} className={`${stat.color} group-hover:scale-110 transition-transform`} />
+                  <span className="text-2xl font-bold">{stat.value}</span>
+                </div>
+                <p className="text-gray-600 dark:text-gray-400 text-sm font-medium">{stat.label}</p>
+                {stat.progress && (
+                  <div className="mt-2 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                    <div 
+                      className="h-full bg-gradient-to-r from-sky-blue to-neon-green transition-all duration-500"
+                      style={{ width: `${stat.progressValue}%` }}
+                    />
+                  </div>
+                )}
+                <p className="text-xs text-gray-500 dark:text-gray-500 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                  {stat.description}
+                </p>
+                <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                  <ChevronRight size={16} className="text-gray-400" />
+                </div>
+              </motion.div>
+            </Link>
           ))}
         </div>
 

@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { newsletterService } from '@/lib/newsletter'
-import { withRateLimit } from '@/lib/api/withRateLimit'
+// // import { withRateLimit } from '@/lib/api/withRateLimit'
 
-export const GET = withRateLimit(async (request: NextRequest) => {
+export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
     const token = searchParams.get('token')

@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Bug, X, Send, Camera, AlertCircle } from 'lucide-react'
 import * as Sentry from '@sentry/nextjs'
+import ProtectedForm from '@/components/security/ProtectedForm'
 
 interface BugReport {
   title: string
@@ -17,7 +18,6 @@ interface BugReport {
 
 export default function BugReporter() {
   const [isOpen, setIsOpen] = useState(false)
-  const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [formData, setFormData] = useState<Partial<BugReport>>({
     type: 'bug',
@@ -26,17 +26,29 @@ export default function BugReporter() {
     userAgent: typeof navigator !== 'undefined' ? navigator.userAgent : ''
   })
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+  const handleSubmit = async (submittedFormData: FormData, recaptchaToken: string) => {
+    const title = submittedFormData.get('title') as string
+    const description = submittedFormData.get('description') as string
+    const type = submittedFormData.get('type') as string || formData.type
+    const priority = formData.priority // Keep using state for priority
+
+    const bugData = {
+      title,
+      description,
+      type,
+      priority,
+      url: formData.url,
+      userAgent: formData.userAgent,
+      recaptchaToken
+    }
 
     try {
       // Capture in Sentry
-      const eventId = Sentry.captureMessage(`Bug Report: ${formData.title}`, 'info')
+      const eventId = Sentry.captureMessage(`Bug Report: ${title}`, 'info')
       Sentry.withScope((scope) => {
         scope.setTag('bug-report', true)
         scope.setContext('bug-details', {
-          ...formData,
+          ...bugData,
           eventId
         })
       })
@@ -48,7 +60,7 @@ export default function BugReporter() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          ...formData,
+          ...bugData,
           sentryEventId: eventId
         }),
       })
@@ -65,11 +77,12 @@ export default function BugReporter() {
             userAgent: navigator.userAgent
           })
         }, 3000)
+      } else {
+        throw new Error('Failed to submit bug report')
       }
     } catch (error) {
       console.error('Failed to submit bug report:', error)
-    } finally {
-      setIsSubmitting(false)
+      throw error
     }
   }
 
@@ -129,15 +142,20 @@ export default function BugReporter() {
 
               {/* Form */}
               {!submitted ? (
-                <form onSubmit={handleSubmit} className="p-6 space-y-4">
+                <ProtectedForm 
+                  onSubmit={handleSubmit} 
+                  action="bug_report"
+                  className="p-6 space-y-4"
+                  showRecaptchaBadge={false}
+                >
                   {/* Issue Type */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Issue Type
                     </label>
                     <select
-                      value={formData.type}
-                      onChange={(e) => setFormData({ ...formData, type: e.target.value as any })}
+                      name="type"
+                      defaultValue={formData.type}
                       className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-red-500"
                     >
                       <option value="bug">Bug</option>
@@ -179,9 +197,9 @@ export default function BugReporter() {
                     </label>
                     <input
                       type="text"
+                      name="title"
                       required
-                      value={formData.title || ''}
-                      onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                      defaultValue={formData.title || ''}
                       placeholder="Brief description of the issue"
                       className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-red-500"
                     />
@@ -193,9 +211,9 @@ export default function BugReporter() {
                       Description *
                     </label>
                     <textarea
+                      name="description"
                       required
-                      value={formData.description || ''}
-                      onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                      defaultValue={formData.description || ''}
                       placeholder="Please describe the issue in detail. Include steps to reproduce if it's a bug."
                       rows={4}
                       className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-red-500"
@@ -220,25 +238,7 @@ export default function BugReporter() {
                     <p className="truncate"><strong>Browser:</strong> {formData.userAgent}</p>
                   </div>
 
-                  {/* Submit Button */}
-                  <button
-                    type="submit"
-                    disabled={isSubmitting || !formData.title || !formData.description}
-                    className="w-full px-6 py-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                  >
-                    {isSubmitting ? (
-                      <>
-                        <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white" />
-                        Submitting...
-                      </>
-                    ) : (
-                      <>
-                        <Send size={20} />
-                        Submit Report
-                      </>
-                    )}
-                  </button>
-                </form>
+                </ProtectedForm>
               ) : (
                 <div className="p-6 text-center">
                   <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">

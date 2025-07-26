@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { JobApplication } from '@/types/job-application'
 import { mockDatabase } from '@/lib/mock-db'
-import { withRateLimit } from '@/lib/api/withRateLimit'
+// // import { withRateLimit } from '@/lib/api/withRateLimit'
 
 // PUT /api/applications/[id]/interviews/[interviewId] - Update interview
-export const PUT = withRateLimit(async (
+export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string; interviewId: string }> }
 ) {
@@ -76,13 +76,8 @@ export const PUT = withRateLimit(async (
   }
 }
 
-}, {
-  interval: 60 * 1000, // 1 minute
-  uniqueTokenPerInterval: 30 // 30 requests per minute for interview updates
-})
-
 // DELETE /api/applications/[id]/interviews/[interviewId] - Cancel interview
-export const DELETE = withRateLimit(async (
+export async function DELETE(
   request: NextRequest,
   { params }: { params: Promise<{ id: string; interviewId: string }> }
 ) {
@@ -139,7 +134,4 @@ export const DELETE = withRateLimit(async (
       { status: 500 }
     )
   }
-}, {
-  interval: 60 * 1000, // 1 minute
-  uniqueTokenPerInterval: 20 // 20 requests per minute for cancelling interviews
-})
+}

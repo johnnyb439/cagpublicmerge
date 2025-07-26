@@ -13,6 +13,12 @@ interface Shortcut {
 export function useKeyboardShortcuts() {
   const router = useRouter()
 
+  // Check if device is mobile/touch
+  const isMobile = typeof window !== 'undefined' && 
+    (window.innerWidth <= 768 || 
+     'ontouchstart' in window || 
+     navigator.maxTouchPoints > 0)
+
   const shortcuts: Shortcut[] = [
     {
       key: 'k',
@@ -103,9 +109,14 @@ export function useKeyboardShortcuts() {
   }, [router])
 
   useEffect(() => {
+    // Don't add keyboard shortcuts on mobile devices
+    if (isMobile) {
+      return
+    }
+    
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [handleKeyDown])
+  }, [handleKeyDown, isMobile])
 
-  return shortcuts
+  return isMobile ? [] : shortcuts
 }

@@ -1,8 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getServerSession } from 'next-auth'
 import { authOptions } from '@/lib/auth/config'
+// // import { withRateLimit } from '@/lib/api/withRateLimit'
 
-export async function POST(req: NextRequest) {
+export async function POST(request: NextRequest) {
   try {
     // Get session for user info
     const session = await getServerSession(authOptions)

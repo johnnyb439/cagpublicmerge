@@ -1,6 +1,7 @@
 /**
  * Input validation and sanitization utilities
  */
+import { z } from 'zod'
 
 export class ValidationService {
   private static instance: ValidationService;
@@ -319,3 +320,63 @@ export class ValidationService {
 }
 
 export const validation = ValidationService.getInstance();
+
+// Zod schemas for enhanced validation
+export const zodSchemas = {
+  // AI Resume schemas
+  resumeAnalysis: z.object({
+    content: z.string().min(50, 'Resume content too short').max(50000, 'Resume content too long'),
+    jobDescription: z.string().max(10000, 'Job description too long').optional(),
+    targetRole: z.string().max(200, 'Target role too long').optional(),
+    experience: z.enum(['Entry', 'Mid', 'Senior', 'Executive']).optional()
+  }),
+  
+  realTimeOptimization: z.object({
+    content: z.string().min(10, 'Content too short').max(10000, 'Content too long'),
+    jobDescription: z.string().max(5000, 'Job description too long').optional(),
+    sessionId: z.string().max(100, 'Session ID too long').optional()
+  }),
+
+  // User authentication schemas
+  userLogin: z.object({
+    email: z.string().email('Invalid email format'),
+    password: z.string().min(1, 'Password is required')
+  }),
+
+  userRegister: z.object({
+    firstName: z.string().min(1, 'First name required').max(50, 'First name too long'),
+    lastName: z.string().min(1, 'Last name required').max(50, 'Last name too long'),
+    email: z.string().email('Invalid email format'),
+    password: z.string().min(8, 'Password must be at least 8 characters'),
+    terms: z.boolean().refine(val => val === true, 'Must accept terms')
+  }),
+
+  // Contact form schema
+  contactForm: z.object({
+    name: z.string().min(1, 'Name required').max(100, 'Name too long'),
+    email: z.string().email('Invalid email format'),
+    subject: z.string().min(5, 'Subject too short').max(200, 'Subject too long'),
+    message: z.string().min(10, 'Message too short').max(2000, 'Message too long'),
+    type: z.enum(['general', 'support', 'business', 'feedback']).optional()
+  })
+}
+
+// Enhanced validation with Zod
+export function validateWithZod<T>(schema: z.ZodSchema<T>, data: unknown): {
+  success: boolean
+  data?: T
+  errors?: string[]
+} {
+  try {
+    const result = schema.parse(data)
+    return { success: true, data: result }
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return {
+        success: false,
+        errors: error.errors.map(err => `${err.path.join('.')}: ${err.message}`)
+      }
+    }
+    return { success: false, errors: ['Unknown validation error'] }
+  }
+}

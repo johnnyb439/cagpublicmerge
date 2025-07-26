@@ -58,7 +58,16 @@
       "Bash(npm run analyze:*)",
       "Bash(npx playwright:*)",
       "Bash(rg:*)",
-      "Bash(npm run test:e2e:*)"
+      "Bash(npm run test:e2e:*)",
+      "Bash(touch:*)",
+      "Bash(tasklist:*)",
+      "Bash(wmic process where:*)",
+      "Bash(del \"C:\\Users\\JohnnyBeast\\OneDrive - Miysis Alliance\\0_2_ClaudeCode_Live Project\\cleared-advisory-group-website\\app\\robots.txt\\route.ts\")",
+      "Bash(PORT=3001 npm run dev)",
+      "Bash(cmd //c:*)",
+      "Bash(npm install:*)",
+      "Bash(mv:*)",
+      "Bash(npx next lint:*)"
     ],
     "deny": []
   }

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth/nextauth';
-import { withRateLimit } from '@/lib/api/withRateLimit';
+// // import { withRateLimit } from '@/lib/api/withRateLimit';
 import emailService from '@/lib/email/emailService';
 import { z } from 'zod';
 
@@ -14,7 +14,7 @@ const emailSchema = z.object({
 });
 
 // POST /api/notifications/email - Send email notification
-export const POST = withRateLimit(async (request: NextRequest) => {
+export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     
@@ -122,13 +122,10 @@ export const POST = withRateLimit(async (request: NextRequest) => {
       { status: 500 }
     );
   }
-}, {
-  interval: 60 * 1000, // 1 minute
-  uniqueTokenPerInterval: 20 // 20 emails per minute max
-});
+};
 
 // GET /api/notifications/email/status - Check email service status
-export const GET = withRateLimit(async (request: NextRequest) => {
+export async function GET(request: NextRequest) {
   const session = await getServerSession(authOptions);
   
   if (!session) {
@@ -144,8 +141,5 @@ export const GET = withRateLimit(async (request: NextRequest) => {
       emailServiceEnabled: emailService.isEnabled(),
       provider: process.env.EMAIL_PROVIDER || 'not configured'
     }
-  });
-}, {
-  interval: 60 * 1000,
-  uniqueTokenPerInterval: 10
-});
+  })
+}

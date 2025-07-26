@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { mockDatabase } from '@/lib/mock-db'
+// // // import { withRateLimit } from '@/lib/api/withRateLimit'
 
 export interface Certification {
   id: string
@@ -84,92 +85,6 @@ export async function GET(request: NextRequest) {
     console.error('Error fetching certifications:', error)
     return NextResponse.json(
       { success: false, error: 'Failed to fetch certifications' },
-      { status: 500 }
-    )
-  }
-}
-
-// POST /api/certifications - Create new certification
-export async function POST(request: NextRequest) {
-  try {
-    const body = await request.json()
-    
-    // Validate required fields
-    const requiredFields = ['name', 'issuer', 'issueDate', 'category']
-    for (const field of requiredFields) {
-      if (!body[field]) {
-        return NextResponse.json(
-          { success: false, error: `Missing required field: ${field}` },
-          { status: 400 }
-        )
-      }
-    }
-
-    const userId = body.userId || '1' // Mock user ID
-    
-    const newCertification: Certification = {
-      id: Date.now().toString(),
-      userId,
-      name: body.name,
-      issuer: body.issuer,
-      issueDate: body.issueDate,
-      expiryDate: body.expiryDate,
-      credentialId: body.credentialId,
-      credentialUrl: body.credentialUrl,
-      category: body.category,
-      status: getCertificationStatus(body.expiryDate),
-      verificationStatus: 'unverified',
-      documents: [],
-      createdAt: new Date().toISOString().split('T')[0],
-      updatedAt: new Date().toISOString().split('T')[0]
-    }
-
-    mockDatabase.certifications.push(newCertification)
-
-    return NextResponse.json({
-      success: true,
-      data: newCertification,
-      message: 'Certification added successfully'
-    }, { status: 201 })
-  } catch (error) {
-    console.error('Error creating certification:', error)
-    return NextResponse.json(
-      { success: false, error: 'Failed to add certification' },
-      { status: 500 }
-    )
-  }
-}
-
-// DELETE /api/certifications - Delete multiple certifications
-export async function DELETE(request: NextRequest) {
-  try {
-    const { searchParams } = new URL(request.url)
-    const ids = searchParams.get('ids')?.split(',') || []
-    const userId = searchParams.get('userId') || '1'
-
-    if (ids.length === 0) {
-      return NextResponse.json(
-        { success: false, error: 'No certification IDs provided' },
-        { status: 400 }
-      )
-    }
-
-    // Remove certifications with matching IDs for the user
-    const initialCount = mockDatabase.certifications.length
-    mockDatabase.certifications = mockDatabase.certifications.filter(cert => 
-      !(ids.includes(cert.id) && cert.userId === userId)
-    )
-    const deletedCount = initialCount - mockDatabase.certifications.length
-
-    return NextResponse.json({
-      success: true,
-      message: `Deleted ${deletedCount} certification(s)`,
-      deletedCount
-    })
-  } catch (error) {
-    console.error('Error deleting certifications:', error)
-    return NextResponse.json(
-      { success: false, error: 'Failed to delete certifications' },
       { status: 500 }
     )
   }

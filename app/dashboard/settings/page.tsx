@@ -21,6 +21,7 @@ import {
   Loader2
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import NotificationSettings from '@/components/notifications/NotificationSettings'
 
 interface UserProfile {
   id: string
@@ -219,7 +220,7 @@ export default function ProfileSettingsPage() {
           className="bg-white dark:bg-command-black rounded-lg shadow-md p-2 mb-6"
         >
           <div className="flex space-x-1">
-            {['personal', 'preferences', 'privacy'].map((tab) => (
+            {['personal', 'preferences', 'notifications', 'privacy'].map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -608,6 +609,11 @@ export default function ProfileSettingsPage() {
                 </div>
               </div>
             </div>
+          )}
+
+          {/* Notifications Tab */}
+          {activeTab === 'notifications' && (
+            <NotificationSettings />
           )}
 
           {/* Privacy Tab */}

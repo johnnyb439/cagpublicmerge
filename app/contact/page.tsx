@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, Phone, Calendar, Send, CheckCircle } from 'lucide-react'
 import BinaryBackground from '@/components/BinaryBackground'
+import ProtectedForm from '@/components/security/ProtectedForm'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -16,19 +17,43 @@ export default function ContactPage() {
   })
   const [isSubmitted, setIsSubmitted] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    // In production, this would send to your backend
-    console.log('Form submitted:', formData)
-    setIsSubmitted(true)
+  const handleSubmit = async (formDataSubmitted: FormData, recaptchaToken: string) => {
+    // Convert FormData to our expected format
+    const submitData = {
+      name: formDataSubmitted.get('name') as string,
+      email: formDataSubmitted.get('email') as string,
+      phone: formDataSubmitted.get('phone') as string,
+      service: formDataSubmitted.get('service') as string,
+      clearanceLevel: formDataSubmitted.get('clearanceLevel') as string,
+      message: formDataSubmitted.get('message') as string
+    }
+    
+    try {
+      // Send to backend with CAPTCHA token
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...submitData,
+          recaptchaToken
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to submit contact form')
+      }
+
+      // Update local state for UI
+      setFormData(submitData)
+      setIsSubmitted(true)
+    } catch (error) {
+      console.error('Contact form submission error:', error)
+      throw error
+    }
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }))
-  }
 
   return (
     <section className="relative min-h-screen bg-gray-50 dark:bg-ops-charcoal py-20">
@@ -116,107 +141,102 @@ export default function ContactPage() {
             className="lg:col-span-2"
           >
             {!isSubmitted ? (
-              <form onSubmit={handleSubmit} className="card">
+              <div className="card">
                 <h2 className="text-2xl font-montserrat font-semibold mb-6">Schedule Your Free Consultation</h2>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <ProtectedForm
+                  onSubmit={handleSubmit}
+                  action="contact_form"
+                  className="space-y-6"
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label htmlFor="name" className="block text-sm font-medium mb-2">Full Name *</label>
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        required
+                        defaultValue={formData.name}
+                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:border-sky-blue dark:focus:border-sky-blue focus:outline-none"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-medium mb-2">Email Address *</label>
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        defaultValue={formData.email}
+                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:border-sky-blue dark:focus:border-sky-blue focus:outline-none"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label htmlFor="phone" className="block text-sm font-medium mb-2">Phone Number</label>
+                      <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        defaultValue={formData.phone}
+                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:border-sky-blue dark:focus:border-sky-blue focus:outline-none"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label htmlFor="service" className="block text-sm font-medium mb-2">Service Affiliation *</label>
+                      <select
+                        id="service"
+                        name="service"
+                        required
+                        defaultValue={formData.service}
+                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:border-sky-blue dark:focus:border-sky-blue focus:outline-none"
+                      >
+                        <option value="">Select your affiliation</option>
+                        <option value="national-guard">National Guard</option>
+                        <option value="reserves">Reserves</option>
+                        <option value="veteran">Veteran</option>
+                        <option value="active-duty">Transitioning Active Duty</option>
+                        <option value="civilian">Cleared Civilian</option>
+                      </select>
+                    </div>
+                    
+                    <div>
+                      <label htmlFor="clearanceLevel" className="block text-sm font-medium mb-2">Clearance Level *</label>
+                      <select
+                        id="clearanceLevel"
+                        name="clearanceLevel"
+                        required
+                        defaultValue={formData.clearanceLevel}
+                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:border-sky-blue dark:focus:border-sky-blue focus:outline-none"
+                      >
+                        <option value="">Select clearance level</option>
+                        <option value="secret">SECRET</option>
+                        <option value="ts">TOP SECRET</option>
+                        <option value="ts-sci">TS/SCI</option>
+                        <option value="public-trust">Public Trust</option>
+                        <option value="none">No Clearance</option>
+                      </select>
+                    </div>
+                  </div>
+                  
                   <div>
-                    <label htmlFor="name" className="block text-sm font-medium mb-2">Full Name *</label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      required
-                      value={formData.name}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:border-sky-blue dark:focus:border-sky-blue focus:outline-none"
+                    <label htmlFor="message" className="block text-sm font-medium mb-2">
+                      Tell us about your career goals
+                    </label>
+                    <textarea
+                      id="message"
+                      name="message"
+                      rows={4}
+                      defaultValue={formData.message}
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:border-sky-blue dark:focus:border-sky-blue focus:outline-none resize-none"
+                      placeholder="What are your IT career goals? What challenges are you facing?"
                     />
                   </div>
-                  
-                  <div>
-                    <label htmlFor="email" className="block text-sm font-medium mb-2">Email Address *</label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      required
-                      value={formData.email}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:border-sky-blue dark:focus:border-sky-blue focus:outline-none"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="phone" className="block text-sm font-medium mb-2">Phone Number</label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:border-sky-blue dark:focus:border-sky-blue focus:outline-none"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="service" className="block text-sm font-medium mb-2">Service Affiliation *</label>
-                    <select
-                      id="service"
-                      name="service"
-                      required
-                      value={formData.service}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:border-sky-blue dark:focus:border-sky-blue focus:outline-none"
-                    >
-                      <option value="">Select your affiliation</option>
-                      <option value="national-guard">National Guard</option>
-                      <option value="reserves">Reserves</option>
-                      <option value="veteran">Veteran</option>
-                      <option value="active-duty">Transitioning Active Duty</option>
-                      <option value="civilian">Cleared Civilian</option>
-                    </select>
-                  </div>
-                  
-                  <div>
-                    <label htmlFor="clearanceLevel" className="block text-sm font-medium mb-2">Clearance Level *</label>
-                    <select
-                      id="clearanceLevel"
-                      name="clearanceLevel"
-                      required
-                      value={formData.clearanceLevel}
-                      onChange={handleChange}
-                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:border-sky-blue dark:focus:border-sky-blue focus:outline-none"
-                    >
-                      <option value="">Select clearance level</option>
-                      <option value="secret">SECRET</option>
-                      <option value="ts">TOP SECRET</option>
-                      <option value="ts-sci">TS/SCI</option>
-                      <option value="public-trust">Public Trust</option>
-                      <option value="none">No Clearance</option>
-                    </select>
-                  </div>
-                </div>
-                
-                <div className="mt-6">
-                  <label htmlFor="message" className="block text-sm font-medium mb-2">
-                    Tell us about your career goals
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows={4}
-                    value={formData.message}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-lg focus:border-sky-blue dark:focus:border-sky-blue focus:outline-none resize-none"
-                    placeholder="What are your IT career goals? What challenges are you facing?"
-                  />
-                </div>
-                
-                <button type="submit" className="btn-primary w-full mt-6 flex items-center justify-center">
-                  Send Message
-                  <Send className="ml-2" size={20} />
-                </button>
-              </form>
+                </ProtectedForm>
+              </div>
             ) : (
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}

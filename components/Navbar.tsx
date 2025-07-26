@@ -27,6 +27,7 @@ export default function Navbar() {
     { href: '/mock-interview', label: 'Mock Interview' },
     { href: '/resources', label: 'Resources' },
     { href: '/networking', label: 'Network' },
+    { href: '/search', label: 'Search' },
   ]
 
   return (
@@ -129,12 +130,12 @@ export default function Navbar() {
 
         {/* Mobile Menu */}
         {isOpen && (
-          <div className="lg:hidden glass-card mt-2">
+          <div className="lg:hidden glass-card mt-2 p-4">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="block text-white hover:text-sky-blue py-2 transition-colors duration-300"
+                className="block text-white hover:text-sky-blue py-3 px-2 transition-colors duration-300 border-b border-gray-700/30 last:border-b-0"
                 onClick={() => setIsOpen(false)}
               >
                 {link.label}

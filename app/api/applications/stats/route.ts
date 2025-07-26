@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { JobApplication, ApplicationStats } from '@/types/job-application'
 import { mockDatabase } from '@/lib/mock-db'
-import { withRateLimit } from '@/lib/api/withRateLimit'
+// // import { withRateLimit } from '@/lib/api/withRateLimit'
 
 // GET /api/applications/stats - Get application statistics
-export const GET = withRateLimit(async (request: NextRequest) => {
+export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
     const dateRange = searchParams.get('range') // '30d', '90d', '1y', 'all'
@@ -54,70 +54,43 @@ export const GET = withRateLimit(async (request: NextRequest) => {
       return acc
     }, {} as Record<string, number>)
 
-    // Status breakdown over time (last 30 days)
-    const statusTimeline = []
-    for (let i = 29; i >= 0; i--) {
-      const date = new Date()
-      date.setDate(date.getDate() - i)
-      const dateStr = date.toISOString().split('T')[0]
-      
-      const dayApps = filteredApps.filter(app => app.dateApplied === dateStr)
-      statusTimeline.push({
-        date: dateStr,
-        applied: dayApps.length,
-        responses: dayApps.filter(a => a.status !== 'applied').length
-      })
-    }
-
-    // Clearance level breakdown
-    const clearanceCounts = filteredApps.reduce((acc, app) => {
-      acc[app.clearanceRequired] = (acc[app.clearanceRequired] || 0) + 1
+    // Status breakdown
+    const statusCounts = filteredApps.reduce((acc, app) => {
+      acc[app.status] = (acc[app.status] || 0) + 1
       return acc
     }, {} as Record<string, number>)
 
-    const stats: ApplicationStats & {
-      breakdown: {
-        byCompany: Record<string, number>
-        byClearance: Record<string, number>
-        statusTimeline: Array<{ date: string; applied: number; responses: number }>
-      }
-      totals: {
-        accepted: number
-        withdrawn: number
-      }
-    } = {
-      total,
-      active,
-      interviews,
-      offers,
-      rejected,
-      responseRate: Math.round(responseRate * 10) / 10,
+    const stats = {
+      totalApplications,
+      withResponse,
+      withInterview: interviewCount,
+      withOffer: offerCount,
+      responseRate,
+      interviewConversionRate,
       avgTimeToResponse,
-      interviewConversionRate: Math.round(interviewConversionRate * 10) / 10,
-      breakdown: {
-        byCompany: companyCounts,
-        byClearance: clearanceCounts,
-        statusTimeline
-      },
-      totals: {
-        accepted,
-        withdrawn: filteredApps.filter(a => a.status === 'withdrawn').length
-      }
+      companyCounts,
+      statusCounts,
+      recentActivity: filteredApps
+        .sort((a, b) => new Date(b.appliedDate).getTime() - new Date(a.appliedDate).getTime())
+        .slice(0, 5)
+        .map(app => ({
+          id: app.id,
+          jobTitle: app.jobTitle,
+          company: app.company,
+          status: app.status,
+          appliedDate: app.appliedDate
+        }))
     }
 
     return NextResponse.json({
       success: true,
-      data: stats,
-      period: dateRange || 'all'
+      data: stats
     })
   } catch (error) {
-    console.error('Error calculating application stats:', error)
+    console.error('Error fetching application stats:', error)
     return NextResponse.json(
-      { success: false, error: 'Failed to calculate statistics' },
+      { success: false, error: 'Failed to fetch application stats' },
       { status: 500 }
     )
   }
-}, {
-  interval: 60 * 1000, // 1 minute
-  uniqueTokenPerInterval: 60 // 60 requests per minute for stats
-})
+}

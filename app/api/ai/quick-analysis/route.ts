@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { resumeAnalyzer } from '@/lib/ai/resume-analyzer'
-import { withRateLimit } from '@/lib/api/withRateLimit'
+// // import { withRateLimit } from '@/lib/api/withRateLimit'
 
-export const POST = withRateLimit(async (request: NextRequest) => {
+export async function POST(request: NextRequest) {
   try {
     const { content } = await request.json()
 
@@ -31,7 +31,4 @@ export const POST = withRateLimit(async (request: NextRequest) => {
       { status: 500 }
     )
   }
-}, {
-  interval: 60 * 60 * 1000, // 1 hour
-  uniqueTokenPerInterval: 20 // 20 requests per hour
-})
+}

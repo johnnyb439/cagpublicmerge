@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { mockDatabase } from '@/lib/mock-db'
-import { withRateLimit } from '@/lib/api/withRateLimit'
+// // // import { withRateLimit } from '@/lib/api/withRateLimit'
 
 export interface UserProfile {
   id: string
@@ -48,7 +48,7 @@ export interface UserProfile {
 // Use shared mock database
 
 // GET /api/profile - Get user profile
-export const GET = withRateLimit(async (request: NextRequest) => {
+export async function GET(request: NextRequest) {
   try {
     // In production, get userId from authentication token
     const { searchParams } = new URL(request.url)
@@ -84,13 +84,8 @@ export const GET = withRateLimit(async (request: NextRequest) => {
   }
 }
 
-}, {
-  interval: 60 * 1000, // 1 minute
-  uniqueTokenPerInterval: 60 // 60 requests per minute for reading profile
-})
-
 // PUT /api/profile - Update user profile
-export const PUT = withRateLimit(async (request: NextRequest) => {
+export async function PUT(request: NextRequest) {
   try {
     const body = await request.json()
     // In production, get userId from authentication token
@@ -146,13 +141,8 @@ export const PUT = withRateLimit(async (request: NextRequest) => {
   }
 }
 
-}, {
-  interval: 60 * 1000, // 1 minute
-  uniqueTokenPerInterval: 30 // 30 requests per minute for updating profile
-})
-
 // POST /api/profile - Create new user profile
-export const POST = withRateLimit(async (request: NextRequest) => {
+export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
     
@@ -222,7 +212,4 @@ export const POST = withRateLimit(async (request: NextRequest) => {
       { status: 500 }
     )
   }
-}, {
-  interval: 60 * 1000, // 1 minute
-  uniqueTokenPerInterval: 10 // 10 requests per minute for creating profiles
-})
+}

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth/nextauth';
-import { withRateLimit } from '@/lib/api/withRateLimit';
+// // import { withRateLimit } from '@/lib/api/withRateLimit';
 import { resumeAnalyzer } from '@/lib/ai/resume-analyzer';
 import { z } from 'zod';
 
@@ -14,7 +14,7 @@ const resumeReviewSchema = z.object({
 });
 
 // POST /api/ai/resume-review - Analyze resume with AI
-export const POST = withRateLimit(async (request: NextRequest) => {
+export async function POST(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     
@@ -104,13 +104,10 @@ export const POST = withRateLimit(async (request: NextRequest) => {
       { status: 500 }
     );
   }
-}, {
-  interval: 60 * 1000, // 1 minute
-  uniqueTokenPerInterval: 5 // 5 analyses per minute per user
-});
+};
 
 // GET /api/ai/resume-review/history - Get user's analysis history
-export const GET = withRateLimit(async (request: NextRequest) => {
+export async function GET(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);
     
@@ -158,7 +155,4 @@ export const GET = withRateLimit(async (request: NextRequest) => {
       { status: 500 }
     );
   }
-}, {
-  interval: 60 * 1000,
-  uniqueTokenPerInterval: 10
-});
+};

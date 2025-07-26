@@ -133,6 +133,24 @@ export default function CertificationsPage() {
         certification.status = 'expired'
       } else if (daysUntilExpiration <= 30) {
         certification.status = 'expiring-soon'
+        
+        // Schedule certification reminder notification
+        try {
+          await fetch('/api/notifications', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              userId: '1',
+              action: 'schedule_cert_reminder',
+              certificationName: certification.name,
+              expirationDate: certification.expirationDate,
+              daysRemaining: daysUntilExpiration,
+              userName: 'User'
+            })
+          })
+        } catch (error) {
+          console.error('Error scheduling certification reminder:', error)
+        }
       }
 
       const response = await fetch('/api/certifications', {

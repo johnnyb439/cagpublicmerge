@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { optimizationService } from '@/lib/ai/optimization-service'
-import { withRateLimit } from '@/lib/api/withRateLimit'
+// // import { withRateLimit } from '@/lib/api/withRateLimit'
 
-export const POST = withRateLimit(async (request: NextRequest) => {
+export async function POST(request: NextRequest) {
   try {
     const { content, jobDescription, sessionId } = await request.json()
 
@@ -35,12 +35,9 @@ export const POST = withRateLimit(async (request: NextRequest) => {
       { status: 500 }
     )
   }
-}, {
-  interval: 60 * 60 * 1000, // 1 hour
-  uniqueTokenPerInterval: 15 // 15 requests per hour for realtime optimization
-})
+}
 
-export const DELETE = withRateLimit(async (request: NextRequest) => {
+export async function DELETE(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
     const sessionId = searchParams.get('sessionId')
@@ -58,7 +55,4 @@ export const DELETE = withRateLimit(async (request: NextRequest) => {
       { status: 500 }
     )
   }
-}, {
-  interval: 60 * 1000, // 1 minute
-  uniqueTokenPerInterval: 30 // 30 requests per minute for cache clearing
-})
+}

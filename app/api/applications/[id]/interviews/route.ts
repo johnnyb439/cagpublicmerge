@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { JobApplication, Interview } from '@/types/job-application'
 import { mockDatabase } from '@/lib/mock-db'
-import { withRateLimit } from '@/lib/api/withRateLimit'
+// // import { withRateLimit } from '@/lib/api/withRateLimit'
 
 // GET /api/applications/[id]/interviews - Get all interviews for application
-export const GET = withRateLimit(async (
+export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
@@ -32,13 +32,8 @@ export const GET = withRateLimit(async (
   }
 }
 
-}, {
-  interval: 60 * 1000, // 1 minute
-  uniqueTokenPerInterval: 60 // 60 requests per minute for reading
-})
-
 // POST /api/applications/[id]/interviews - Add new interview
-export const POST = withRateLimit(async (
+export async function POST(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
@@ -97,15 +92,12 @@ export const POST = withRateLimit(async (
       success: true,
       data: newInterview,
       message: 'Interview scheduled successfully'
-    }, { status: 201 })
+    })
   } catch (error) {
-    console.error('Error creating interview:', error)
+    console.error('Error scheduling interview:', error)
     return NextResponse.json(
       { success: false, error: 'Failed to schedule interview' },
       { status: 500 }
     )
   }
-}, {
-  interval: 60 * 1000, // 1 minute
-  uniqueTokenPerInterval: 20 // 20 requests per minute for scheduling interviews
-})
+}

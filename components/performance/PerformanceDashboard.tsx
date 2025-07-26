@@ -3,9 +3,14 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Activity, Zap, Globe, Database, TrendingUp, AlertTriangle, CheckCircle } from 'lucide-react'
-import { getPerformanceMonitor } from '@/lib/performance/metrics'
-import { getResourceTracker } from '@/lib/performance/resource-tracker'
-import { WebVitalsMetrics } from '@/lib/performance/metrics'
+
+interface WebVitalsMetrics {
+  FCP?: number;
+  LCP?: number;
+  FID?: number;
+  CLS?: number;
+  TTFB?: number;
+}
 
 interface PerformanceData {
   webVitals: WebVitalsMetrics
@@ -27,17 +32,41 @@ interface PerformanceData {
 export default function PerformanceDashboard() {
   const [performanceData, setPerformanceData] = useState<PerformanceData | null>(null)
   const [isVisible, setIsVisible] = useState(false)
+  const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
+    setIsClient(true)
+  }, [])
+
+  useEffect(() => {
+    if (!isClient) return
+
     const updatePerformanceData = () => {
-      const monitor = getPerformanceMonitor()
-      const resourceTracker = getResourceTracker()
+      // Mock performance data for development
+      const mockData: PerformanceData = {
+        webVitals: {
+          FCP: 1200,
+          LCP: 2100,
+          FID: 80,
+          CLS: 0.05,
+          TTFB: 600
+        },
+        resources: {
+          total: 45,
+          scripts: 12,
+          stylesheets: 8,
+          images: 15,
+          totalSize: 2048000,
+          cacheHitRate: 85
+        },
+        metrics: [
+          { name: 'Page Load', value: 1200, unit: 'ms' },
+          { name: 'DOM Ready', value: 800, unit: 'ms' },
+          { name: 'Interactive', value: 1500, unit: 'ms' }
+        ]
+      }
       
-      setPerformanceData({
-        webVitals: monitor.getWebVitals(),
-        resources: resourceTracker.analyzeResources(),
-        metrics: monitor.getMetrics().slice(-10) // Last 10 metrics
-      })
+      setPerformanceData(mockData)
     }
 
     // Initial update
@@ -47,7 +76,7 @@ export default function PerformanceDashboard() {
     const interval = setInterval(updatePerformanceData, 5000)
 
     return () => clearInterval(interval)
-  }, [])
+  }, [isClient])
 
   const getWebVitalStatus = (metric: string, value: number | undefined) => {
     if (value === undefined) return { color: 'text-gray-500', icon: AlertTriangle, status: 'Pending' }
@@ -72,7 +101,7 @@ export default function PerformanceDashboard() {
     }
   }
 
-  if (!performanceData) return null
+  if (!isClient || !performanceData) return null
 
   return (
     <>

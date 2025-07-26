@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Certification } from '../route'
+// // import { withRateLimit } from '@/lib/api/withRateLimit'
 
 // Mock database - replace with actual database in production
 let certifications: Certification[] = []

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { Search, MapPin, Shield, DollarSign, Filter, ChevronRight, Layers, Save, ChevronLeft, Building } from 'lucide-react'
 import Link from 'next/link'
@@ -69,12 +69,7 @@ export default function JobsPage() {
     certifications: []
   })
 
-  // Fetch jobs from API
-  useEffect(() => {
-    fetchJobs()
-  }, [filters, currentPage, sortBy])
-
-  const fetchJobs = async () => {
+  const fetchJobs = useCallback(async () => {
     setIsLoading(true)
     try {
       const params = new URLSearchParams()
@@ -110,7 +105,12 @@ export default function JobsPage() {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [filters, currentPage, sortBy])
+
+  // Fetch jobs from API
+  useEffect(() => {
+    fetchJobs()
+  }, [fetchJobs])
 
   const handleSaveSearch = async () => {
     try {
@@ -216,7 +216,7 @@ export default function JobsPage() {
               transition={{ duration: 0.8, delay: 0.1 }}
               className="glass-card rounded-lg shadow-md p-6 mb-8"
             >
-              <div className="flex flex-col md:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
                 <div className="flex-1 relative">
                   <Search className="absolute left-3 top-3 text-gray-400 dark:text-gray-500" size={20} />
                   <input
@@ -239,7 +239,7 @@ export default function JobsPage() {
                 </div>
                 <button
                   onClick={() => setShowAdvancedFilters(true)}
-                  className="px-6 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center"
+                  className="px-4 sm:px-6 py-3 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors flex items-center justify-center sm:justify-start"
                 >
                   <Filter size={20} className="mr-2" />
                   Filters
@@ -349,7 +349,7 @@ export default function JobsPage() {
                       transition={{ duration: 0.5, delay: index * 0.1 }}
                       className="bg-white dark:bg-command-black rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
                     >
-                      <div className="flex flex-col md:flex-row justify-between">
+                      <div className="flex flex-col lg:flex-row justify-between">
                         <div className="flex-1">
                           <div className="flex items-start justify-between mb-2">
                             <h3 className="text-xl font-montserrat font-semibold">
@@ -366,7 +366,7 @@ export default function JobsPage() {
                             />
                           </div>
                           
-                          <div className="flex items-center gap-3 text-gray-600 dark:text-gray-400 mb-2">
+                          <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 text-gray-600 dark:text-gray-400 mb-2">
                             <div className="flex items-center">
                               <Building size={16} className="mr-1" />
                               {job.company}

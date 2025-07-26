@@ -5,55 +5,72 @@ import { motion } from 'framer-motion'
 import { Building, Mail, Lock, Phone, Users, Check, AlertCircle } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import ProtectedForm from '@/components/security/ProtectedForm'
 
 export default function CompanyRegisterPage() {
   const router = useRouter()
-  const [formData, setFormData] = useState({
-    companyName: '',
-    contactName: '',
-    email: '',
-    phone: '',
-    password: '',
-    confirmPassword: '',
-    companySize: '',
-    hiringNeeds: '',
-    agreeToTerms: false
-  })
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError('')
+  const handleSubmit = async (formData: FormData, recaptchaToken: string) => {
+    const companyName = formData.get('companyName') as string
+    const contactName = formData.get('contactName') as string
+    const email = formData.get('email') as string
+    const phone = formData.get('phone') as string
+    const password = formData.get('password') as string
+    const confirmPassword = formData.get('confirmPassword') as string
+    const companySize = formData.get('companySize') as string
+    const hiringNeeds = formData.get('hiringNeeds') as string
+    const agreeToTerms = formData.get('agreeToTerms') === 'on'
 
     // Validation
-    if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match')
-      return
+    if (password !== confirmPassword) {
+      throw new Error('Passwords do not match')
     }
 
-    if (formData.password.length < 8) {
-      setError('Password must be at least 8 characters')
-      return
+    if (password.length < 8) {
+      throw new Error('Password must be at least 8 characters')
     }
 
-    if (!formData.agreeToTerms) {
-      setError('Please agree to the terms and conditions')
-      return
+    if (!agreeToTerms) {
+      throw new Error('Please agree to the terms and conditions')
     }
 
-    setLoading(true)
+    try {
+      // Send registration request with CAPTCHA token
+      const response = await fetch('/api/auth/register-company', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          companyName,
+          contactName,
+          email,
+          phone,
+          password,
+          companySize,
+          hiringNeeds,
+          recaptchaToken
+        }),
+      })
 
-    // Simulate registration
-    setTimeout(() => {
+      if (!response.ok) {
+        const data = await response.json()
+        throw new Error(data.error || 'Company registration failed')
+      }
+
+      // Store company data locally
       localStorage.setItem('company', JSON.stringify({
-        email: formData.email,
-        companyName: formData.companyName,
-        contactName: formData.contactName,
+        email,
+        companyName,
+        contactName,
         isCompany: true
       }))
+      
       router.push('/dashboard')
-    }, 1000)
+    } catch (error) {
+      console.error('Company registration error:', error)
+      throw error
+    }
   }
 
   return (
@@ -92,7 +109,11 @@ export default function CompanyRegisterPage() {
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <ProtectedForm
+            onSubmit={handleSubmit}
+            action="company_register"
+            className="space-y-4"
+          >
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label htmlFor="companyName" className="block text-sm font-medium mb-2 dark:text-gray-300">
@@ -103,8 +124,7 @@ export default function CompanyRegisterPage() {
                   <input
                     type="text"
                     id="companyName"
-                    value={formData.companyName}
-                    onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
+                    name="companyName"
                     className="w-full pl-10 pr-4 py-3 border dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg focus:outline-none focus:border-dynamic-green dark:text-white"
                     placeholder="Acme Defense Corp"
                     required
@@ -121,8 +141,7 @@ export default function CompanyRegisterPage() {
                   <input
                     type="text"
                     id="contactName"
-                    value={formData.contactName}
-                    onChange={(e) => setFormData({ ...formData, contactName: e.target.value })}
+                    name="contactName"
                     className="w-full pl-10 pr-4 py-3 border dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg focus:outline-none focus:border-dynamic-green dark:text-white"
                     placeholder="Jane Smith"
                     required
@@ -141,8 +160,7 @@ export default function CompanyRegisterPage() {
                   <input
                     type="email"
                     id="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    name="email"
                     className="w-full pl-10 pr-4 py-3 border dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg focus:outline-none focus:border-dynamic-green dark:text-white"
                     placeholder="hr@company.com"
                     required
@@ -159,8 +177,7 @@ export default function CompanyRegisterPage() {
                   <input
                     type="tel"
                     id="phone"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    name="phone"
                     className="w-full pl-10 pr-4 py-3 border dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg focus:outline-none focus:border-dynamic-green dark:text-white"
                     placeholder="(555) 123-4567"
                     required
@@ -175,8 +192,7 @@ export default function CompanyRegisterPage() {
               </label>
               <select
                 id="companySize"
-                value={formData.companySize}
-                onChange={(e) => setFormData({ ...formData, companySize: e.target.value })}
+                name="companySize"
                 className="w-full px-4 py-3 border dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg focus:outline-none focus:border-dynamic-green dark:text-white"
                 required
               >
@@ -195,8 +211,7 @@ export default function CompanyRegisterPage() {
               </label>
               <textarea
                 id="hiringNeeds"
-                value={formData.hiringNeeds}
-                onChange={(e) => setFormData({ ...formData, hiringNeeds: e.target.value })}
+                name="hiringNeeds"
                 className="w-full px-4 py-3 border dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg focus:outline-none focus:border-dynamic-green dark:text-white"
                 rows={3}
                 placeholder="e.g., Looking for 5 cleared network engineers for upcoming contract..."
@@ -213,8 +228,7 @@ export default function CompanyRegisterPage() {
                   <input
                     type="password"
                     id="password"
-                    value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                    name="password"
                     className="w-full pl-10 pr-4 py-3 border dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg focus:outline-none focus:border-dynamic-green dark:text-white"
                     placeholder="••••••••"
                     required
@@ -231,8 +245,7 @@ export default function CompanyRegisterPage() {
                   <input
                     type="password"
                     id="confirmPassword"
-                    value={formData.confirmPassword}
-                    onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                    name="confirmPassword"
                     className="w-full pl-10 pr-4 py-3 border dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg focus:outline-none focus:border-dynamic-green dark:text-white"
                     placeholder="••••••••"
                     required
@@ -241,24 +254,14 @@ export default function CompanyRegisterPage() {
               </div>
             </div>
 
-            {error && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="flex items-center p-3 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-400 rounded-lg"
-              >
-                <AlertCircle size={20} className="mr-2" />
-                <span className="text-sm">{error}</span>
-              </motion.div>
-            )}
 
             <div className="flex items-start">
               <input
                 type="checkbox"
                 id="terms"
-                checked={formData.agreeToTerms}
-                onChange={(e) => setFormData({ ...formData, agreeToTerms: e.target.checked })}
+                name="agreeToTerms"
                 className="mt-1 mr-2"
+                required
               />
               <label htmlFor="terms" className="text-sm text-gray-600 dark:text-gray-400">
                 I agree to the{' '}
@@ -272,14 +275,7 @@ export default function CompanyRegisterPage() {
               </label>
             </div>
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {loading ? 'Creating Company Account...' : 'Create Company Account'}
-            </button>
-          </form>
+          </ProtectedForm>
 
           {/* Benefits */}
           <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">

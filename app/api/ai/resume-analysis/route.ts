@@ -1,22 +1,35 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { resumeAnalyzer } from '@/lib/ai/resume-analyzer'
 import { ResumeAnalysisRequest } from '@/types/ai-resume'
-import { withRateLimit } from '@/lib/api/withRateLimit'
+import { validateWithZod, zodSchemas } from '@/lib/security/validation'
+import { securityLogger } from '@/lib/security/monitoring'
 
-export const POST = withRateLimit(async (request: NextRequest) => {
+export async function POST(request: NextRequest) {
+  const ip = request.headers.get('x-forwarded-for') || 'unknown'
+  const userAgent = request.headers.get('user-agent')
+  
   try {
-    const body: ResumeAnalysisRequest = await request.json()
+    const body = await request.json()
 
-    // Validate required fields
-    if (!body.content || body.content.trim().length < 50) {
+    // Validate input with Zod
+    const validation = validateWithZod(zodSchemas.resumeAnalysis, body)
+    if (!validation.success) {
+      securityLogger.logValidationFailure(ip, 'resume-analysis', JSON.stringify(body), validation.errors?.join(', ') || '', userAgent || undefined)
       return NextResponse.json(
-        { error: 'Resume content is required and must be at least 50 characters' },
+        { error: 'Validation failed', details: validation.errors },
         { status: 400 }
       )
     }
 
     // Analyze resume
-    const analysis = await resumeAnalyzer.analyzeResume(body)
+    if (!validation.data) {
+      return NextResponse.json(
+        { error: 'Invalid request data' },
+        { status: 400 }
+      )
+    }
+    
+    const analysis = await resumeAnalyzer.analyzeResume(validation.data)
 
     return NextResponse.json({
       success: true,
@@ -33,12 +46,9 @@ export const POST = withRateLimit(async (request: NextRequest) => {
       { status: 500 }
     )
   }
-}, {
-  interval: 60 * 60 * 1000, // 1 hour
-  uniqueTokenPerInterval: 10 // 10 requests per hour
-})
+}
 
-export const GET = withRateLimit(async (request: NextRequest) => {
+export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
     const demo = searchParams.get('demo')
@@ -97,7 +107,4 @@ JavaScript, Python, React, Node.js, AWS, Docker, SQL, Git
       { status: 500 }
     )
   }
-}, {
-  interval: 60 * 60 * 1000, // 1 hour  
-  uniqueTokenPerInterval: 20 // 20 requests per hour for GET (demo)
-})
+}

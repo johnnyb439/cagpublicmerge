@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { withRateLimit } from '@/lib/api/withRateLimit'
+// // // import { withRateLimit } from '@/lib/api/withRateLimit'
 
 export interface JobMatchResult {
   id: string
@@ -91,7 +91,7 @@ const mockJobs = [
 ]
 
 // POST /api/jobs/match - Find matching jobs based on user profile/resume
-export const POST = withRateLimit(async (request: NextRequest) => {
+export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
     
@@ -261,13 +261,8 @@ function getRequiredExperience(jobTitle: string): number {
   return 3 // Default mid-level
 }
 
-}, {
-  interval: 60 * 1000, // 1 minute
-  uniqueTokenPerInterval: 10 // 10 requests per minute for job matching (expensive operation)
-})
-
 // GET /api/jobs/match - Get saved job matches for user
-export const GET = withRateLimit(async (request: NextRequest) => {
+export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
     const userId = searchParams.get('userId') || '1'
@@ -295,7 +290,4 @@ export const GET = withRateLimit(async (request: NextRequest) => {
       { status: 500 }
     )
   }
-}, {
-  interval: 60 * 1000, // 1 minute
-  uniqueTokenPerInterval: 30 // 30 requests per minute for reading saved matches
-})
+}

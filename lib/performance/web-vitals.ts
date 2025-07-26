@@ -1,4 +1,4 @@
-import { onCLS, onFCP, onFID, onLCP, onTTFB, onINP, CLSMetric, FCPMetric, FIDMetric, LCPMetric, TTFBMetric, INPMetric } from 'web-vitals'
+import { onCLS, onFCP, onLCP, onTTFB, onINP, CLSMetric, FCPMetric, LCPMetric, TTFBMetric, INPMetric } from 'web-vitals'
 import { getPerformanceMonitor } from './metrics'
 
 export interface WebVitalsScore {
@@ -62,17 +62,7 @@ export function initWebVitals() {
     })
   })
 
-  // First Input Delay
-  onFID((metric: FIDMetric) => {
-    const value = formatMetricValue('FID', metric.value)
-    monitor.recordMetric('web_vitals_fid', value, 'ms')
-    sendWebVitalToAnalytics({
-      metric: 'FID',
-      value,
-      rating: getRating('FID', value),
-      threshold: thresholds.FID
-    })
-  })
+  // Note: FID is deprecated, INP is the replacement metric
 
   // Cumulative Layout Shift
   onCLS((metric: CLSMetric) => {

@@ -7,32 +7,43 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { secureStorage } from '@/lib/security/secureStorage'
 import { validation } from '@/lib/security/validation'
+import ProtectedForm from '@/components/security/ProtectedForm'
 
 export default function LoginPage() {
   const router = useRouter()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
   const [userType, setUserType] = useState<'jobseeker' | 'employer'>('jobseeker')
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError('')
-    setLoading(true)
+  const handleSubmit = async (formData: FormData, recaptchaToken: string) => {
+    const email = formData.get('email') as string
+    const password = formData.get('password') as string
 
     try {
       // Validate email
       if (!validation.isValidEmail(email)) {
-        setError('Please enter a valid email address')
-        setLoading(false)
-        return
+        throw new Error('Please enter a valid email address')
       }
 
       if (!email || !password) {
-        setError('Please enter both email and password')
-        setLoading(false)
-        return
+        throw new Error('Please enter both email and password')
+      }
+
+      // Send login request with CAPTCHA token
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: validation.sanitizeInput(email),
+          password,
+          userType,
+          recaptchaToken
+        }),
+      })
+
+      if (!response.ok) {
+        const data = await response.json()
+        throw new Error(data.error || 'Login failed')
       }
 
       // Initialize secure storage with password-derived key
@@ -55,8 +66,7 @@ export default function LoginPage() {
       }, 500)
     } catch (error) {
       console.error('Login error:', error)
-      setError('Login failed. Please try again.')
-      setLoading(false)
+      throw error
     }
   }
 
@@ -107,7 +117,12 @@ export default function LoginPage() {
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <ProtectedForm
+            onSubmit={handleSubmit}
+            action="login"
+            className="space-y-6"
+            showRecaptchaBadge={false}
+          >
             <div>
               <label htmlFor="email" className="block text-sm font-medium mb-2 text-gray-200">
                 Email Address
@@ -117,8 +132,7 @@ export default function LoginPage() {
                 <input
                   type="email"
                   id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  name="email"
                   className="w-full pl-10 pr-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-sky-blue text-white placeholder-gray-400"
                   placeholder={userType === 'employer' ? 'recruiter@company.com' : 'john.doe@email.com'}
                   required
@@ -135,34 +149,14 @@ export default function LoginPage() {
                 <input
                   type="password"
                   id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  name="password"
                   className="w-full pl-10 pr-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:border-sky-blue text-white placeholder-gray-400"
                   placeholder="••••••••"
                   required
                 />
               </div>
             </div>
-
-            {error && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="flex items-center p-3 bg-red-900/50 text-red-300 rounded-lg"
-              >
-                <AlertCircle size={20} className="mr-2" />
-                {error}
-              </motion.div>
-            )}
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-gradient-to-r from-sky-blue to-neon-green text-white py-3 rounded-lg font-medium hover:shadow-lg transition-all duration-300 disabled:opacity-50"
-            >
-              {loading ? 'Logging in...' : 'Log In'}
-            </button>
-          </form>
+          </ProtectedForm>
 
           {/* Links */}
           <div className="mt-6 text-center space-y-2">

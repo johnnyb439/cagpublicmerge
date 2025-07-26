@@ -15,7 +15,8 @@ import {
   ChevronRight,
   BookOpen,
   MessageSquare,
-  FolderOpen
+  FolderOpen,
+  Users
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -212,7 +213,7 @@ export default function DashboardPage() {
         </motion.div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
           {isDataLoading ? (
             <>
               {[1, 2, 3, 4].map((i) => (
@@ -288,9 +289,9 @@ export default function DashboardPage() {
 
         {/* Tab Content */}
         {activeTab === 'overview' && (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
             {/* Left Column */}
-            <div className="lg:col-span-2 space-y-8">
+            <div className="lg:col-span-2 space-y-6 lg:space-y-8">
             {/* Quick Actions */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -299,7 +300,7 @@ export default function DashboardPage() {
               className="bg-white dark:bg-command-black rounded-lg shadow-md p-6"
             >
               <h2 className="text-xl font-montserrat font-bold mb-6">Quick Actions</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-3 md:gap-4">
                 <Link
                   href="/jobs"
                   className="flex items-center p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
@@ -388,7 +389,7 @@ export default function DashboardPage() {
           </div>
 
           {/* Right Column */}
-          <div className="space-y-8">
+          <div className="space-y-6 lg:space-y-8">
             {/* Job Recommendations */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}

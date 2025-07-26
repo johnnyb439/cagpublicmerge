@@ -24,7 +24,7 @@ npm run dev
 
 ## Live URLs
 - GitHub: https://github.com/johnnyb439/caglive
-- Live Site: https://caglive.vercel.app
+- Live Site: https://caglive2.vercel.app
 
 ## Key Features to Test
 - Mock Interview tool

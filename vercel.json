@@ -16,8 +16,7 @@
   },
   "build": {
     "env": {
-      "NEXT_PUBLIC_APP_ENV": "production",
-      "SENTRY_AUTH_TOKEN": "@sentry-auth-token"
+      "NEXT_PUBLIC_APP_ENV": "production"
     }
   },
   "functions": {

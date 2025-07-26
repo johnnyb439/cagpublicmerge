@@ -6,34 +6,33 @@ import {
   DollarSign, Calendar, Mail, Search, Edit, Check, X, Star,
   Briefcase, Clock, ChevronRight, AlertCircle, Sparkles,
   Target, Building, Brain, CheckCircle2, XCircle, LayoutDashboard,
-  MessageSquare, Linkedin, ExternalLink, Bell
+  MessageSquare, Linkedin, ExternalLink, Bell, Plus, RotateCcw,
+  Filter, Settings, GitBranch, Package, Rocket
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import MessagingCenter from '@/components/MessagingCenter'
-import NotificationCenter from '@/components/NotificationCenter'
+import { motion } from 'framer-motion'
 
 export default function ProfilePage() {
   const router = useRouter()
   const [isEditing, setIsEditing] = useState(false)
-  const [isMessageCenterOpen, setIsMessageCenterOpen] = useState(false)
   const [user, setUser] = useState<any>(null)
   
   const [profileData, setProfileData] = useState({
-    name: '',
-    role: '',
-    clearance: '',
-    location: '',
+    name: 'John Doe',
+    role: 'Senior Software Engineer',
+    clearance: 'Top Secret/SCI',
+    location: 'Arlington, VA',
     avatar: null as string | null,
-    email: '',
-    phone: '',
+    email: 'john.doe@email.com',
+    phone: '+1 (555) 123-4567',
     profileStrength: 75,
     linkedinUrl: ''
   })
 
   const [dreamJob, setDreamJob] = useState({
-    title: '',
-    locations: [''],
+    title: 'Senior Cloud Architect',
+    locations: ['Washington DC, Remote'],
     salaryRange: [120000, 180000],
     availability: 'Available Now',
     clearanceLevel: 'Top Secret/SCI',
@@ -41,14 +40,13 @@ export default function ProfilePage() {
     emailAlerts: true
   })
 
-  const [aiSuggestion, setAiSuggestion] = useState({
-    visible: true,
-    message: 'Try uploading your AWS certification to match 2 more jobs in your area!'
-  })
-
   const [documents, setDocuments] = useState({
     resume: { uploaded: true, lastUpdate: '2 days ago' },
-    certifications: ['AWS Solutions Architect', 'Security+', 'CISSP']
+    certifications: [
+      { name: 'AWS Solutions Architect', active: true, color: 'bg-orange-500' },
+      { name: 'Security+', active: false, color: 'bg-gray-500' },
+      { name: 'CISSP', active: false, color: 'bg-gray-500' }
+    ]
   })
 
   const activityStats = {
@@ -62,13 +60,21 @@ export default function ProfilePage() {
   const badges = [
     { id: 1, name: 'Top 10% Resume', icon: Star, earned: true, color: 'text-yellow-500' },
     { id: 2, name: 'TS/SCI Verified', icon: Shield, earned: true, color: 'text-blue-500' },
-    { id: 3, name: 'Cyber Certified', icon: Award, earned: true, color: 'text-green-500' },
+    { id: 3, name: 'Cyber Certified', icon: CheckCircle2, earned: true, color: 'text-green-500' },
     { id: 4, name: 'Fast Responder', icon: Clock, earned: false, color: 'text-gray-400' },
   ]
 
   const availabilityOptions = ['Available Now', '2 Weeks Notice', '1 Month Notice', '2+ Months Notice']
   const clearanceOptions = ['Public Trust', 'Secret', 'Top Secret', 'Top Secret/SCI', 'TS/SCI + Poly']
   const tagOptions = ['Remote', 'Hybrid', 'On-Site', 'Contract', 'Full-Time', 'Part-Time']
+
+  // GitHub-style activity data
+  const activityData = Array.from({ length: 53 }, (_, week) => 
+    Array.from({ length: 7 }, (_, day) => ({
+      date: new Date(2024, 0, week * 7 + day + 1),
+      count: Math.floor(Math.random() * 5)
+    }))
+  )
 
   useEffect(() => {
     const userData = localStorage.getItem('user')
@@ -79,20 +85,10 @@ export default function ProfilePage() {
     
     const parsedUser = JSON.parse(userData)
     setUser(parsedUser)
-    setProfileData(prev => ({
-      ...prev,
-      name: parsedUser.name || 'John Doe',
-      email: parsedUser.email || 'john.doe@email.com',
-      role: 'Senior Software Engineer',
-      clearance: parsedUser.clearanceLevel || 'Top Secret/SCI',
-      location: 'Arlington, VA',
-      phone: '+1 (555) 123-4567',
-    }))
   }, [router])
 
   const handleSaveProfile = () => {
     setIsEditing(false)
-    // Save profile data
     localStorage.setItem('user', JSON.stringify({
       ...user,
       name: profileData.name,
@@ -100,14 +96,22 @@ export default function ProfilePage() {
     }))
   }
 
+  const getActivityColor = (count: number) => {
+    if (count === 0) return 'bg-gray-800'
+    if (count === 1) return 'bg-green-900'
+    if (count === 2) return 'bg-green-700'
+    if (count === 3) return 'bg-green-500'
+    return 'bg-green-400'
+  }
+
   if (!user) return null
 
   return (
-    <div className="min-h-screen glass-bg text-gray-100 relative overflow-hidden py-20">
+    <div className="min-h-screen bg-gray-900 text-gray-100 relative overflow-hidden">
       {/* Binary Pattern Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0 opacity-[0.03]">
-          <div className="text-neon-green font-mono text-lg leading-relaxed">
+          <div className="text-green-500 font-mono text-lg leading-relaxed">
             {Array(30).fill(null).map((_, i) => (
               <div key={i} className="whitespace-nowrap">
                 {Array(15).fill('01101000 01100101 01101100 01110000 00100000 ').join('')}
@@ -118,108 +122,60 @@ export default function ProfilePage() {
       </div>
       
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header Actions */}
-        <div className="flex justify-end gap-4 mb-6">
-          <NotificationCenter />
-          <button
-            onClick={() => setIsMessageCenterOpen(!isMessageCenterOpen)}
-            className="flex items-center gap-2 px-4 py-2 glass-card rounded-lg hover:bg-gray-700 transition-colors"
-          >
-            <MessageSquare size={20} />
-            <span>Messages</span>
-          </button>
-          <Link
-            href="/dashboard"
-            className="flex items-center gap-2 px-4 py-2 glass-card rounded-lg hover:bg-gray-700 transition-colors"
-          >
-            <LayoutDashboard size={20} />
-            <span>Dashboard</span>
-          </Link>
-        </div>
-
-        {/* Profile Overview Card */}
-        <div className="glass-card rounded-xl p-6 mb-8 border border-gray-700">
+        {/* Profile Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-gray-800 rounded-lg border border-gray-700 p-6 mb-6"
+        >
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div className="flex items-center gap-4">
               <div className="relative">
-                <div className="w-24 h-24 rounded-full bg-gradient-to-r from-sky-blue to-neon-green p-0.5">
+                <div className="w-20 h-20 rounded-full bg-gradient-to-r from-green-500 to-blue-500 p-0.5">
                   <div className="w-full h-full rounded-full bg-gray-800 flex items-center justify-center">
-                    {profileData.avatar ? (
-                      <img src={profileData.avatar} alt={profileData.name} className="w-full h-full rounded-full object-cover" />
-                    ) : (
-                      <User size={40} className="text-gray-400" />
-                    )}
+                    <span className="text-2xl font-bold text-white">JD</span>
                   </div>
                 </div>
-                <button className="absolute bottom-0 right-0 w-8 h-8 bg-sky-blue rounded-full flex items-center justify-center hover:bg-neon-green transition-colors">
-                  <Upload size={16} className="text-white" />
+                <button className="absolute bottom-0 right-0 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors">
+                  <Upload size={12} className="text-white" />
                 </button>
               </div>
               
               <div>
-                {isEditing ? (
-                  <input
-                    type="text"
-                    value={profileData.name}
-                    onChange={(e) => setProfileData({...profileData, name: e.target.value})}
-                    className="text-2xl font-bold bg-gray-700 rounded px-2 py-1 mb-1"
-                  />
-                ) : (
-                  <h1 className="text-2xl font-bold mb-1">{profileData.name}</h1>
-                )}
-                <p className="text-gray-400">{profileData.role}</p>
-                <div className="flex items-center gap-4 mt-2 text-sm">
+                <h1 className="text-2xl font-bold mb-1">{profileData.name}</h1>
+                <p className="text-gray-400 mb-2">{profileData.role}</p>
+                <div className="flex items-center gap-4 text-sm">
                   <span className="flex items-center gap-1">
-                    <Shield size={16} className="text-sky-blue" />
+                    <Shield size={16} className="text-blue-500" />
                     {profileData.clearance}
                   </span>
                   <span className="flex items-center gap-1">
-                    <MapPin size={16} className="text-neon-green" />
+                    <MapPin size={16} className="text-green-500" />
                     {profileData.location}
                   </span>
-                  {profileData.linkedinUrl && !isEditing && (
-                    <a 
-                      href={profileData.linkedinUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-1 text-sky-blue hover:text-neon-green transition-colors"
-                    >
-                      <Linkedin size={16} />
-                      LinkedIn
-                      <ExternalLink size={12} />
-                    </a>
-                  )}
                 </div>
               </div>
             </div>
 
             <div className="flex gap-3">
-              {isEditing ? (
-                <>
-                  <button
-                    onClick={handleSaveProfile}
-                    className="flex items-center gap-2 px-4 py-2 bg-neon-green text-gray-900 rounded-lg hover:bg-opacity-90 transition-colors"
-                  >
-                    <Check size={20} />
-                    Save
-                  </button>
-                  <button
-                    onClick={() => setIsEditing(false)}
-                    className="flex items-center gap-2 px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors"
-                  >
-                    <X size={20} />
-                    Cancel
-                  </button>
-                </>
-              ) : (
-                <button
-                  onClick={() => setIsEditing(true)}
-                  className="flex items-center gap-2 px-4 py-2 bg-gray-700 rounded-lg hover:bg-gray-600 transition-colors"
-                >
-                  <Edit size={20} />
-                  Edit Profile
-                </button>
-              )}
+              <button className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                <MessageSquare size={20} />
+                Messages
+              </button>
+              <Link
+                href="/dashboard"
+                className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                <LayoutDashboard size={20} />
+                Dashboard
+              </Link>
+              <button
+                onClick={() => setIsEditing(!isEditing)}
+                className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+              >
+                <Edit size={20} />
+                Edit Profile
+              </button>
             </div>
           </div>
 
@@ -231,232 +187,419 @@ export default function ProfilePage() {
             </div>
             <div className="w-full bg-gray-700 rounded-full h-2">
               <div 
-                className="bg-gradient-to-r from-sky-blue to-neon-green h-2 rounded-full transition-all duration-500"
+                className="bg-gradient-to-r from-green-500 to-blue-500 h-2 rounded-full transition-all duration-500"
                 style={{ width: `${profileData.profileStrength}%` }}
               />
             </div>
           </div>
+        </motion.div>
 
-          {/* AI Suggestion */}
-          {aiSuggestion.visible && (
+        {/* Three Column Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* Left Column */}
+          <div className="space-y-6">
+            {/* Documents & Certifications */}
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="mt-4 p-3 bg-gradient-to-r from-sky-blue/20 to-neon-green/20 rounded-lg border border-sky-blue/30 flex items-start gap-3"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="bg-gray-800 rounded-lg border border-gray-700 p-6"
             >
-              <Sparkles className="text-sky-blue mt-0.5" size={20} />
-              <div className="flex-1">
-                <p className="text-sm">{aiSuggestion.message}</p>
+              <h3 className="text-lg font-semibold mb-4 flex items-center">
+                <FileText className="w-5 h-5 mr-2 text-gray-400" />
+                Documents & Certifications
+              </h3>
+              
+              {/* Resume Section */}
+              <div className="mb-6">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2">
+                    <FileText className="w-4 h-4 text-green-500" />
+                    <span className="font-medium">Resume</span>
+                  </div>
+                  <button className="text-blue-500 hover:text-blue-400 text-sm">
+                    Update
+                  </button>
+                </div>
+                <p className="text-sm text-gray-400">Last updated {documents.resume.lastUpdate}</p>
               </div>
-              <button
-                onClick={() => setAiSuggestion({...aiSuggestion, visible: false})}
-                className="text-gray-400 hover:text-white"
-              >
-                <X size={16} />
+
+              {/* Certifications */}
+              <div className="mb-6">
+                <h4 className="font-medium mb-3">Certifications</h4>
+                <div className="flex flex-wrap gap-2 mb-3">
+                  {documents.certifications.map((cert, index) => (
+                    <span
+                      key={index}
+                      className={`px-3 py-1 rounded-full text-xs font-medium text-white ${cert.color}`}
+                    >
+                      {cert.name}
+                    </span>
+                  ))}
+                </div>
+                <button className="text-blue-500 hover:text-blue-400 text-sm flex items-center gap-1">
+                  <Plus size={16} />
+                  Add Certification
+                </button>
+              </div>
+
+              {/* AI Review Button */}
+              <button className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors">
+                <Brain size={20} />
+                Let AI Review My Resume
               </button>
             </motion.div>
-          )}
-        </div>
 
-        {/* Activity Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-          <div className="glass-card p-4 rounded-lg text-center">
-            <Briefcase className="text-sky-blue mx-auto mb-2" size={24} />
-            <div className="text-2xl font-bold">{activityStats.jobsApplied}</div>
-            <div className="text-sm text-gray-400">Jobs Applied</div>
-          </div>
-          <div className="glass-card p-4 rounded-lg text-center">
-            <Star className="text-yellow-500 mx-auto mb-2" size={24} />
-            <div className="text-2xl font-bold">{activityStats.jobsSaved}</div>
-            <div className="text-sm text-gray-400">Jobs Saved</div>
-          </div>
-          <div className="glass-card p-4 rounded-lg text-center">
-            <Brain className="text-neon-green mx-auto mb-2" size={24} />
-            <div className="text-2xl font-bold">{activityStats.aiReviews}</div>
-            <div className="text-sm text-gray-400">AI Reviews</div>
-          </div>
-          <div className="glass-card p-4 rounded-lg text-center">
-            <Calendar className="text-purple-500 mx-auto mb-2" size={24} />
-            <div className="text-2xl font-bold">{activityStats.interviewsScheduled}</div>
-            <div className="text-sm text-gray-400">Interviews</div>
-          </div>
-          <div className="glass-card p-4 rounded-lg text-center">
-            <TrendingUp className="text-emerald-500 mx-auto mb-2" size={24} />
-            <div className="text-2xl font-bold">{activityStats.hiringProgress}%</div>
-            <div className="text-sm text-gray-400">Progress</div>
-          </div>
-        </div>
+            {/* Dream Job Tracker */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.1 }}
+              className="bg-gray-800 rounded-lg border border-gray-700 p-6"
+            >
+              <h3 className="text-lg font-semibold mb-4 flex items-center">
+                <Target className="w-5 h-5 mr-2 text-blue-500" />
+                Dream Job Tracker (AI Module)
+              </h3>
 
-        {/* Badges */}
-        <div className="glass-card rounded-xl p-6 mb-8">
-          <h2 className="text-xl font-bold mb-4">Achievements</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {badges.map((badge) => (
-              <div
-                key={badge.id}
-                className={`p-4 rounded-lg border ${
-                  badge.earned 
-                    ? 'bg-gray-800 border-gray-700' 
-                    : 'bg-gray-900 border-gray-800 opacity-50'
-                }`}
-              >
-                <badge.icon className={`${badge.color} mb-2`} size={32} />
-                <p className="text-sm font-medium">{badge.name}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium mb-2">Dream Job Title</label>
+                  <input
+                    type="text"
+                    value={dreamJob.title}
+                    onChange={(e) => setDreamJob({...dreamJob, title: e.target.value})}
+                    placeholder="e.g., Senior Cloud Architect"
+                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none"
+                  />
+                </div>
 
-        {/* Contact Information */}
-        {isEditing && (
-          <div className="glass-card rounded-xl p-6 mb-8">
-            <h2 className="text-xl font-bold mb-4">Contact Information</h2>
-            <div className="grid md:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium mb-2">Email</label>
-                <input
-                  type="email"
-                  value={profileData.email}
-                  onChange={(e) => setProfileData({...profileData, email: e.target.value})}
-                  className="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none focus:border-sky-blue border border-gray-600"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-2">Phone</label>
-                <input
-                  type="tel"
-                  value={profileData.phone}
-                  onChange={(e) => setProfileData({...profileData, phone: e.target.value})}
-                  className="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none focus:border-sky-blue border border-gray-600"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-2">Location</label>
-                <input
-                  type="text"
-                  value={profileData.location}
-                  onChange={(e) => setProfileData({...profileData, location: e.target.value})}
-                  className="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none focus:border-sky-blue border border-gray-600"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-2">LinkedIn Profile</label>
-                <input
-                  type="url"
-                  value={profileData.linkedinUrl}
-                  onChange={(e) => setProfileData({...profileData, linkedinUrl: e.target.value})}
-                  placeholder="https://linkedin.com/in/yourprofile"
-                  className="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none focus:border-sky-blue border border-gray-600"
-                />
-              </div>
-            </div>
-          </div>
-        )}
+                <div>
+                  <label className="block text-sm font-medium mb-2">Preferred Locations</label>
+                  <input
+                    type="text"
+                    value={dreamJob.locations.join(', ')}
+                    onChange={(e) => setDreamJob({...dreamJob, locations: e.target.value.split(', ')})}
+                    placeholder="e.g., Washington DC, Remote"
+                    className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none"
+                  />
+                  <button className="mt-2 text-blue-500 hover:text-blue-400 text-sm">
+                    📍
+                  </button>
+                </div>
 
-        {/* Dream Job Settings */}
-        <div className="glass-card rounded-xl p-6">
-          <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-            <Target className="text-sky-blue" />
-            Dream Job Preferences
-          </h2>
-          <div className="grid md:grid-cols-2 gap-6">
-            <div>
-              <label className="block text-sm font-medium mb-2">Desired Title</label>
-              <input
-                type="text"
-                value={dreamJob.title}
-                onChange={(e) => setDreamJob({...dreamJob, title: e.target.value})}
-                placeholder="e.g., Senior DevOps Engineer"
-                className="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none focus:border-sky-blue border border-gray-600"
-              />
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium mb-2">Clearance Level</label>
-              <select
-                value={dreamJob.clearanceLevel}
-                onChange={(e) => setDreamJob({...dreamJob, clearanceLevel: e.target.value})}
-                className="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none focus:border-sky-blue border border-gray-600"
-              >
-                {clearanceOptions.map((option) => (
-                  <option key={option} value={option}>{option}</option>
+                <div>
+                  <label className="block text-sm font-medium mb-2">Salary Range</label>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-sm text-green-500">${dreamJob.salaryRange[0].toLocaleString()}</span>
+                    <span className="text-sm text-green-500">${dreamJob.salaryRange[1].toLocaleString()}</span>
+                  </div>
+                  <div className="relative">
+                    <input
+                      type="range"
+                      min="80000"
+                      max="250000"
+                      step="5000"
+                      value={dreamJob.salaryRange[0]}
+                      onChange={(e) => setDreamJob({
+                        ...dreamJob,
+                        salaryRange: [parseInt(e.target.value), dreamJob.salaryRange[1]]
+                      })}
+                      className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Availability</label>
+                    <select
+                      value={dreamJob.availability}
+                      onChange={(e) => setDreamJob({...dreamJob, availability: e.target.value})}
+                      className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
+                    >
+                      {availabilityOptions.map((option) => (
+                        <option key={option} value={option}>{option}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-2">Clearance Level</label>
+                    <select
+                      value={dreamJob.clearanceLevel}
+                      onChange={(e) => setDreamJob({...dreamJob, clearanceLevel: e.target.value})}
+                      className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
+                    >
+                      {clearanceOptions.map((option) => (
+                        <option key={option} value={option}>{option}</option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">Tags</label>
+                  <div className="flex flex-wrap gap-2">
+                    {tagOptions.map((tag) => (
+                      <button
+                        key={tag}
+                        onClick={() => {
+                          const newTags = dreamJob.tags.includes(tag)
+                            ? dreamJob.tags.filter(t => t !== tag)
+                            : [...dreamJob.tags, tag]
+                          setDreamJob({...dreamJob, tags: newTags})
+                        }}
+                        className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
+                          dreamJob.tags.includes(tag)
+                            ? 'bg-blue-600 text-white'
+                            : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                        }`}
+                      >
+                        {tag}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Middle Column */}
+          <div className="space-y-6">
+            {/* Activity Snapshot */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-gray-800 rounded-lg border border-gray-700 p-6"
+            >
+              <h3 className="text-lg font-semibold mb-4 flex items-center">
+                📊 Activity Snapshot
+              </h3>
+
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-300">Jobs Applied</span>
+                  <span className="text-2xl font-bold text-green-500">{activityStats.jobsApplied}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-300">Jobs Saved</span>
+                  <span className="text-2xl font-bold text-blue-500">{activityStats.jobsSaved}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-300">AI Resume Reviews</span>
+                  <span className="text-2xl font-bold text-green-500">{activityStats.aiReviews}</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-gray-300">Interviews Scheduled</span>
+                  <span className="text-2xl font-bold text-yellow-500">{activityStats.interviewsScheduled}</span>
+                </div>
+                
+                <div className="pt-4">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-gray-300">Hiring Progress</span>
+                    <span className="text-sm font-medium">{activityStats.hiringProgress}%</span>
+                  </div>
+                  <div className="w-full bg-gray-700 rounded-full h-2">
+                    <div 
+                      className="bg-green-500 h-2 rounded-full transition-all duration-500"
+                      style={{ width: `${activityStats.hiringProgress}%` }}
+                    />
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Credibility & Badges */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="bg-gray-800 rounded-lg border border-gray-700 p-6"
+            >
+              <h3 className="text-lg font-semibold mb-4 flex items-center">
+                🏆 Credibility & Badges
+              </h3>
+
+              <div className="grid grid-cols-2 gap-4 mb-4">
+                {badges.map((badge) => (
+                  <div
+                    key={badge.id}
+                    className={`p-4 rounded-lg border text-center ${
+                      badge.earned 
+                        ? 'bg-gray-700 border-gray-600' 
+                        : 'bg-gray-900 border-gray-800 opacity-50'
+                    }`}
+                  >
+                    <badge.icon className={`${badge.color} mb-2 mx-auto`} size={32} />
+                    <p className="text-sm font-medium">{badge.name}</p>
+                  </div>
                 ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium mb-2">Salary Range</label>
-              <div className="flex items-center gap-2">
-                <input
-                  type="number"
-                  value={dreamJob.salaryRange[0]}
-                  onChange={(e) => setDreamJob({
-                    ...dreamJob, 
-                    salaryRange: [parseInt(e.target.value), dreamJob.salaryRange[1]]
-                  })}
-                  className="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none focus:border-sky-blue border border-gray-600"
-                />
-                <span className="text-gray-400">to</span>
-                <input
-                  type="number"
-                  value={dreamJob.salaryRange[1]}
-                  onChange={(e) => setDreamJob({
-                    ...dreamJob, 
-                    salaryRange: [dreamJob.salaryRange[0], parseInt(e.target.value)]
-                  })}
-                  className="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none focus:border-sky-blue border border-gray-600"
-                />
               </div>
-            </div>
 
-            <div>
-              <label className="block text-sm font-medium mb-2">Availability</label>
-              <select
-                value={dreamJob.availability}
-                onChange={(e) => setDreamJob({...dreamJob, availability: e.target.value})}
-                className="w-full px-4 py-2 bg-gray-700 rounded-lg focus:outline-none focus:border-sky-blue border border-gray-600"
-              >
-                {availabilityOptions.map((option) => (
-                  <option key={option} value={option}>{option}</option>
-                ))}
-              </select>
-            </div>
+              <button className="w-full text-blue-500 hover:text-blue-400 text-sm">
+                View All Achievements
+              </button>
+            </motion.div>
           </div>
 
-          <div className="mt-4">
-            <label className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={dreamJob.emailAlerts}
-                onChange={(e) => setDreamJob({...dreamJob, emailAlerts: e.target.checked})}
-                className="rounded"
-              />
-              <span className="text-sm">Send me email alerts for matching jobs</span>
-            </label>
+          {/* Right Column */}
+          <div className="space-y-6">
+            {/* GitHub Activity Calendar */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="bg-gray-800 rounded-lg border border-gray-700 p-6"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold">Activity</h3>
+                <span className="text-sm text-gray-400">All 6 contributions in the last year</span>
+              </div>
+
+              {/* Activity Grid */}
+              <div className="space-y-1">
+                <div className="grid grid-cols-53 gap-1">
+                  {activityData.flat().map((day, index) => (
+                    <div
+                      key={index}
+                      className={`w-3 h-3 rounded-sm ${getActivityColor(day.count)}`}
+                      title={`${day.count} contributions on ${day.date.toDateString()}`}
+                    />
+                  ))}
+                </div>
+                <div className="flex items-center justify-between text-xs text-gray-400 mt-2">
+                  <span>Less</span>
+                  <div className="flex gap-1">
+                    <div className="w-3 h-3 rounded-sm bg-gray-800"></div>
+                    <div className="w-3 h-3 rounded-sm bg-green-900"></div>
+                    <div className="w-3 h-3 rounded-sm bg-green-700"></div>
+                    <div className="w-3 h-3 rounded-sm bg-green-500"></div>
+                    <div className="w-3 h-3 rounded-sm bg-green-400"></div>
+                  </div>
+                  <span>More</span>
+                </div>
+              </div>
+
+              <button className="w-full mt-4 text-blue-500 hover:text-blue-400 text-sm">
+                Report repository
+              </button>
+            </motion.div>
+
+            {/* Releases */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.1 }}
+              className="bg-gray-800 rounded-lg border border-gray-700 p-6"
+            >
+              <h3 className="text-lg font-semibold mb-4">Releases</h3>
+              <div className="flex items-center gap-2 text-sm text-gray-400">
+                <GitBranch size={16} />
+                <span>1 tag</span>
+              </div>
+              <button className="w-full mt-4 text-blue-500 hover:text-blue-400 text-sm">
+                Create a new release
+              </button>
+            </motion.div>
+
+            {/* Packages */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.2 }}
+              className="bg-gray-800 rounded-lg border border-gray-700 p-6"
+            >
+              <h3 className="text-lg font-semibold mb-4">Packages</h3>
+              <p className="text-sm text-gray-400 mb-4">No packages published</p>
+              <button className="w-full text-blue-500 hover:text-blue-400 text-sm">
+                Publish your first package
+              </button>
+            </motion.div>
+
+            {/* Deployments */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.3 }}
+              className="bg-gray-800 rounded-lg border border-gray-700 p-6"
+            >
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold">Deployments</h3>
+                <span className="text-sm text-gray-400">62</span>
+              </div>
+              <div className="space-y-2">
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                  <span className="text-sm">Production - caglive2</span>
+                  <span className="text-xs text-gray-400">1 hour ago</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                  <span className="text-sm">Production - caglive</span>
+                  <span className="text-xs text-gray-400">1 hour ago</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-red-500"></div>
+                  <span className="text-sm">Preview - caglive2</span>
+                  <span className="text-xs text-gray-400">1 hour ago</span>
+                </div>
+              </div>
+              <button className="w-full mt-4 text-blue-500 hover:text-blue-400 text-sm">
+                + 59 deployments
+              </button>
+            </motion.div>
+
+            {/* Languages */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.4 }}
+              className="bg-gray-800 rounded-lg border border-gray-700 p-6"
+            >
+              <h3 className="text-lg font-semibold mb-4">Languages</h3>
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-blue-500"></div>
+                    <span className="text-sm">TypeScript</span>
+                  </div>
+                  <span className="text-sm text-gray-400">89.6%</span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-3 h-3 rounded-full bg-gray-500"></div>
+                    <span className="text-sm">Other</span>
+                  </div>
+                  <span className="text-sm text-gray-400">1.4%</span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Suggested workflows */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.5 }}
+              className="bg-gray-800 rounded-lg border border-gray-700 p-6"
+            >
+              <h3 className="text-lg font-semibold mb-2">Suggested workflows</h3>
+              <p className="text-sm text-gray-400 mb-4">Based on your tech stack</p>
+              
+              <div className="flex items-center gap-3 p-3 bg-gray-700 rounded-lg">
+                <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center">
+                  <Settings size={16} className="text-gray-300" />
+                </div>
+                <div className="flex-1">
+                  <h4 className="text-sm font-medium">Datadog Synthetics</h4>
+                  <p className="text-xs text-gray-400">Run Datadog Synthetic tests within your GitHub Actions workflow</p>
+                </div>
+                <button className="text-blue-500 hover:text-blue-400 text-sm">
+                  Configure
+                </button>
+              </div>
+            </motion.div>
           </div>
         </div>
       </div>
-
-      {/* Messaging Center Modal */}
-      {isMessageCenterOpen && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-gray-800 rounded-lg max-w-4xl w-full max-h-[80vh] overflow-hidden">
-            <div className="p-4 border-b border-gray-700 flex items-center justify-between">
-              <h2 className="text-xl font-bold">Messages</h2>
-              <button
-                onClick={() => setIsMessageCenterOpen(false)}
-                className="text-gray-400 hover:text-white"
-              >
-                <X size={24} />
-              </button>
-            </div>
-            <MessagingCenter />
-          </div>
-        </div>
-      )}
     </div>
   )
 }
-
-// Add missing import for motion
-import { motion } from 'framer-motion'

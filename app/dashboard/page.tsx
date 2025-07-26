@@ -176,7 +176,8 @@ export default function DashboardPage() {
             <Link
               key={stat.label}
               href={stat.href}
-              className="block"
+              passHref
+              className="block relative z-10"
             >
               <motion.div
                 initial={{ opacity: 0, y: 20 }}

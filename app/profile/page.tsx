@@ -61,7 +61,7 @@ export default function ProfilePage() {
 
   const badges = [
     { id: 1, name: 'Top 10% Resume', icon: Star, earned: true, color: 'text-yellow-500' },
-    { id: 2, name: 'TS/SCI Verified', icon: Shield, earned: true, color: 'text-blue-500' },
+    { id: 2, name: 'TS/SCI', icon: Shield, earned: true, color: 'text-blue-500' },
     { id: 3, name: 'Cyber Certified', icon: CheckCircle2, earned: true, color: 'text-green-500' },
     { id: 4, name: 'Fast Responder', icon: Clock, earned: false, color: 'text-gray-400' },
   ]
@@ -477,6 +477,11 @@ export default function ProfilePage() {
                         ? 'bg-gray-700 border-gray-600' 
                         : 'bg-gray-900 border-gray-800 opacity-50'
                     }`}
+                    title={
+                      badge.name === 'TS/SCI' 
+                        ? 'This is self-declared information provided by the user. Recruiters should verify clearances independently.'
+                        : undefined
+                    }
                   >
                     <badge.icon className={`${badge.color} mb-2 mx-auto`} size={32} />
                     <p className="text-sm font-medium">{badge.name}</p>

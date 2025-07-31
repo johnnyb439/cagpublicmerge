@@ -180,7 +180,7 @@ export default function JobsPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-white dark:bg-command-black rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow"
+              className="bg-white dark:bg-command-black rounded-lg shadow-md p-6 hover-lift cursor-pointer"
             >
               <div className="flex flex-col md:flex-row justify-between">
                 <div className="flex-1">

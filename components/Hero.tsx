@@ -78,7 +78,7 @@ export default function Hero() {
 
           {/* Banner */}
           <div className="flex justify-center mb-8">
-            <div className="relative glass rounded-full px-8 py-3 overflow-hidden">
+            <div className="relative glass glass-enhanced glass-frosted-blue rounded-full px-8 py-3 overflow-hidden">
               {/* Binary background decoration */}
               <div className="absolute inset-0 opacity-10">
                 <div className="text-xs font-mono leading-none whitespace-nowrap">
@@ -101,18 +101,18 @@ export default function Hero() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link href="/jobs" className="glass-button text-white inline-flex items-center group hover-glow">
+              <Link href="/jobs" className="glass-button ripple text-white inline-flex items-center group hover-glow">
                 Browse Cleared Jobs
                 <ArrowRight className="ml-2 transition-transform group-hover:translate-x-2" size={20} />
               </Link>
             </motion.div>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link href="/mock-interview" className="glass-button text-white inline-flex items-center hover-glow">
+              <Link href="/mock-interview" className="glass-button ripple text-white inline-flex items-center hover-glow">
                 Try AI Mock Interview
               </Link>
             </motion.div>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link href="/contact" className="glass-button text-white inline-flex items-center hover-glow">
+              <Link href="/contact" className="glass-button ripple text-white inline-flex items-center hover-glow">
                 Schedule Consultation
               </Link>
             </motion.div>

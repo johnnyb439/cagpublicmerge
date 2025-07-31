@@ -115,8 +115,10 @@ export default function Navbar() {
         </div>
 
         {/* Mobile Menu */}
-        {isOpen && (
-          <div className="md:hidden glass-card mt-2">
+        <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+          isOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
+        }`}>
+          <div className="glass-card mt-2 transform transition-transform duration-300 ease-in-out">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -156,7 +158,7 @@ export default function Navbar() {
               )}
             </div>
           </div>
-        )}
+        </div>
       </div>
     </nav>
   )

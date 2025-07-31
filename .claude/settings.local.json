@@ -31,7 +31,8 @@
       "Bash(mkdir:*)",
       "Bash(xcopy:*)",
       "Bash(robocopy:*)",
-      "Bash(dir:*)"
+      "Bash(dir:*)",
+      "Bash(git remote add:*)"
     ],
     "deny": []
   }

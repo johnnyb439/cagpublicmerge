@@ -7,7 +7,20 @@
 ## How to Use SAVE CHECKPOINT
 Simply type "SAVE CHECKPOINT" and the backup script will automatically create a timestamped backup.
 
+## How to Use RESTORE CHECKPOINT
+Simply type "RESTORE CHECKPOINT" and the restore script will automatically restore from the most recent checkpoint.
+
 ## Restore Points
+
+### checkpoint_20250731_122939
+**Date:** July 31, 2025 - 12:29:39 PM  
+**Status:** Latest checkpoint  
+**Key Changes:**
+- Fixed React 19 dependency conflict (removed react-beautiful-dnd)
+- Pushed to both repositories (caglive & cagadvisor)
+- Created restore-checkpoint.ps1 script
+- All previous fixes included (TypeScript error, simplified codebase)
+- Ready for Vercel deployment without dependency issues
 
 ### checkpoint_20250731_112329
 **Date:** July 31, 2025 - 11:23:29 AM  

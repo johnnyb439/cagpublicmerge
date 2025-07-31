@@ -9,7 +9,6 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import BinaryBackground from '@/components/BinaryBackground'
-// Removed unused imports - using local components instead
 
 interface ResourceItem {
   id: string;
@@ -22,7 +21,6 @@ interface ResourceItem {
   downloadable?: boolean;
   downloadPath?: string;
   interactive?: boolean;
-  interactiveType?: string;
   videoUrl?: string;
   views?: number;
   rating?: number;
@@ -199,21 +197,8 @@ const allResources: ResourceItem[] = [
     type: 'tool',
     category: 'Tools & Templates',
     interactive: true,
-    interactiveType: 'clearance',
     views: 5678,
     rating: 4.9
-  },
-  {
-    id: 'salary-calculator',
-    title: 'Cleared IT Salary Calculator',
-    description: 'Calculate your market value with clearance premium',
-    type: 'tool',
-    category: 'Tools & Templates',
-    interactive: true,
-    interactiveType: 'salary',
-    featured: true,
-    views: 8234,
-    rating: 5.0
   },
   {
     id: 'network-tracker',

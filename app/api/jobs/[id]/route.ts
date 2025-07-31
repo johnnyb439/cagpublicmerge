@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server'
-// // // import { withRateLimit } from '@/lib/api/withRateLimit'
 
 // Expanded job details - in production this would come from a database
 const jobDatabase = {

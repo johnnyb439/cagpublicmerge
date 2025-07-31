@@ -1,8 +1,7 @@
 import { NextResponse } from 'next/server';
-// // import { withRateLimit } from '@/lib/api/withRateLimit';
 
 // Basic feedback system without AI integration for demo deployment
-export async function POST(request: NextRequest) {
+export async function POST(request: Request) {
   try {
     const { question, answer, role, tier } = await request.json();
 

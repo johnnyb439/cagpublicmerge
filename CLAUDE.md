@@ -1,13 +1,3 @@
-# PROJECT IDENTIFIER: CAG Live2
-
-## Key Phrase Recognition
-When you say "Johnny be nice", I will understand that:
-- We are working on the CAG Live2 project
-- Working directory: /Users/tone/cleared-advisory/CAG Live2
-- This is Johnny's baseline connected to https://github.com/johnnyb439/caglive
-- Deployment target: https://caglive2.vercel.app
-- This is SEPARATE from the CAG Official 2025 project
-
 # Claude Code Project Guide
 
 ## Quick Start
@@ -34,7 +24,7 @@ npm run dev
 
 ## Live URLs
 - GitHub: https://github.com/johnnyb439/caglive
-- Live Site: https://caglive2.vercel.app
+- Live Site: https://caglive.vercel.app
 
 ## Key Features to Test
 - Mock Interview tool

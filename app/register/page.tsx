@@ -5,65 +5,52 @@ import { motion } from 'framer-motion'
 import { User, Mail, Lock, Shield, AlertCircle, Check } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import ProtectedForm from '@/components/security/ProtectedForm'
 
 export default function RegisterPage() {
   const router = useRouter()
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    clearanceLevel: '',
+    agreeToTerms: false
+  })
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  const handleSubmit = async (formData: FormData, recaptchaToken: string) => {
-    const name = formData.get('name') as string
-    const email = formData.get('email') as string
-    const password = formData.get('password') as string
-    const confirmPassword = formData.get('confirmPassword') as string
-    const clearanceLevel = formData.get('clearanceLevel') as string
-    const agreeToTerms = formData.get('agreeToTerms') === 'on'
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setError('')
 
     // Validation
-    if (password !== confirmPassword) {
-      throw new Error('Passwords do not match')
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match')
+      return
     }
 
-    if (password.length < 8) {
-      throw new Error('Password must be at least 8 characters')
+    if (formData.password.length < 8) {
+      setError('Password must be at least 8 characters')
+      return
     }
 
-    if (!agreeToTerms) {
-      throw new Error('Please agree to the terms and conditions')
+    if (!formData.agreeToTerms) {
+      setError('Please agree to the terms and conditions')
+      return
     }
 
-    try {
-      // Send registration request with CAPTCHA token
-      const response = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          password,
-          clearanceLevel,
-          recaptchaToken
-        }),
-      })
+    setLoading(true)
 
-      if (!response.ok) {
-        const data = await response.json()
-        throw new Error(data.error || 'Registration failed')
-      }
-
-      // Store user data locally
+    // Simulate registration - in production this would connect to your auth system
+    setTimeout(() => {
+      // Store user data
       localStorage.setItem('user', JSON.stringify({
-        email,
-        name,
-        clearanceLevel
+        email: formData.email,
+        name: formData.name,
+        clearanceLevel: formData.clearanceLevel
       }))
-      
       router.push('/dashboard')
-    } catch (error) {
-      console.error('Registration error:', error)
-      throw error
-    }
+    }, 1000)
   }
 
   return (
@@ -102,11 +89,7 @@ export default function RegisterPage() {
           </div>
 
           {/* Form */}
-          <ProtectedForm
-            onSubmit={handleSubmit}
-            action="register"
-            className="space-y-4"
-          >
+          <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label htmlFor="name" className="block text-sm font-medium mb-2">
                 Full Name
@@ -116,7 +99,8 @@ export default function RegisterPage() {
                 <input
                   type="text"
                   id="name"
-                  name="name"
+                  value={formData.name}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                   className="w-full pl-10 pr-4 py-3 border dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg focus:outline-none focus:border-dynamic-green dark:text-white"
                   placeholder="John Doe"
                   required
@@ -133,7 +117,8 @@ export default function RegisterPage() {
                 <input
                   type="email"
                   id="email"
-                  name="email"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="w-full pl-10 pr-4 py-3 border dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg focus:outline-none focus:border-dynamic-green dark:text-white"
                   placeholder="john.doe@email.com"
                   required
@@ -147,7 +132,8 @@ export default function RegisterPage() {
               </label>
               <select
                 id="clearance"
-                name="clearanceLevel"
+                value={formData.clearanceLevel}
+                onChange={(e) => setFormData({ ...formData, clearanceLevel: e.target.value })}
                 className="w-full px-4 py-3 border dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg focus:outline-none focus:border-dynamic-green dark:text-white"
                 required
               >
@@ -169,7 +155,8 @@ export default function RegisterPage() {
                 <input
                   type="password"
                   id="password"
-                  name="password"
+                  value={formData.password}
+                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   className="w-full pl-10 pr-4 py-3 border dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg focus:outline-none focus:border-dynamic-green dark:text-white"
                   placeholder="••••••••"
                   required
@@ -187,7 +174,8 @@ export default function RegisterPage() {
                 <input
                   type="password"
                   id="confirmPassword"
-                  name="confirmPassword"
+                  value={formData.confirmPassword}
+                  onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
                   className="w-full pl-10 pr-4 py-3 border dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg focus:outline-none focus:border-dynamic-green dark:text-white"
                   placeholder="••••••••"
                   required
@@ -195,13 +183,24 @@ export default function RegisterPage() {
               </div>
             </div>
 
+            {error && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                className="flex items-center p-3 bg-red-50 text-red-700 rounded-lg"
+              >
+                <AlertCircle size={20} className="mr-2" />
+                <span className="text-sm">{error}</span>
+              </motion.div>
+            )}
+
             <div className="flex items-start">
               <input
                 type="checkbox"
                 id="terms"
-                name="agreeToTerms"
+                checked={formData.agreeToTerms}
+                onChange={(e) => setFormData({ ...formData, agreeToTerms: e.target.checked })}
                 className="mt-1 mr-2"
-                required
               />
               <label htmlFor="terms" className="text-sm text-gray-600 dark:text-gray-400">
                 I agree to the{' '}
@@ -214,7 +213,15 @@ export default function RegisterPage() {
                 </Link>
               </label>
             </div>
-          </ProtectedForm>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading ? 'Creating Account...' : 'Create Account'}
+            </button>
+          </form>
 
           {/* Security Notice */}
           <div className="mt-6 p-4 bg-gray-50 dark:bg-ops-charcoal rounded-lg">

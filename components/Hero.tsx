@@ -2,35 +2,19 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import OptimizedImage from '@/components/ui/OptimizedImage'
+import Image from 'next/image'
 import { ArrowRight, Shield, Users, Briefcase } from 'lucide-react'
-import { useAnalytics } from '@/hooks/useAnalytics'
-import { useLoadingPerformance, useInteractionTracking } from '@/hooks/useLoadingPerformance'
 
 export default function Hero() {
-  const analytics = useAnalytics()
-  const { trackImageLoad } = useLoadingPerformance({ 
-    componentName: 'Hero',
-    trackRender: true,
-    trackImages: true 
-  })
-  const { startInteraction, endInteraction } = useInteractionTracking()
-
-  const handleCTAClick = () => {
-    startInteraction('hero_cta_click')
-    analytics.track('cta_click', { location: 'hero', action: 'get_started' })
-    setTimeout(() => endInteraction('hero_cta_click'), 100)
-  }
-
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background Gradient */}
       <div className="absolute inset-0 bg-professional-gradient"></div>
       
-      {/* Binary Pattern Background - Mobile Optimized */}
+      {/* Binary Pattern Background */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute inset-0 opacity-[0.06] hidden sm:block">
-          <div className="text-dynamic-green font-mono text-sm sm:text-lg leading-relaxed">
+        <div className="absolute inset-0 opacity-[0.06]">
+          <div className="text-dynamic-green font-mono text-lg leading-relaxed">
             {Array(30).fill(null).map((_, i) => (
               <div key={i} className="whitespace-nowrap">
                 {Array(15).fill('01101000 01100101 01101100 01110000 00100000 ').join('')}
@@ -38,23 +22,23 @@ export default function Hero() {
             ))}
           </div>
         </div>
-        {/* Scattered larger binary numbers - Hidden on mobile */}
-        <div className="absolute top-10 left-4 sm:left-20 text-cyber-cyan opacity-20 font-mono text-2xl sm:text-4xl transform rotate-12">
+        {/* Scattered larger binary numbers */}
+        <div className="absolute top-10 left-20 text-cyber-cyan opacity-20 font-mono text-4xl transform rotate-12">
           01010011
         </div>
-        <div className="absolute top-40 right-4 sm:right-32 text-dynamic-green opacity-20 font-mono text-xl sm:text-3xl transform -rotate-6">
+        <div className="absolute top-40 right-32 text-dynamic-green opacity-20 font-mono text-3xl transform -rotate-6">
           11001010
         </div>
-        <div className="absolute bottom-20 left-4 sm:left-40 text-sky-blue opacity-20 font-mono text-2xl sm:text-5xl transform rotate-45">
+        <div className="absolute bottom-20 left-40 text-sky-blue opacity-20 font-mono text-5xl transform rotate-45">
           10110
         </div>
-        <div className="absolute bottom-40 right-4 sm:right-20 text-emerald-green opacity-20 font-mono text-xl sm:text-3xl transform -rotate-12">
+        <div className="absolute bottom-40 right-20 text-emerald-green opacity-20 font-mono text-3xl transform -rotate-12">
           01101110
         </div>
-        <div className="hidden sm:block absolute top-1/3 left-1/4 text-cyber-cyan opacity-20 font-mono text-2xl transform rotate-30">
+        <div className="absolute top-1/3 left-1/4 text-cyber-cyan opacity-20 font-mono text-2xl transform rotate-30">
           11100101
         </div>
-        <div className="hidden sm:block absolute top-2/3 right-1/3 text-dynamic-green opacity-20 font-mono text-4xl transform -rotate-20">
+        <div className="absolute top-2/3 right-1/3 text-dynamic-green opacity-20 font-mono text-4xl transform -rotate-20">
           00110111
         </div>
       </div>
@@ -78,13 +62,12 @@ export default function Hero() {
               {/* Multiple blending layers for better integration */}
               <div className="absolute inset-0 bg-gradient-radial from-white/10 via-transparent to-transparent blur-3xl scale-150"></div>
               <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent blur-2xl"></div>
-              <OptimizedImage 
+              <Image 
                 src="/images/cag-logo.png" 
                 alt="Cleared Advisory Group Logo" 
                 width={450} 
                 height={350}
-                priority
-                className="relative object-contain opacity-90 mix-blend-screen w-full h-auto max-w-sm sm:max-w-md lg:max-w-lg"
+                className="relative object-contain opacity-90 mix-blend-screen"
                 style={{
                   filter: 'drop-shadow(0 0 60px rgba(255, 255, 255, 0.2)) drop-shadow(0 0 120px rgba(135, 206, 235, 0.1)) brightness(1.1) contrast(0.9)',
                   transform: 'scaleX(1.2)'
@@ -93,97 +76,80 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Banner - Mobile Optimized */}
-          <div className="flex justify-center mb-8 px-4">
-            <div className="relative glass rounded-full px-4 sm:px-8 py-2 sm:py-3 overflow-hidden">
+          {/* Banner */}
+          <div className="flex justify-center mb-8">
+            <div className="relative glass rounded-full px-8 py-3 overflow-hidden">
               {/* Binary background decoration */}
-              <div className="absolute inset-0 opacity-10 hidden sm:block">
+              <div className="absolute inset-0 opacity-10">
                 <div className="text-xs font-mono leading-none whitespace-nowrap">
                   {Array(10).fill('01011010 11001100 10101010 01110110 ').join('')}
                 </div>
               </div>
-              <span className="relative text-white font-semibold text-sm sm:text-lg text-center">
-                Proudly Serving America's Cleared Professionals
-              </span>
+              <span className="relative text-white font-semibold text-lg">Proudly Serving America's Cleared Professionals</span>
             </div>
           </div>
           
-          <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-montserrat font-bold text-white mb-6 text-shadow-lg px-4">
-            <span className="block">Your Gateway to</span>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-montserrat font-bold text-white mb-6 text-shadow-lg">
+            Your Gateway to
             <span className="block gradient-text-animated mt-2">Cleared IT Opportunities</span>
           </h1>
           
-          <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto px-4">
+          <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
             Bridging the gap for National Guard, Reservists, Veterans, and cleared professionals 
             seeking lucrative government contracting careers.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 px-4">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link 
-                href="/jobs" 
-                className="glass-button text-white inline-flex items-center justify-center group hover-glow w-full sm:w-auto min-h-[48px] touch-manipulation"
-                onClick={() => {
-                  analytics.trackClick('hero_browse_jobs')
-                  handleCTAClick()
-                }}
-              >
+              <Link href="/jobs" className="glass-button text-white inline-flex items-center group hover-glow">
                 Browse Cleared Jobs
                 <ArrowRight className="ml-2 transition-transform group-hover:translate-x-2" size={20} />
               </Link>
             </motion.div>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link 
-                href="/mock-interview" 
-                className="glass-button text-white inline-flex items-center justify-center hover-glow w-full sm:w-auto min-h-[48px] touch-manipulation"
-                onClick={() => analytics.trackClick('hero_mock_interview')}
-              >
+              <Link href="/mock-interview" className="glass-button text-white inline-flex items-center hover-glow">
                 Try AI Mock Interview
               </Link>
             </motion.div>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link 
-                href="/contact" 
-                className="glass-button text-white inline-flex items-center justify-center hover-glow w-full sm:w-auto min-h-[48px] touch-manipulation"
-                onClick={() => analytics.trackClick('hero_consultation')}
-              >
+              <Link href="/contact" className="glass-button text-white inline-flex items-center hover-glow">
                 Schedule Consultation
               </Link>
             </motion.div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
-              className="glass-card touch-manipulation"
+              className="glass-card"
             >
-              <Shield className="w-10 sm:w-12 h-10 sm:h-12 text-dynamic-green mx-auto mb-4" />
-              <h3 className="text-white font-semibold mb-2 text-sm sm:text-base">SECRET+ Required</h3>
-              <p className="text-gray-400 text-xs sm:text-sm">We specialize in opportunities for cleared professionals</p>
+              <Shield className="w-12 h-12 text-dynamic-green mx-auto mb-4" />
+              <h3 className="text-white font-semibold mb-2">SECRET+ Required</h3>
+              <p className="text-gray-400 text-sm">We specialize in opportunities for cleared professionals</p>
             </motion.div>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.4 }}
-              className="glass-card touch-manipulation"
+              className="glass-card"
             >
-              <Users className="w-10 sm:w-12 h-10 sm:h-12 text-dynamic-blue mx-auto mb-4" />
-              <h3 className="text-white font-semibold mb-2 text-sm sm:text-base">Military-Friendly</h3>
-              <p className="text-gray-400 text-xs sm:text-sm">Understanding your unique service commitments</p>
+              <Users className="w-12 h-12 text-dynamic-blue mx-auto mb-4" />
+              <h3 className="text-white font-semibold mb-2">Military-Friendly</h3>
+              <p className="text-gray-400 text-sm">Understanding your unique service commitments</p>
             </motion.div>
 
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="glass-card touch-manipulation"
+              className="glass-card"
             >
-              <Briefcase className="w-10 sm:w-12 h-10 sm:h-12 text-emerald-green mx-auto mb-4" />
-              <h3 className="text-white font-semibold mb-2 text-sm sm:text-base">IT Focus</h3>
-              <p className="text-gray-400 text-xs sm:text-sm">From help desk to systems administration</p>
+              <Briefcase className="w-12 h-12 text-emerald-green mx-auto mb-4" />
+              <h3 className="text-white font-semibold mb-2">IT Focus</h3>
+              <p className="text-gray-400 text-sm">From help desk to systems administration</p>
             </motion.div>
           </div>
         </motion.div>

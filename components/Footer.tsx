@@ -67,13 +67,13 @@ export default function Footer() {
             
             {/* Social Links */}
             <div className="flex space-x-4 mt-6">
-              <a href="https://www.linkedin.com/company/cleared-advisory-group" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-sky-blue transition-colors">
+              <a href="#" className="text-gray-400 hover:text-sky-blue transition-colors">
                 <Linkedin className="w-5 h-5" />
               </a>
-              <a href="https://twitter.com/ClearedAdvisory" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-sky-blue transition-colors">
+              <a href="#" className="text-gray-400 hover:text-sky-blue transition-colors">
                 <Twitter className="w-5 h-5" />
               </a>
-              <a href="https://www.facebook.com/ClearedAdvisoryGroup" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-sky-blue transition-colors">
+              <a href="#" className="text-gray-400 hover:text-sky-blue transition-colors">
                 <Facebook className="w-5 h-5" />
               </a>
             </div>

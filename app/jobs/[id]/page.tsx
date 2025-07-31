@@ -15,23 +15,6 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 
-interface Job {
-  id: number
-  title: string
-  company: string
-  location: string
-  clearance: string
-  salary: string
-  type: string
-  posted: string
-  description: string
-  fullDescription: string
-  requirements: string[]
-  responsibilities: string[]
-  benefits: string[]
-  applicationDeadline?: string
-}
-
 // This would come from your API in production
 const jobDatabase = {
   1: {
@@ -237,7 +220,7 @@ Located in beautiful Colorado Springs with views of Pikes Peak and access to wor
 export default function JobDetailPage() {
   const params = useParams()
   const router = useRouter()
-  const [job, setJob] = useState<Job | null>(null)
+  const [job, setJob] = useState<any>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {

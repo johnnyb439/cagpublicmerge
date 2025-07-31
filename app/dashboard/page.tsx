@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { secureStorage } from '@/lib/security/secureStorage'
 import { 
   User, 
   Briefcase, 
@@ -15,105 +14,40 @@ import {
   ChevronRight,
   BookOpen,
   MessageSquare,
-  FolderOpen,
-  Users
+  FolderOpen
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import Analytics from '@/components/dashboard/Analytics'
-import ActivityTimeline from '@/components/dashboard/ActivityTimeline'
 import GoalTracking from '@/components/dashboard/GoalTracking'
 import PersonalizedRecommendations from '@/components/dashboard/PersonalizedRecommendations'
-import MessagingCenter from '@/components/MessagingCenter'
-import ErrorBoundary from '@/components/ErrorBoundary'
-import { SkeletonDashboardCard } from '@/components/ui/Skeleton'
-import OnboardingModal from '@/components/OnboardingModal'
+import DraggableQuickActions from '@/components/dashboard/DraggableQuickActions'
 
 interface UserData {
   email: string
   name: string
   clearanceLevel: string
-  onboardingCompleted?: boolean
 }
 
 export default function DashboardPage() {
   const router = useRouter()
   const [user, setUser] = useState<UserData | null>(null)
   const [activeTab, setActiveTab] = useState('overview')
-  const [isMessageCenterOpen, setIsMessageCenterOpen] = useState(false)
-  const [profileCompletion, setProfileCompletion] = useState(0)
-  const [certCount, setCertCount] = useState(0)
-  const [jobApplications, setJobApplications] = useState(0)
-  const [mockInterviews, setMockInterviews] = useState(0)
-  const [isDataLoading, setIsDataLoading] = useState(true)
-  const [showOnboarding, setShowOnboarding] = useState(false)
+  const [showAllActivities, setShowAllActivities] = useState(false)
 
   useEffect(() => {
-    const loadUserData = async () => {
-      try {
-        // Check if user is logged in
-        const userData = await secureStorage.getItem('user')
-        if (userData) {
-          setUser(userData)
-          
-          // Check if user needs onboarding
-          const onboardingStatus = await secureStorage.getItem('onboardingCompleted')
-          if (!onboardingStatus && !userData.onboardingCompleted) {
-            setShowOnboarding(true)
-          }
-          
-          // Calculate profile completion
-          let completed = 25 // Base for having an account
-          if (userData.name) completed += 15
-          if (userData.email) completed += 15
-          if (userData.clearanceLevel) completed += 15
-          
-          const currentResume = await secureStorage.getItem('currentResume')
-          if (currentResume) completed += 15
-          
-          const certifications = await secureStorage.getItem('certifications')
-          if (certifications) {
-            completed += 15
-            setCertCount(certifications.length)
-          }
-          
-          setProfileCompletion(completed)
-          
-          // Get job applications count
-          const applications = await secureStorage.getItem('jobApplications')
-          if (applications) {
-            setJobApplications(applications.length)
-          }
-          
-          // Get mock interviews count
-          const interviews = await secureStorage.getItem('mockInterviews')
-          if (interviews) {
-            setMockInterviews(interviews.length)
-          }
-        } else {
-          router.push('/login')
-        }
-      } catch (error) {
-        console.error('Error loading dashboard data:', error)
-        // If secure storage not initialized, redirect to secure login
-        router.push('/secure-login')
-      } finally {
-        setIsDataLoading(false)
-      }
+    // Check if user is logged in
+    const userData = localStorage.getItem('user')
+    if (userData) {
+      setUser(JSON.parse(userData))
+    } else {
+      router.push('/login')
     }
-    
-    loadUserData()
   }, [router])
 
-  const handleLogout = async () => {
-    try {
-      await secureStorage.removeItem('user')
-      await secureStorage.clear()
-      router.push('/login')
-    } catch (error) {
-      console.error('Logout error:', error)
-      router.push('/login')
-    }
+  const handleLogout = () => {
+    localStorage.removeItem('user')
+    router.push('/login')
   }
 
   if (!user) {
@@ -125,47 +59,45 @@ export default function DashboardPage() {
   }
 
   const stats = [
-    { 
-      label: 'Profile Completion', 
-      value: `${profileCompletion}%`, 
-      icon: User, 
-      color: profileCompletion === 100 ? 'text-dynamic-green' : profileCompletion >= 75 ? 'text-yellow-500' : 'text-orange-500',
-      href: '/profile',
-      description: profileCompletion === 100 ? 'Profile complete!' : 'Complete your profile',
-      progress: true,
-      progressValue: profileCompletion
-    },
-    { 
-      label: 'Jobs Applied', 
-      value: jobApplications.toString(), 
-      icon: Briefcase, 
-      color: 'text-dynamic-blue',
-      href: '/dashboard/applications',
-      description: jobApplications > 0 ? 'View applications' : 'Start applying'
-    },
-    { 
-      label: 'Certifications', 
-      value: certCount.toString(), 
-      icon: Award, 
-      color: 'text-emerald-green',
-      href: '/dashboard/certifications',
-      description: certCount > 0 ? 'Manage certifications' : 'Add certifications'
-    },
-    { 
-      label: 'Mock Interviews', 
-      value: mockInterviews.toString(), 
-      icon: Target, 
-      color: 'text-sky-blue',
-      href: '/mock-interview',
-      description: mockInterviews > 0 ? 'Practice more' : 'Start practicing'
-    }
+    { label: 'Profile Completion', value: '75%', icon: User, color: 'text-dynamic-green', href: '/profile' },
+    { label: 'Jobs Applied', value: '12', icon: Briefcase, color: 'text-dynamic-blue', href: '/dashboard/applications' },
+    { label: 'Certifications', value: '3', icon: Award, color: 'text-emerald-green', href: '/dashboard/certifications' },
+    { label: 'Mock Interviews', value: '5', icon: Target, color: 'text-sky-blue', href: '/mock-interview' }
   ]
 
-  const recentActivity = [
-    { type: 'application', title: 'Applied to Network Administrator at TechCorp', time: '2 hours ago' },
-    { type: 'interview', title: 'Completed mock interview for Systems Admin', time: '1 day ago' },
-    { type: 'certification', title: 'Added Security+ certification', time: '3 days ago' },
-    { type: 'profile', title: 'Updated resume', time: '1 week ago' }
+  const activities = [
+    { 
+      type: 'application', 
+      title: 'Applied to Network Administrator at TechCorp', 
+      subtitle: 'Application submitted and under review',
+      time: '2 hours ago',
+      status: 'pending',
+      icon: Briefcase
+    },
+    { 
+      type: 'interview', 
+      title: 'Completed mock interview for Systems Admin', 
+      subtitle: 'Score: 85/100 - Great performance!',
+      time: '1 day ago',
+      status: 'completed',
+      icon: Target
+    },
+    { 
+      type: 'goal', 
+      title: 'Goal Achieved: Complete 5 Mock Interviews', 
+      subtitle: "You've improved your interview skills significantly",
+      time: '2 days ago',
+      status: 'completed',
+      icon: Target
+    },
+    { 
+      type: 'certification', 
+      title: 'Added Security+ certification', 
+      subtitle: 'Certification verified and added to profile',
+      time: '3 days ago',
+      status: 'completed',
+      icon: Award
+    }
   ]
 
   const recommendedJobs = [
@@ -193,76 +125,45 @@ export default function DashboardPage() {
                 Clearance Level: <span className="text-dynamic-green font-semibold">{user.clearanceLevel}</span>
               </p>
             </div>
-            <div className="flex items-center gap-4">
-              <Link
-                href="/dashboard/settings"
-                className="flex items-center text-gray-600 dark:text-gray-400 hover:text-dynamic-green transition-colors"
-              >
-                <User size={20} className="mr-2" />
-                Settings
-              </Link>
-              <button
-                onClick={handleLogout}
-                className="flex items-center text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors"
-              >
-                <LogOut size={20} className="mr-2" />
-                Log Out
-              </button>
-            </div>
+            <button
+              onClick={handleLogout}
+              className="flex items-center text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors"
+            >
+              <LogOut size={20} className="mr-2" />
+              Log Out
+            </button>
           </div>
         </motion.div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-8">
-          {isDataLoading ? (
-            <>
-              {[1, 2, 3, 4].map((i) => (
-                <SkeletonDashboardCard key={i} />
-              ))}
-            </>
-          ) : (
-            stats.map((stat, index) => (
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+          {stats.map((stat, index) => (
             <Link
               key={stat.label}
               href={stat.href}
-              passHref
-              className="block relative z-10"
+              className="block"
             >
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: index * 0.1 }}
-                className="bg-white dark:bg-command-black rounded-lg shadow-md p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer group relative"
+                className="bg-white dark:bg-command-black rounded-lg shadow-md p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer"
               >
                 <div className="flex items-center justify-between mb-4">
-                  <stat.icon size={24} className={`${stat.color} group-hover:scale-110 transition-transform`} />
+                  <stat.icon size={24} className={stat.color} />
                   <span className="text-2xl font-bold">{stat.value}</span>
                 </div>
-                <p className="text-gray-600 dark:text-gray-400 text-sm font-medium">{stat.label}</p>
-                {stat.progress && (
-                  <div className="mt-2 h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                    <div 
-                      className="h-full bg-gradient-to-r from-sky-blue to-neon-green transition-all duration-500"
-                      style={{ width: `${stat.progressValue}%` }}
-                    />
-                  </div>
-                )}
-                <p className="text-xs text-gray-500 dark:text-gray-500 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                  {stat.description}
-                </p>
-                <div className="absolute bottom-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <ChevronRight size={16} className="text-gray-400" />
-                </div>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">{stat.label}</p>
               </motion.div>
             </Link>
-          )))}
+          ))}
         </div>
 
         {/* Navigation Tabs */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
           className="bg-white dark:bg-command-black rounded-lg shadow-md p-2 mb-8"
         >
           <div className="flex space-x-1">
@@ -287,109 +188,76 @@ export default function DashboardPage() {
           </div>
         </motion.div>
 
-        {/* Tab Content */}
+        {/* Main Content */}
         {activeTab === 'overview' && (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-            {/* Left Column */}
-            <div className="lg:col-span-2 space-y-6 lg:space-y-8">
-            {/* Quick Actions */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Left Column */}
+          <div className="lg:col-span-2 space-y-8">
+            {/* Quick Actions - Draggable */}
+            <DraggableQuickActions />
+
+            {/* Activity Timeline */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
               className="bg-white dark:bg-command-black rounded-lg shadow-md p-6"
             >
-              <h2 className="text-xl font-montserrat font-bold mb-6">Quick Actions</h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-3 md:gap-4">
-                <Link
-                  href="/jobs"
-                  className="flex items-center p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-                >
-                  <Briefcase className="text-dynamic-green mr-3" size={24} />
-                  <div>
-                    <p className="font-semibold">Browse Jobs</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">View cleared positions</p>
-                  </div>
-                </Link>
-                <Link
-                  href="/mock-interview"
-                  className="flex items-center p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-                >
-                  <Target className="text-dynamic-blue mr-3" size={24} />
-                  <div>
-                    <p className="font-semibold">Practice Interview</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">AI-powered prep</p>
-                  </div>
-                </Link>
-                <Link
-                  href="/resources"
-                  className="flex items-center p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-                >
-                  <BookOpen className="text-emerald-green mr-3" size={24} />
-                  <div>
-                    <p className="font-semibold">Resources</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Career guides</p>
-                  </div>
-                </Link>
-                <Link
-                  href="/dashboard/resume"
-                  className="flex items-center p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-                >
-                  <FileText className="text-sky-blue mr-3" size={24} />
-                  <div>
-                    <p className="font-semibold">Update Resume</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Military translation</p>
-                  </div>
-                </Link>
-                <Link
-                  href="/dashboard/applications"
-                  className="flex items-center p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-                >
-                  <Briefcase className="text-orange-500 mr-3" size={24} />
-                  <div>
-                    <p className="font-semibold">Track Applications</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Manage job applications</p>
-                  </div>
-                </Link>
-                <Link
-                  href="/dashboard/certifications"
-                  className="flex items-center p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-                >
-                  <Award className="text-purple-500 mr-3" size={24} />
-                  <div>
-                    <p className="font-semibold">Certifications</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Track credentials</p>
-                  </div>
-                </Link>
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl font-montserrat font-bold">Activity Timeline</h2>
                 <button
-                  onClick={() => setIsMessageCenterOpen(true)}
-                  className="flex items-center p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
+                  onClick={() => setShowAllActivities(!showAllActivities)}
+                  className="text-sm text-dynamic-green hover:text-emerald-green transition-colors"
                 >
-                  <MessageSquare className="text-cyan-500 mr-3" size={24} />
-                  <div>
-                    <p className="font-semibold">Messages</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Chat with recruiters</p>
-                  </div>
+                  View All
                 </button>
-                <Link
-                  href="/networking"
-                  className="flex items-center p-4 border rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors"
-                >
-                  <Users className="text-violet-500 mr-3" size={24} />
-                  <div>
-                    <p className="font-semibold">Network</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Connect with professionals</p>
+              </div>
+              <div className="space-y-6 relative">
+                {/* Vertical line */}
+                <div className="absolute left-5 top-0 bottom-0 w-px bg-gray-200 dark:bg-gray-700"></div>
+                
+                {activities.slice(0, showAllActivities ? activities.length : 4).map((activity, index) => (
+                  <div key={index} className="flex items-start relative">
+                    <div className={`w-10 h-10 rounded-full flex items-center justify-center z-10 ${
+                      activity.status === 'pending' ? 'bg-orange-100 dark:bg-orange-900/20' :
+                      activity.status === 'completed' ? 'bg-green-100 dark:bg-green-900/20' :
+                      'bg-blue-100 dark:bg-blue-900/20'
+                    }`}>
+                      <activity.icon size={20} className={
+                        activity.status === 'pending' ? 'text-orange-500' :
+                        activity.status === 'completed' ? 'text-dynamic-green' :
+                        'text-dynamic-blue'
+                      } />
+                    </div>
+                    <div className="ml-4 flex-1">
+                      <div className="flex items-start justify-between">
+                        <div className="flex-1">
+                          <p className="text-gray-800 dark:text-gray-200 font-semibold">{activity.title}</p>
+                          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{activity.subtitle}</p>
+                          <p className="text-xs text-gray-500 dark:text-gray-500 mt-2 flex items-center">
+                            <Calendar size={12} className="mr-1" />
+                            {activity.time}
+                          </p>
+                        </div>
+                        {activity.status && (
+                          <span className={`text-xs px-2 py-1 rounded-full ${
+                            activity.status === 'pending' ? 'bg-orange-100 text-orange-600 dark:bg-orange-900/20 dark:text-orange-400' :
+                            activity.status === 'completed' ? 'bg-green-100 text-green-600 dark:bg-green-900/20 dark:text-green-400' :
+                            'bg-blue-100 text-blue-600 dark:bg-blue-900/20 dark:text-blue-400'
+                          }`}>
+                            {activity.status}
+                          </span>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                </Link>
+                ))}
               </div>
             </motion.div>
-
-            {/* Recent Activity - Use new Timeline component */}
-            <ActivityTimeline />
           </div>
 
           {/* Right Column */}
-          <div className="space-y-6 lg:space-y-8">
+          <div className="space-y-8">
             {/* Job Recommendations */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -468,90 +336,24 @@ export default function DashboardPage() {
               </button>
             </motion.div>
           </div>
-          </div>
+        </div>
         )}
 
         {/* Analytics Tab */}
         {activeTab === 'analytics' && (
-          <ErrorBoundary>
-            <Analytics />
-          </ErrorBoundary>
+          <Analytics />
         )}
 
         {/* Goals Tab */}
         {activeTab === 'goals' && (
-          <ErrorBoundary>
-            <GoalTracking />
-          </ErrorBoundary>
+          <GoalTracking />
         )}
 
         {/* Recommendations Tab */}
         {activeTab === 'recommendations' && (
-          <ErrorBoundary>
-            <PersonalizedRecommendations />
-          </ErrorBoundary>
+          <PersonalizedRecommendations />
         )}
       </div>
-
-      {/* Messaging Center Modal */}
-      {isMessageCenterOpen && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-lg max-w-4xl w-full max-h-[80vh] overflow-hidden">
-            <div className="p-4 border-b border-gray-300 dark:border-gray-700 flex items-center justify-between">
-              <h2 className="text-xl font-bold">Messages</h2>
-              <button
-                onClick={() => setIsMessageCenterOpen(false)}
-                className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            <MessagingCenter />
-          </div>
-        </div>
-      )}
-
-      {/* Onboarding Modal */}
-      <OnboardingModal
-        isOpen={showOnboarding}
-        onClose={() => setShowOnboarding(false)}
-        onComplete={async (data) => {
-          try {
-            // Save onboarding data
-            await secureStorage.setItem('onboardingCompleted', true)
-            
-            // Update user data with onboarding info
-            const updatedUser = {
-              ...user,
-              ...data,
-              onboardingCompleted: true
-            }
-            
-            await secureStorage.setItem('user', updatedUser)
-            setUser(updatedUser)
-            setShowOnboarding(false)
-            
-            // Recalculate profile completion
-            let completed = 25
-            if (updatedUser.firstName && updatedUser.lastName) completed += 15
-            if (updatedUser.email) completed += 15
-            if (updatedUser.clearanceLevel) completed += 15
-            if (updatedUser.phone && updatedUser.location) completed += 15
-            
-            const currentResume = await secureStorage.getItem('currentResume')
-            if (currentResume) completed += 15
-            
-            setProfileCompletion(completed)
-            
-            // Show success message (you could add a toast notification here)
-            console.log('Onboarding completed successfully!')
-          } catch (error) {
-            console.error('Error saving onboarding data:', error)
-          }
-        }}
-      />
     </section>
   )
 }

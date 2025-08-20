@@ -5,7 +5,15 @@
 
 @layer base {
   :root {
-    --cag-blue: #0EA5E9;
+    /* Primary theme colors - Blue-Green gradient system */
+    --cag-primary: #0891B2; /* dynamic-blue - main brand color */
+    --cag-secondary: #10B981; /* dynamic-green - secondary brand color */
+    --cag-accent: #0EA5E9; /* sky-blue - accent color */
+    --cag-blue: #0891B2; /* Updated to match blue-green theme */
+    
+    /* Theme gradients */
+    --cag-gradient: linear-gradient(135deg, #047857 0%, #10B981 25%, #0891B2 50%, #0EA5E9 75%, #1E40AF 100%);
+    --cag-button-gradient: linear-gradient(135deg, #0891B2 0%, #10B981 100%);
   }
   
   html {
@@ -137,14 +145,37 @@
     @apply h-4 bg-gray-200 dark:bg-gray-700 rounded w-full animate-pulse;
   }
   
-  /* CAG Blue Glow Effect */
+  /* CAG Blue-Green Glow Effect */
   .cag-glow {
-    box-shadow: 0 0 20px rgba(14, 165, 233, 0.3), 0 0 40px rgba(14, 165, 233, 0.15);
+    box-shadow: 0 0 20px rgba(8, 145, 178, 0.4), 0 0 40px rgba(16, 185, 129, 0.2), 0 0 60px rgba(8, 145, 178, 0.1);
     transition: all 0.3s ease;
   }
   
   .cag-glow:hover {
-    box-shadow: 0 0 25px rgba(14, 165, 233, 0.4), 0 0 50px rgba(14, 165, 233, 0.2);
+    box-shadow: 0 0 30px rgba(8, 145, 178, 0.5), 0 0 50px rgba(16, 185, 129, 0.3), 0 0 80px rgba(8, 145, 178, 0.15);
+    transform: translateY(-2px);
+  }
+
+  /* CAG Theme Button Styles */
+  .btn-cag-primary {
+    background: var(--cag-primary);
+    color: white;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-cag-primary:hover {
+    background: var(--cag-secondary);
+  }
+  
+  .btn-cag-gradient {
+    background: var(--cag-button-gradient);
+    color: white;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-cag-gradient:hover {
+    background: linear-gradient(135deg, #10B981 0%, #0891B2 100%);
+    transform: translateY(-1px);
   }
 }
 

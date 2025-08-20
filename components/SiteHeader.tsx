@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Home } from 'lucide-react'
 import MoreMenu from './MoreMenu'
 import NavActions from './NavActions'
+import ThemeToggle from './ThemeToggle'
 
 export default function SiteHeader() {
   return (
@@ -12,16 +13,17 @@ export default function SiteHeader() {
         <div className="flex justify-between items-center h-16">
           {/* Left: Logo/Brand */}
           <div className="flex items-center space-x-3">
-            <Link href="/" className="p-3 rounded-lg transition-colors duration-300 cag-glow" style={{backgroundColor: 'var(--cag-blue)'}}>
+            <Link href="/" className="p-3 rounded-lg btn-cag-gradient cag-glow">
               <Home className="w-6 h-6 text-white" />
             </Link>
             <span className="text-white font-semibold text-lg">Cleared Advisory Group</span>
           </div>
 
-          {/* Right: More Menu + Auth Actions */}
+          {/* Right: More Menu + Auth Actions + Theme Toggle */}
           <div className="flex items-center space-x-6">
             <MoreMenu />
             <NavActions />
+            <ThemeToggle />
           </div>
         </div>
       </div>

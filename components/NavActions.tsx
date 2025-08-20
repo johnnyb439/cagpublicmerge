@@ -88,8 +88,7 @@ export default function NavActions() {
       </Link>
       <Link
         href="/register"
-        className="px-4 py-2 text-sm bg-sky-blue text-white rounded-md hover:bg-blue-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-sky-blue focus:ring-opacity-50 cag-glow"
-        style={{ backgroundColor: 'var(--cag-blue)' }}
+        className="px-4 py-2 text-sm text-white rounded-md btn-cag-gradient cag-glow focus:outline-none focus:ring-2 focus:ring-sky-blue focus:ring-opacity-50"
       >
         Create Account
       </Link>

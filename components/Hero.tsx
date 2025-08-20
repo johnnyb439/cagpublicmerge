@@ -2,53 +2,13 @@
 
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import Image from 'next/image'
-import { ArrowRight, Shield, Users, Briefcase } from 'lucide-react'
 
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background Gradient */}
-      <div className="absolute inset-0 bg-professional-gradient"></div>
+      {/* Clean Dark Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"></div>
       
-      {/* Binary Pattern Background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute inset-0 opacity-[0.06]">
-          <div className="text-dynamic-green font-mono text-lg leading-relaxed">
-            {Array(30).fill(null).map((_, i) => (
-              <div key={i} className="whitespace-nowrap">
-                {Array(15).fill('01101000 01100101 01101100 01110000 00100000 ').join('')}
-              </div>
-            ))}
-          </div>
-        </div>
-        {/* Scattered larger binary numbers */}
-        <div className="absolute top-10 left-20 text-cyber-cyan opacity-20 font-mono text-4xl transform rotate-12">
-          01010011
-        </div>
-        <div className="absolute top-40 right-32 text-dynamic-green opacity-20 font-mono text-3xl transform -rotate-6">
-          11001010
-        </div>
-        <div className="absolute bottom-20 left-40 text-sky-blue opacity-20 font-mono text-5xl transform rotate-45">
-          10110
-        </div>
-        <div className="absolute bottom-40 right-20 text-emerald-green opacity-20 font-mono text-3xl transform -rotate-12">
-          01101110
-        </div>
-        <div className="absolute top-1/3 left-1/4 text-cyber-cyan opacity-20 font-mono text-2xl transform rotate-30">
-          11100101
-        </div>
-        <div className="absolute top-2/3 right-1/3 text-dynamic-green opacity-20 font-mono text-4xl transform -rotate-20">
-          00110111
-        </div>
-      </div>
-      
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-dynamic-green/20 rounded-full blur-3xl animate-float"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-dynamic-blue/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-sky-blue/10 rounded-full blur-3xl animate-pulse-slow"></div>
-      </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
@@ -56,101 +16,123 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          {/* Logo */}
-          <div className="flex justify-center mb-6">
-            <div className="relative">
-              {/* Multiple blending layers for better integration */}
-              <div className="absolute inset-0 bg-gradient-radial from-white/10 via-transparent to-transparent blur-3xl scale-150"></div>
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent blur-2xl"></div>
-              <Image 
-                src="/images/cag-logo.png" 
-                alt="Cleared Advisory Group Logo" 
-                width={450} 
-                height={350}
-                className="relative object-contain opacity-90 mix-blend-screen"
-                style={{
-                  filter: 'drop-shadow(0 0 60px rgba(255, 255, 255, 0.2)) drop-shadow(0 0 120px rgba(135, 206, 235, 0.1)) brightness(1.1) contrast(0.9)',
-                  transform: 'scaleX(1.2)'
-                }}
-              />
-            </div>
-          </div>
-
-          {/* Banner */}
-          <div className="flex justify-center mb-8">
-            <div className="relative glass glass-enhanced glass-frosted-blue rounded-full px-8 py-3 overflow-hidden">
-              {/* Binary background decoration */}
-              <div className="absolute inset-0 opacity-10">
-                <div className="text-xs font-mono leading-none whitespace-nowrap">
-                  {Array(10).fill('01011010 11001100 10101010 01110110 ').join('')}
-                </div>
-              </div>
-              <span className="relative text-white font-semibold text-lg">Proudly Serving America's Cleared Professionals</span>
-            </div>
-          </div>
           
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-montserrat font-bold text-white mb-6 text-shadow-lg">
-            Your Gateway to
-            <span className="block gradient-text-animated mt-2">Cleared IT Opportunities</span>
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6">
+            Your Security Clearance is Your
+            <span className="block mt-2" style={{color: 'var(--cag-blue)'}}>Gateway to Success</span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
-            Bridging the gap for National Guard, Reservists, Veterans, and cleared professionals 
-            seeking lucrative government contracting careers.
+          <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-4xl mx-auto">
+            We help cleared professionals transition into lucrative IT contracting careers with personalized guidance and proven strategies.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link href="/jobs" className="glass-button ripple text-white inline-flex items-center group hover-glow">
-                Browse Cleared Jobs
-                <ArrowRight className="ml-2 transition-transform group-hover:translate-x-2" size={20} />
+              <Link href="/register" className="text-white font-semibold px-8 py-3 rounded-lg hover:bg-blue-600 transition-colors duration-300" style={{backgroundColor: 'var(--cag-blue)'}}>
+                Create Account
               </Link>
             </motion.div>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link href="/mock-interview" className="glass-button ripple text-white inline-flex items-center hover-glow">
-                Try AI Mock Interview
-              </Link>
-            </motion.div>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link href="/contact" className="glass-button ripple text-white inline-flex items-center hover-glow">
-                Schedule Consultation
+              <Link href="/login" className="border border-gray-400 hover:border-white text-white font-semibold px-8 py-3 rounded-lg transition-colors duration-300">
+                Log In
               </Link>
             </motion.div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="glass-card"
-            >
-              <Shield className="w-12 h-12 text-dynamic-green mx-auto mb-4" />
-              <h3 className="text-white font-semibold mb-2">SECRET+ Required</h3>
-              <p className="text-gray-400 text-sm">We specialize in opportunities for cleared professionals</p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="glass-card"
-            >
-              <Users className="w-12 h-12 text-dynamic-blue mx-auto mb-4" />
-              <h3 className="text-white font-semibold mb-2">Military-Friendly</h3>
-              <p className="text-gray-400 text-sm">Understanding your unique service commitments</p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="glass-card"
-            >
-              <Briefcase className="w-12 h-12 text-emerald-green mx-auto mb-4" />
-              <h3 className="text-white font-semibold mb-2">IT Focus</h3>
-              <p className="text-gray-400 text-sm">From help desk to systems administration</p>
-            </motion.div>
+          {/* Realistic QR Code */}
+          <div className="flex justify-center">
+            <div className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+              <div className="w-32 h-32 relative bg-white border-2 border-gray-100">
+                {/* QR Code Pattern */}
+                <svg width="128" height="128" viewBox="0 0 128 128" className="w-full h-full">
+                  {/* Corner Position Markers */}
+                  <rect x="4" y="4" width="28" height="28" fill="black"/>
+                  <rect x="8" y="8" width="20" height="20" fill="white"/>
+                  <rect x="12" y="12" width="12" height="12" fill="black"/>
+                  
+                  <rect x="96" y="4" width="28" height="28" fill="black"/>
+                  <rect x="100" y="8" width="20" height="20" fill="white"/>
+                  <rect x="104" y="12" width="12" height="12" fill="black"/>
+                  
+                  <rect x="4" y="96" width="28" height="28" fill="black"/>
+                  <rect x="8" y="100" width="20" height="20" fill="white"/>
+                  <rect x="12" y="104" width="12" height="12" fill="black"/>
+                  
+                  {/* Timing Patterns */}
+                  <g>
+                    {Array.from({length: 11}, (_, i) => (
+                      <rect key={`h-${i}`} x={36 + i * 4} y="24" width="4" height="4" fill={i % 2 === 0 ? "black" : "white"}/>
+                    ))}
+                    {Array.from({length: 11}, (_, i) => (
+                      <rect key={`v-${i}`} x="24" y={36 + i * 4} width="4" height="4" fill={i % 2 === 0 ? "black" : "white"}/>
+                    ))}
+                  </g>
+                  
+                  {/* Data Pattern */}
+                  <g>
+                    <rect x="40" y="40" width="4" height="4" fill="black"/>
+                    <rect x="48" y="40" width="4" height="4" fill="white"/>
+                    <rect x="52" y="40" width="4" height="4" fill="black"/>
+                    <rect x="60" y="40" width="4" height="4" fill="black"/>
+                    <rect x="68" y="40" width="4" height="4" fill="white"/>
+                    <rect x="76" y="40" width="4" height="4" fill="black"/>
+                    <rect x="84" y="40" width="4" height="4" fill="black"/>
+                    
+                    <rect x="40" y="48" width="4" height="4" fill="white"/>
+                    <rect x="44" y="48" width="4" height="4" fill="black"/>
+                    <rect x="52" y="48" width="4" height="4" fill="white"/>
+                    <rect x="56" y="48" width="4" height="4" fill="black"/>
+                    <rect x="64" y="48" width="4" height="4" fill="black"/>
+                    <rect x="72" y="48" width="4" height="4" fill="white"/>
+                    <rect x="80" y="48" width="4" height="4" fill="black"/>
+                    <rect x="88" y="48" width="4" height="4" fill="white"/>
+                    
+                    <rect x="40" y="56" width="4" height="4" fill="black"/>
+                    <rect x="48" y="56" width="4" height="4" fill="black"/>
+                    <rect x="56" y="56" width="4" height="4" fill="white"/>
+                    <rect x="64" y="56" width="4" height="4" fill="black"/>
+                    <rect x="68" y="56" width="4" height="4" fill="black"/>
+                    <rect x="76" y="56" width="4" height="4" fill="white"/>
+                    <rect x="84" y="56" width="4" height="4" fill="black"/>
+                    
+                    <rect x="40" y="64" width="4" height="4" fill="white"/>
+                    <rect x="44" y="64" width="4" height="4" fill="black"/>
+                    <rect x="52" y="64" width="4" height="4" fill="black"/>
+                    <rect x="60" y="64" width="4" height="4" fill="white"/>
+                    <rect x="68" y="64" width="4" height="4" fill="black"/>
+                    <rect x="72" y="64" width="4" height="4" fill="black"/>
+                    <rect x="80" y="64" width="4" height="4" fill="white"/>
+                    <rect x="88" y="64" width="4" height="4" fill="black"/>
+                    
+                    <rect x="40" y="72" width="4" height="4" fill="black"/>
+                    <rect x="48" y="72" width="4" height="4" fill="white"/>
+                    <rect x="52" y="72" width="4" height="4" fill="black"/>
+                    <rect x="60" y="72" width="4" height="4" fill="black"/>
+                    <rect x="68" y="72" width="4" height="4" fill="white"/>
+                    <rect x="76" y="72" width="4" height="4" fill="black"/>
+                    <rect x="84" y="72" width="4" height="4" fill="white"/>
+                    
+                    <rect x="40" y="80" width="4" height="4" fill="white"/>
+                    <rect x="44" y="80" width="4" height="4" fill="black"/>
+                    <rect x="52" y="80" width="4" height="4" fill="white"/>
+                    <rect x="60" y="80" width="4" height="4" fill="black"/>
+                    <rect x="64" y="80" width="4" height="4" fill="black"/>
+                    <rect x="72" y="80" width="4" height="4" fill="white"/>
+                    <rect x="80" y="80" width="4" height="4" fill="black"/>
+                    <rect x="88" y="80" width="4" height="4" fill="black"/>
+                    
+                    <rect x="40" y="88" width="4" height="4" fill="black"/>
+                    <rect x="48" y="88" width="4" height="4" fill="black"/>
+                    <rect x="56" y="88" width="4" height="4" fill="white"/>
+                    <rect x="64" y="88" width="4" height="4" fill="black"/>
+                    <rect x="68" y="88" width="4" height="4" fill="white"/>
+                    <rect x="76" y="88" width="4" height="4" fill="black"/>
+                    <rect x="84" y="88" width="4" height="4" fill="black"/>
+                  </g>
+                </svg>
+              </div>
+              <p className="text-xs text-gray-600 mt-2 text-center font-medium">Scan to visit site</p>
+            </div>
           </div>
         </motion.div>
       </div>

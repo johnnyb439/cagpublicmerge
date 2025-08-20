@@ -10,7 +10,12 @@ function getUser() {
   
   try {
     const userData = localStorage.getItem('user')
-    return userData ? JSON.parse(userData) : null
+    if (userData && userData !== 'null' && userData !== '{}') {
+      const user = JSON.parse(userData)
+      // Only return user if it has meaningful data
+      return user && Object.keys(user).length > 0 ? user : null
+    }
+    return null
   } catch (error) {
     return null
   }
@@ -29,7 +34,17 @@ export default function NavActions() {
 
   useEffect(() => {
     setMounted(true)
-    setUser(getUser())
+    
+    // Force guest state for landing page (you can remove this later)
+    localStorage.removeItem('user')
+    setUser(null)
+    
+    // Uncomment below when you want to restore auth functionality:
+    // const userData = localStorage.getItem('user')
+    // if (userData === 'null' || userData === '{}' || userData === '') {
+    //   localStorage.removeItem('user')
+    // }
+    // setUser(getUser())
   }, [])
 
   // Prevent hydration mismatch by not rendering until mounted

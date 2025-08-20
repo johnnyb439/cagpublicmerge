@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { Home } from 'lucide-react'
 import MoreMenu from './MoreMenu'
 import NavActions from './NavActions'
 
@@ -11,13 +12,8 @@ export default function SiteHeader() {
         <div className="flex justify-between items-center h-16">
           {/* Left: Logo/Brand */}
           <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-3">
-              <div className="w-8 h-8 bg-sky-blue rounded-md flex items-center justify-center">
-                <span className="text-white font-bold text-lg">C</span>
-              </div>
-              <span className="text-white font-montserrat font-semibold text-lg">
-                CAG
-              </span>
+            <Link href="/" className="p-3 rounded-lg transition-colors duration-300" style={{backgroundColor: 'var(--cag-blue)'}}>
+              <Home className="w-6 h-6 text-white" />
             </Link>
           </div>
 

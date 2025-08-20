@@ -28,7 +28,7 @@ export default function Hero() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link href="/register" className="text-white font-semibold px-8 py-3 rounded-lg hover:bg-blue-600 transition-colors duration-300" style={{backgroundColor: 'var(--cag-blue)'}}>
+              <Link href="/register" className="text-white font-semibold px-8 py-3 rounded-lg hover:bg-blue-600 transition-colors duration-300 cag-glow" style={{backgroundColor: 'var(--cag-blue)'}}>
                 Create Account
               </Link>
             </motion.div>

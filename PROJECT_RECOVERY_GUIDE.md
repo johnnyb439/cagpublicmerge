@@ -1,5 +1,8 @@
 # 🚀 CAG Project Recovery Guide
 
+## 🌟 IMPORTANT: Working on Development Branch
+**You're now working on the `tone-development` branch to avoid conflicts with backend work!**
+
 ## Quick Recovery (If Site Crashes)
 
 ### 1. Navigate to Project Directory
@@ -7,9 +10,10 @@
 cd /Users/tone/Desktop/CAG-Official-2025/cagadvisor-latest
 ```
 
-### 2. Pull Latest Changes
+### 2. Switch to Your Development Branch & Pull Latest Changes
 ```bash
-git pull origin master
+git checkout tone-development
+git pull origin tone-development
 ```
 
 ### 3. Install Dependencies (if needed)
@@ -35,6 +39,7 @@ npm run dev
 cd /Users/tone/Desktop/CAG-Official-2025/
 git clone https://github.com/johnnyb439/caglive.git cagadvisor-latest
 cd cagadvisor-latest
+git checkout tone-development  # Switch to your development branch
 ```
 
 ### 2. Install Dependencies
@@ -150,8 +155,9 @@ npm run build
 # 1. Navigate to project
 cd /Users/tone/Desktop/CAG-Official-2025/cagadvisor-latest
 
-# 2. Pull latest changes  
-git pull
+# 2. Switch to your branch and pull latest changes  
+git checkout tone-development
+git pull origin tone-development
 
 # 3. Start development
 npm run dev
@@ -161,9 +167,39 @@ npm run dev
 
 ### When Working with Claude Code Again:
 1. Navigate to the project directory
-2. Run `git pull` to get latest changes
-3. Share this recovery guide with Claude
-4. Reference commit `0978a75` for current navbar state
+2. Switch to your branch: `git checkout tone-development`
+3. Run `git pull origin tone-development` to get latest changes
+4. Share this recovery guide with Claude
+5. Reference branch `tone-development` for current navbar state
+
+## 🔀 Branch Management
+
+### Your Development Workflow:
+```bash
+# Always work on your branch
+git checkout tone-development
+
+# Make changes, then save them
+git add .
+git commit -m "Your changes description"
+git push origin tone-development
+
+# Your friend works on 'master' branch - no conflicts!
+```
+
+### To Get Backend Updates from Your Friend:
+```bash
+# Switch to master to get backend changes
+git checkout master
+git pull origin master
+
+# Merge into your development branch
+git checkout tone-development
+git merge master
+
+# Push updated development branch
+git push origin tone-development
+```
 
 ---
 

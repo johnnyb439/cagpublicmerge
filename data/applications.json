@@ -1,0 +1,24 @@
+{
+  "applications": [
+    {
+      "id": "app_1755166243341_5ykyxen6y",
+      "userId": "user_test_123",
+      "jobId": "job_001",
+      "jobTitle": "Senior Developer",
+      "company": "Tech Corp",
+      "coverLetter": "I am very interested in this position",
+      "resume": null,
+      "status": "submitted",
+      "appliedAt": "2025-08-14T10:10:43.341Z",
+      "updatedAt": "2025-08-14T10:10:43.341Z",
+      "notes": [],
+      "timeline": [
+        {
+          "status": "submitted",
+          "timestamp": "2025-08-14T10:10:43.341Z",
+          "note": "Application submitted"
+        }
+      ]
+    }
+  ]
+}

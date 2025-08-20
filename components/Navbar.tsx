@@ -12,9 +12,13 @@ export default function Navbar() {
 
   useEffect(() => {
     // Check if user is logged in
-    const userData = localStorage.getItem('user')
-    if (userData) {
-      setUser(JSON.parse(userData))
+    try {
+      const userData = localStorage.getItem('user')
+      if (userData) {
+        setUser(JSON.parse(userData))
+      }
+    } catch (error) {
+      console.log('Error loading user data')
     }
   }, [])
 

@@ -900,16 +900,7 @@ export default function ResourcesPage() {
                     <div key={index} className="mb-8">
                       <h3 className="text-xl font-semibold text-dynamic-green mb-3">{section.title}</h3>
                       <div className="text-gray-300 dark:text-gray-400 whitespace-pre-line">
-                        {section.content.split('\n').map((paragraph, pIndex) => (
-                          <p key={pIndex} className="mb-2">
-                            {paragraph.split(/(\*\*.*?\*\*)/).map((part, partIndex) => {
-                              if (part.startsWith('**') && part.endsWith('**')) {
-                                return <strong key={partIndex} className="text-white">{part.slice(2, -2)}</strong>
-                              }
-                              return part
-                            })}
-                          </p>
-                        ))}
+                        <p className="mb-2">{section.content || ''}</p>
                       </div>
                     </div>
                   ))

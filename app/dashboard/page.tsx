@@ -22,6 +22,7 @@ import Analytics from '@/components/dashboard/Analytics'
 import GoalTracking from '@/components/dashboard/GoalTracking'
 import PersonalizedRecommendations from '@/components/dashboard/PersonalizedRecommendations'
 import DraggableQuickActions from '@/components/dashboard/DraggableQuickActions'
+import { isDevMode } from '@/lib/dev-mode'
 
 interface UserData {
   email: string
@@ -40,7 +41,8 @@ export default function DashboardPage() {
     const userData = localStorage.getItem('user')
     if (userData) {
       setUser(JSON.parse(userData))
-    } else {
+    } else if (!isDevMode) {
+      // Only redirect in production mode
       router.push('/login')
     }
   }, [router])

@@ -19,16 +19,24 @@ export default function LiveChat() {
 
   // Load chat state from localStorage
   useEffect(() => {
-    const savedChatState = localStorage.getItem('chatOpened')
-    if (savedChatState === 'true') {
-      setHasNewMessage(false)
+    try {
+      const savedChatState = localStorage.getItem('chatOpened')
+      if (savedChatState === 'true') {
+        setHasNewMessage(false)
+      }
+    } catch (error) {
+      console.log('Error loading chat state')
     }
   }, [])
 
   const handleOpenChat = () => {
     setIsOpen(true)
     setHasNewMessage(false)
-    localStorage.setItem('chatOpened', 'true')
+    try {
+      localStorage.setItem('chatOpened', 'true')
+    } catch (error) {
+      console.log('Error saving chat state')
+    }
   }
 
   const sendMessage = () => {

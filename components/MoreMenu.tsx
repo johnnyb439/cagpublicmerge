@@ -6,16 +6,57 @@ import { ChevronDown, ChevronUp } from 'lucide-react'
 
 export default function MoreMenu() {
   const [isOpen, setIsOpen] = useState(false)
+  const [user, setUser] = useState<any>(null)
   const menuRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
 
-  const menuItems = [
+  // Check if user is logged in
+  useEffect(() => {
+    const checkUser = () => {
+      try {
+        if (typeof window !== 'undefined' && window.localStorage) {
+          const userData = localStorage.getItem('user')
+          if (userData) {
+            setUser(JSON.parse(userData))
+          } else {
+            setUser(null)
+          }
+        }
+      } catch (error) {
+        console.error('Error loading user data in MoreMenu:', error)
+        setUser(null)
+      }
+    }
+
+    checkUser()
+    
+    // Listen for login/logout events
+    window.addEventListener('userLogin', checkUser)
+    window.addEventListener('userLogout', checkUser)
+    window.addEventListener('storage', checkUser)
+    
+    const interval = setInterval(checkUser, 1000)
+
+    return () => {
+      window.removeEventListener('userLogin', checkUser)
+      window.removeEventListener('userLogout', checkUser)
+      window.removeEventListener('storage', checkUser)
+      clearInterval(interval)
+    }
+  }, [])
+
+  // Different menu items based on login status
+  const baseMenuItems = [
     { href: '/about', label: 'About' },
     { href: '/services', label: 'Services' },
     { href: '/jobs', label: 'Jobs' },
     { href: '/mock-interview', label: 'Mock Interview' },
     { href: '/resources', label: 'Resources' },
   ]
+
+  const menuItems = user 
+    ? [{ href: '/dashboard', label: '📊 Dashboard' }, ...baseMenuItems]
+    : baseMenuItems
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {

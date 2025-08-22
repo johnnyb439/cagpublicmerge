@@ -24,23 +24,24 @@ const EnhancedInput = forwardRef<HTMLInputElement, EnhancedInputProps>(
               {icon}
             </div>
           )}
-          <motion.input
-            ref={ref}
-            whileFocus={{ scale: 1.01 }}
-            className={`
-              w-full ${icon ? 'pl-10' : 'pl-4'} pr-4 py-3 
-              border border-gray-300 dark:border-gray-600 
-              bg-white dark:bg-gray-800 
-              text-gray-900 dark:text-white 
-              rounded-lg 
-              focus:outline-none focus:border-dynamic-green dark:focus:border-dynamic-green
-              focus:ring-2 focus:ring-dynamic-green/20
-              transition-all duration-200
-              ${error ? 'border-red-500' : ''}
-              ${className}
-            `}
-            {...props}
-          />
+          <motion.div whileFocus={{ scale: 1.01 }}>
+            <input
+              ref={ref}
+              className={`
+                w-full ${icon ? 'pl-10' : 'pl-4'} pr-4 py-3 
+                border border-gray-300 dark:border-gray-600 
+                bg-white dark:bg-gray-800 
+                text-gray-900 dark:text-white 
+                rounded-lg 
+                focus:outline-none focus:border-dynamic-green dark:focus:border-dynamic-green
+                focus:ring-2 focus:ring-dynamic-green/20
+                transition-all duration-200
+                ${error ? 'border-red-500' : ''}
+                ${className}
+              `}
+              {...props}
+            />
+          </motion.div>
           {error && (
             <motion.p
               initial={{ opacity: 0, y: -10 }}

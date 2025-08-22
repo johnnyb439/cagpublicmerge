@@ -27,6 +27,10 @@ export default function LoginPage() {
           name: email.split('@')[0],
           clearanceLevel: 'SECRET'
         }))
+        
+        // Dispatch custom event to notify navbar
+        window.dispatchEvent(new CustomEvent('userLogin'))
+        
         router.push('/dashboard')
       } else {
         setError('Please enter both email and password')

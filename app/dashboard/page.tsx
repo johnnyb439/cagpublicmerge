@@ -49,6 +49,7 @@ export default function DashboardPage() {
 
   const handleLogout = () => {
     localStorage.removeItem('user')
+    window.dispatchEvent(new CustomEvent('userLogout'))
     router.push('/login')
   }
 

@@ -58,7 +58,6 @@ export async function POST(request: Request) {
     });
 
   } catch (error) {
-    console.error('Error processing interview:', error);
     return NextResponse.json(
       { 
         feedback: "Unable to process your answer. Please try again.",

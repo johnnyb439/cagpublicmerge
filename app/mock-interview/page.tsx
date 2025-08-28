@@ -271,6 +271,11 @@ const InterviewSummary = ({
 };
 
 export default function MockInterviewPage() {
+  // AUDIT: Test data access immediately
+  console.log('🔍 AUDIT: interviewQuestions object:', Object.keys(interviewQuestions));
+  console.log('🔍 AUDIT: helpdesk questions exist:', !!interviewQuestions.helpdesk);
+  console.log('🔍 AUDIT: helpdesk count:', interviewQuestions.helpdesk?.length || 0);
+
   const [selectedTier, setSelectedTier] = useState<InterviewTier | null>(null)
   const [selectedRole, setSelectedRole] = useState<InterviewRole | null>(null)
   const [isInterviewing, setIsInterviewing] = useState(false)
@@ -300,6 +305,40 @@ export default function MockInterviewPage() {
   })
   const [showSummary, setShowSummary] = useState(false)
 
+  const startInterviewWithRole = (roleId: string) => {
+    console.log('🔍 startInterviewWithRole called with:', roleId);
+    setIsInterviewing(true)
+    setShowSummary(false)
+    setInterviewStats({
+      startTime: Date.now(),
+      totalTime: 0,
+      questionsAnswered: 0,
+      byDifficulty: { easy: 0, medium: 0, hard: 0 }
+    })
+    
+    // Order questions by progressive difficulty
+    if (availableRoles.includes(roleId)) {
+      const questions = interviewQuestions[roleId] || [];
+      console.log('🔍 DIRECT ACCESS - Questions for', roleId, ':', questions.length);
+      console.log('🔍 DIRECT ACCESS - First question:', questions[0]);
+      
+      const ordered = orderByDifficulty(questions);
+      console.log('🔍 DIRECT ACCESS - Ordered questions:', ordered.length);
+      console.log('🔍 DIRECT ACCESS - First ordered:', ordered[0]);
+      
+      setShuffledQuestions(ordered);
+      setQuestionIndex(0);
+      setQuestionCount(1);
+      setCurrentQuestion(ordered[0]);
+      
+      // Start timer if enabled
+      if (useTimer) {
+        setTimeRemaining(timerDuration);
+        setIsTimerPaused(false);
+      }
+    }
+  }
+
   const startInterview = () => {
     if (selectedRole) {
       setIsInterviewing(true)
@@ -314,7 +353,16 @@ export default function MockInterviewPage() {
       // Order questions by progressive difficulty
       if (availableRoles.includes(selectedRole)) {
         const questions = interviewQuestions[selectedRole] || [];
+        console.log('Questions:', questions);
+        console.log('Role param:', selectedRole);
+        console.log('🔍 Selected role:', selectedRole);
+        console.log('🔍 Questions found:', questions.length);
+        console.log('🔍 First question:', questions[0]);
+        
         const ordered = orderByDifficulty(questions);
+        console.log('🔍 Ordered questions:', ordered.length);
+        console.log('🔍 First ordered question:', ordered[0]);
+        
         setShuffledQuestions(ordered);
         setQuestionIndex(0);
         setQuestionCount(1);
@@ -639,11 +687,17 @@ export default function MockInterviewPage() {
                   <button
                     key={role.id}
                     onClick={() => {
+                      console.log('🔍 Role button clicked:', role.id);
+                      console.log('🔍 Is available:', isAvailable);
                       if (isAvailable) {
+                        console.log('🔍 Setting selected role to:', role.id);
                         setSelectedRole(role.id);
                         // Automatically start interview after role selection
                         setTimeout(() => {
-                          startInterview();
+                          console.log('🔍 Starting interview for role:', role.id);
+                          console.log('🔍 Selected role state:', selectedRole);
+                          // Pass role directly to avoid state timing issue
+                          startInterviewWithRole(role.id);
                         }, 500);
                       }
                     }}
@@ -712,7 +766,17 @@ export default function MockInterviewPage() {
               </div>
               
               <div className="bg-gray-50 dark:bg-ops-charcoal rounded-lg p-4 mb-6">
-                <p className="text-lg">{currentQuestion?.question}</p>
+                {currentQuestion?.question ? (
+                  <p className="text-lg">{currentQuestion.question}</p>
+                ) : (
+                  <div className="p-6 text-slate-300">
+                    <p>🔍 Debug Info:</p>
+                    <p>Selected Role: {selectedRole}</p>
+                    <p>Is Interviewing: {isInterviewing.toString()}</p>
+                    <p>Current Question: {currentQuestion ? 'Loaded' : 'NULL'}</p>
+                    <p>Shuffled Questions: {shuffledQuestions.length}</p>
+                  </div>
+                )}
               </div>
               
               <div className="space-y-4">

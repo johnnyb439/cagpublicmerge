@@ -23,8 +23,8 @@ const interviewRoles = {
   ]
 }
 
-// For now, we'll only show helpdesk questions since those are the only ones with answers
-const availableRoles = ['helpdesk']
+// All roles now have questions available
+const availableRoles = ['helpdesk', 'osp', 'isp', 'fiber', 'network', 'systems']
 
 // Fisher-Yates shuffle algorithm
 const shuffleArray = <T,>(array: T[]): T[] => {
@@ -53,19 +53,17 @@ export default function MockInterviewPage() {
     if (selectedRole) {
       setIsInterviewing(true)
       // Shuffle questions when starting interview
-      if (selectedRole === 'helpdesk') {
-        const questions = interviewQuestions.helpdesk || [];
-        const shuffled = shuffleArray(questions);
-        setShuffledQuestions(shuffled);
-        setQuestionIndex(0);
-        setQuestionCount(1);
-        setCurrentQuestion(shuffled[0]);
-      }
+      const questions = interviewQuestions[selectedRole] || [];
+      const shuffled = shuffleArray(questions);
+      setShuffledQuestions(shuffled);
+      setQuestionIndex(0);
+      setQuestionCount(1);
+      setCurrentQuestion(shuffled[0]);
     }
   }
 
   const generateQuestion = () => {
-    if (selectedRole === 'helpdesk' && shuffledQuestions.length > 0) {
+    if (selectedRole && shuffledQuestions.length > 0) {
       // Get next question from shuffled array
       const nextIndex = questionIndex + 1;
       if (nextIndex < shuffledQuestions.length) {
@@ -110,9 +108,9 @@ export default function MockInterviewPage() {
 
   // Ensure question loads when interview starts
   useEffect(() => {
-    if (isInterviewing && selectedRole === 'helpdesk' && !currentQuestion && shuffledQuestions.length === 0) {
+    if (isInterviewing && selectedRole && !currentQuestion && shuffledQuestions.length === 0) {
       // This will be handled by startInterview now
-      const questions = interviewQuestions.helpdesk || [];
+      const questions = interviewQuestions[selectedRole] || [];
       const shuffled = shuffleArray(questions);
       setShuffledQuestions(shuffled);
       setQuestionIndex(0);
@@ -205,14 +203,12 @@ export default function MockInterviewPage() {
                         setTimeout(() => {
                           setIsInterviewing(true);
                           // Shuffle questions when starting interview
-                          if (role.id === 'helpdesk') {
-                            const questions = interviewQuestions.helpdesk || [];
-                            const shuffled = shuffleArray(questions);
-                            setShuffledQuestions(shuffled);
-                            setQuestionIndex(0);
-                            setQuestionCount(1);
-                            setCurrentQuestion(shuffled[0]);
-                          }
+                          const questions = interviewQuestions[role.id] || [];
+                          const shuffled = shuffleArray(questions);
+                          setShuffledQuestions(shuffled);
+                          setQuestionIndex(0);
+                          setQuestionCount(1);
+                          setCurrentQuestion(shuffled[0]);
                         }, 500);
                       }
                     }}

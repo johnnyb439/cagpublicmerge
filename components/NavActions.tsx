@@ -24,7 +24,19 @@ function getUser() {
 function logout() {
   if (typeof window !== 'undefined') {
     localStorage.removeItem('user')
-    window.location.href = '/'
+  }
+}
+
+// Temporary function to simulate login for testing
+function tempLogin() {
+  if (typeof window !== 'undefined') {
+    const testUser = { 
+      id: 1, 
+      name: 'Test User', 
+      email: 'test@example.com' 
+    }
+    localStorage.setItem('user', JSON.stringify(testUser))
+    window.location.reload()
   }
 }
 
@@ -34,17 +46,7 @@ export default function NavActions() {
 
   useEffect(() => {
     setMounted(true)
-    
-    // Force guest state for landing page (you can remove this later)
-    localStorage.removeItem('user')
-    setUser(null)
-    
-    // Uncomment below when you want to restore auth functionality:
-    // const userData = localStorage.getItem('user')
-    // if (userData === 'null' || userData === '{}' || userData === '') {
-    //   localStorage.removeItem('user')
-    // }
-    // setUser(getUser())
+    setUser(getUser())
   }, [])
 
   // Prevent hydration mismatch by not rendering until mounted
@@ -68,7 +70,14 @@ export default function NavActions() {
           <span>Dashboard</span>
         </Link>
         <button
-          onClick={logout}
+          onClick={() => {
+            if (typeof window !== 'undefined') {
+              localStorage.removeItem('user')
+              setUser(null)
+              window.location.href = '/'
+              window.location.reload()
+            }
+          }}
           className="flex items-center space-x-2 px-4 py-2 text-sm text-white hover:text-red-400 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50 rounded-md"
         >
           <LogOut size={16} />
@@ -92,6 +101,12 @@ export default function NavActions() {
       >
         Create Account
       </Link>
+      <button
+        onClick={tempLogin}
+        className="px-4 py-2 text-sm text-yellow-400 hover:text-yellow-300 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-50 rounded-md border border-yellow-400"
+      >
+        [Test Login]
+      </button>
     </div>
   )
 }

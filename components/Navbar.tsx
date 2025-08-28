@@ -115,7 +115,8 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={link.isButton 
+                aria-label={link.label}
+                className={link.isButton
                   ? "bg-cag-blue hover:bg-cag-blue/80 text-white px-4 py-2 rounded-lg transition-all duration-300 whitespace-nowrap text-sm lg:text-base cag-glow"
                   : "text-white hover:text-sky-blue transition-colors duration-300 whitespace-nowrap text-sm lg:text-base px-2"
                 }
@@ -123,7 +124,7 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
-            
+
             {/* User Account Links */}
             {user ? (
               <button
@@ -133,6 +134,7 @@ export default function Navbar() {
                   window.dispatchEvent(new CustomEvent('userLogout'))
                   window.location.href = '/'
                 }}
+                aria-label="Sign out"
                 className="text-white hover:text-sky-blue transition-colors duration-300 whitespace-nowrap text-sm lg:text-base"
               >
                 Sign Out
@@ -140,17 +142,18 @@ export default function Navbar() {
             ) : (
               <Link
                 href="/login"
+                aria-label="Sign in"
                 className="text-white hover:text-sky-blue transition-colors duration-300 whitespace-nowrap text-sm lg:text-base"
               >
                 Sign In
               </Link>
             )}
-            
+
             {/* Theme Toggle */}
             <ThemeToggle />
-            
+
             {/* American Flag */}
-            <div className="flex items-center space-x-2 ml-4">
+            <div className="flex items-center space-x-2 ml-4" aria-label="United States">
               <div className="w-8 h-5 relative bg-patriot-red">
                 {/* Red and white stripes */}
                 <div className="absolute inset-0 flex flex-col">
@@ -182,7 +185,7 @@ export default function Navbar() {
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="text-white hover:text-sky-blue"
-              aria-label="Toggle mobile menu"
+              aria-label={isOpen ? "Close mobile menu" : "Open mobile menu"}
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -198,7 +201,8 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className={link.isButton 
+                aria-label={link.label}
+                className={link.isButton
                   ? "block bg-cag-blue hover:bg-cag-blue/80 text-white px-4 py-2 rounded-lg transition-all duration-300 mb-2 cag-glow text-center"
                   : "block text-white hover:text-sky-blue py-2 transition-colors duration-300"
                 }
@@ -207,13 +211,13 @@ export default function Navbar() {
                 {link.label}
               </Link>
             ))}
-            
+
             {/* Theme Toggle in Mobile */}
             <div className="border-t border-gray-700 mt-4 pt-4 flex items-center justify-between">
               <span className="text-white">Theme</span>
               <ThemeToggle />
             </div>
-            
+
             {/* User Account Links in Mobile */}
             <div className="border-t border-gray-700 mt-4 pt-4">
               {user ? (
@@ -225,6 +229,7 @@ export default function Navbar() {
                     setIsOpen(false)
                     window.location.href = '/'
                   }}
+                  aria-label="Sign out"
                   className="block text-white hover:text-sky-blue py-2 transition-colors duration-300 w-full text-left"
                 >
                   Sign Out
@@ -232,6 +237,7 @@ export default function Navbar() {
               ) : (
                 <Link
                   href="/login"
+                  aria-label="Sign in"
                   className="block text-white hover:text-sky-blue py-2 transition-colors duration-300"
                   onClick={() => setIsOpen(false)}
                 >

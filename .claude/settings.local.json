@@ -32,8 +32,13 @@
       "Bash(xcopy:*)",
       "Bash(robocopy:*)",
       "Bash(dir:*)",
-      "Bash(git remote add:*)"
+      "Bash(git remote add:*)",
+      "Bash(grep:*)",
+      "Bash(node:*)"
     ],
-    "deny": []
+    "deny": [],
+    "additionalDirectories": [
+      "/Users/tone/Desktop/CAG-Official-2025/cagpublicmerge"
+    ]
   }
 }

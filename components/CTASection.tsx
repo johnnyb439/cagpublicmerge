@@ -25,6 +25,7 @@ export default function CTASection() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link 
               href="/contact" 
+              aria-label="Schedule a free consultation to discuss your career goals"
               className="glass-button bg-white/20 text-white px-8 py-4 rounded-lg font-semibold hover:bg-white/30 transition-all duration-300 inline-flex items-center justify-center group"
             >
               <Calendar className="mr-2" size={20} />
@@ -34,6 +35,7 @@ export default function CTASection() {
             
             <Link 
               href="/mock-interview" 
+              aria-label="Try our AI-powered mock interview tool"
               className="glass-button text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 inline-flex items-center justify-center"
             >
               <MessageCircle className="mr-2" size={20} />

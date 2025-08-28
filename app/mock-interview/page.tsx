@@ -4,7 +4,12 @@ import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { Bot, Mic, MicOff, Send, RefreshCw, CheckCircle, AlertCircle } from 'lucide-react'
 import BinaryBackground from '@/components/BinaryBackground'
-import { interviewQuestions, InterviewQuestion } from './interview-data'
+interface InterviewQuestion {
+  question: string;
+  answer: string;
+  difficulty?: 'easy' | 'medium' | 'hard';
+  category?: string;
+}
 
 
 type InterviewTier = 'tier1' | 'tier2'
@@ -49,16 +54,27 @@ export default function MockInterviewPage() {
   const [shuffledQuestions, setShuffledQuestions] = useState<InterviewQuestion[]>([])
   const [questionIndex, setQuestionIndex] = useState(0)
 
-  const startInterview = () => {
+  const startInterview = async () => {
     if (selectedRole) {
       setIsInterviewing(true)
-      // Shuffle questions when starting interview
-      const questions = interviewQuestions[selectedRole] || [];
-      const shuffled = shuffleArray(questions);
-      setShuffledQuestions(shuffled);
-      setQuestionIndex(0);
-      setQuestionCount(1);
-      setCurrentQuestion(shuffled[0]);
+      try {
+        // Load questions dynamically from API
+        const response = await fetch(`/api/interview-questions/${selectedRole}`)
+        const data = await response.json()
+        const questions = data.questions || []
+        
+        setShuffledQuestions(questions)
+        setQuestionIndex(0)
+        setQuestionCount(1)
+        setCurrentQuestion(questions[0])
+      } catch (error) {
+        console.error('Failed to load questions:', error)
+        // Show error message if API fails
+        setCurrentQuestion({
+          question: "Sorry, questions failed to load. Please try again.",
+          answer: "Refresh the page or contact support if the issue persists."
+        })
+      }
     }
   }
 
@@ -106,18 +122,7 @@ export default function MockInterviewPage() {
     setQuestionIndex(0)
   }
 
-  // Ensure question loads when interview starts
-  useEffect(() => {
-    if (isInterviewing && selectedRole && !currentQuestion && shuffledQuestions.length === 0) {
-      // This will be handled by startInterview now
-      const questions = interviewQuestions[selectedRole] || [];
-      const shuffled = shuffleArray(questions);
-      setShuffledQuestions(shuffled);
-      setQuestionIndex(0);
-      setQuestionCount(1);
-      setCurrentQuestion(shuffled[0]);
-    }
-  }, [isInterviewing, selectedRole, currentQuestion, shuffledQuestions]);
+  // Questions are now loaded dynamically by startInterview function
 
   return (
     <section className="relative min-h-screen bg-gray-50 dark:bg-ops-charcoal py-20">
@@ -201,14 +206,7 @@ export default function MockInterviewPage() {
                         setSelectedRole(role.id);
                         // Automatically start interview after role selection
                         setTimeout(() => {
-                          setIsInterviewing(true);
-                          // Shuffle questions when starting interview
-                          const questions = interviewQuestions[role.id] || [];
-                          const shuffled = shuffleArray(questions);
-                          setShuffledQuestions(shuffled);
-                          setQuestionIndex(0);
-                          setQuestionCount(1);
-                          setCurrentQuestion(shuffled[0]);
+                          startInterview();
                         }, 500);
                       }
                     }}

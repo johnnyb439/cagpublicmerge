@@ -1,0 +1,552 @@
+[
+  {
+    "id": "network-001",
+    "category": "network",
+    "question": "Explain the difference between a switch and a router, and when you would use each.",
+    "answer": "A switch operates at Layer 2 (Data Link) and forwards frames based on MAC addresses within a local network. It creates separate collision domains for each port, learns MAC addresses dynamically, and maintains a MAC address table. Switches are used for: connecting devices in the same network/VLAN, providing dedicated bandwidth per port, and creating network segments. A router operates at Layer 3 (Network) and forwards packets based on IP addresses between different networks. It maintains routing tables, performs NAT, and provides security between networks. Routers are used for: connecting different networks/subnets, WAN connectivity and internet access, implementing security policies between segments, and traffic routing decisions. In practice: use switches for LAN connectivity within buildings/floors, deploy routers at network borders and WAN edges, and implement Layer 3 switches for inter-VLAN routing in larger networks. Modern equipment often combines functions - Layer 3 switches can route, and routers include switch ports.",
+    "difficulty": "easy",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-002",
+    "category": "network",
+    "question": "How do you configure and troubleshoot VLANs on a managed switch?",
+    "answer": "VLAN configuration starts with planning: assign VLAN IDs (avoid VLAN 1 for security), document purpose of each VLAN (e.g., VLAN 10-Users, VLAN 20-VoIP), and plan IP addressing scheme. Access switch via console or SSH, enter configuration mode, and create VLANs: 'vlan 10', 'name Users'. Configure access ports: 'interface gi1/0/1', 'switchport mode access', 'switchport access vlan 10'. Configure trunk ports between switches: 'switchport mode trunk', 'switchport trunk allowed vlan 10,20,30', and verify native VLAN matches. For inter-VLAN routing: configure router-on-a-stick or Layer 3 switch, create subinterfaces or SVIs, and assign IP addresses as default gateways. Troubleshooting commands: 'show vlan brief' to verify VLAN existence, 'show interfaces trunk' for trunk status, 'show mac address-table' for MAC learning, and 'show spanning-tree' for loop prevention. Common issues: VLAN mismatch on trunk links, forgotten 'no shutdown' on VLAN interface, native VLAN mismatch causing issues, and pruning removing needed VLANs. Best practices: use VLAN descriptions, implement VLAN pruning for security, and document all VLAN assignments.",
+    "difficulty": "easy",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-003",
+    "category": "network",
+    "question": "Walk through subnetting a /24 network into 4 equal subnets.",
+    "answer": "Starting with a /24 network (e.g., 192.168.1.0/24) giving us 256 addresses. To create 4 equal subnets, we need 2 bits for subnetting (2² = 4 subnets). Original: /24 = 255.255.255.0, New mask: /26 = 255.255.255.192 (borrowing 2 bits). Each subnet gets 64 addresses (2⁶ = 64): 62 usable hosts plus network and broadcast. The four subnets are: Subnet 1: 192.168.1.0/26 (0-63), network: .0, first host: .1, last host: .62, broadcast: .63. Subnet 2: 192.168.1.64/26 (64-127), network: .64, first host: .65, last host: .126, broadcast: .127. Subnet 3: 192.168.1.128/26 (128-191), network: .128, first host: .129, last host: .190, broadcast: .191. Subnet 4: 192.168.1.192/26 (192-255), network: .192, first host: .193, last host: .254, broadcast: .255. Practical application: assign subnets by department or function, configure router interfaces with first usable IP, update DHCP scopes for each subnet, and document subnet assignments. Remember: more subnets = fewer hosts per subnet, and plan for growth when subnetting.",
+    "difficulty": "easy",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-004",
+    "category": "network",
+    "question": "How do you configure and verify a static route on a Cisco router?",
+    "answer": "Static routes are configured when dynamic routing isn't suitable or for specific traffic control. Configuration syntax: 'ip route [destination] [mask] [next-hop or exit-interface] [distance]'. Example: 'ip route 10.10.10.0 255.255.255.0 192.168.1.1' routes traffic for 10.10.10.0/24 network via 192.168.1.1. For default route: 'ip route 0.0.0.0 0.0.0.0 192.168.1.1' sends all unknown traffic to 192.168.1.1. Using exit interface: 'ip route 10.10.10.0 255.255.255.0 GigabitEthernet0/1' (faster lookup but proxy-ARP dependent). Floating static routes: add higher administrative distance, 'ip route 10.10.10.0 255.255.255.0 192.168.1.2 10', used as backup when primary fails. Verification commands: 'show ip route' displays routing table, 'show ip route static' shows only static routes, 'ping' and 'traceroute' to test connectivity, and 'show ip interface brief' for interface status. Troubleshooting: verify next-hop is reachable, check interface is up/up, ensure no more specific routes override, and watch for routing loops. Best practices: use descriptions for documentation, implement floating statics for redundancy, and regularly audit static routes for relevance.",
+    "difficulty": "easy",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-005",
+    "category": "network",
+    "question": "Explain DHCP process and how to troubleshoot common DHCP issues.",
+    "answer": "DHCP uses four-step DORA process: Discover (client broadcasts request), Offer (server offers IP configuration), Request (client requests offered IP), and Acknowledge (server confirms assignment). DHCP provides: IP address and subnet mask, default gateway, DNS servers, and lease time. Server configuration includes: defining scope (IP range), excluding static IPs (servers, printers), setting lease duration, and configuring options (DNS, gateway). Common issues and fixes: No IP received - check VLAN configuration, verify DHCP service running, ensure scope has available IPs, and check for rogue DHCP servers. Wrong IP range - verify client in correct VLAN, check DHCP relay/helper configuration, and ensure scope options correct. IP conflicts - check for static IP overlaps, verify exclusions configured, and clear lease for conflicting address. Troubleshooting tools: 'ipconfig /release and /renew' on Windows, 'show ip dhcp binding' on Cisco, packet capture to see DORA process, and Event Viewer for DHCP server logs. DHCP relay for multiple subnets: configure 'ip helper-address' on router, points to DHCP server IP, and allows DHCP across VLANs. Best practices: use reservations for servers/printers, monitor scope utilization, and implement DHCP failover for redundancy.",
+    "difficulty": "easy",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-006",
+    "category": "network",
+    "question": "How do you implement and troubleshoot spanning tree protocol (STP)?",
+    "answer": "STP prevents Layer 2 loops by blocking redundant paths. Process: elect root bridge (lowest bridge ID), calculate shortest path to root, and block redundant ports. Port states: Blocking (20 sec), Listening (15 sec), Learning (15 sec), Forwarding, or Disabled. Port roles: Root port (best path to root), Designated port (forwarding on segment), and Blocked/Alternate port (redundant path). Configuration: set bridge priority: 'spanning-tree vlan 1 priority 4096', configure root bridge: 'spanning-tree vlan 1 root primary', and enable portfast on access ports: 'spanning-tree portfast'. Verify with commands: 'show spanning-tree' for STP status, 'show spanning-tree summary' for overview, and 'debug spanning-tree' for real-time changes. Common issues: suboptimal root bridge selection (set priority manually), slow convergence (implement Rapid STP), and topology changes from flapping links. RSTP improvements: faster convergence (seconds vs 50 seconds), new port roles (alternate, backup), and backward compatible with STP. Best practices: manually set root bridge, use BPDU guard on access ports, implement root guard on distribution ports, and document expected topology. Advanced features: PVST+ for per-VLAN spanning tree, MST for multiple spanning tree instances, and loop guard for additional protection.",
+    "difficulty": "easy",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-007",
+    "category": "network",
+    "question": "Describe how to configure and secure a wireless network with enterprise authentication.",
+    "answer": "Enterprise wireless uses 802.1X authentication with RADIUS for individual user credentials. Components needed: RADIUS server (Windows NPS or FreeRADIUS), certificate authority for EAP-TLS, wireless controller or access points, and Active Directory for user accounts. Configure RADIUS server: install Network Policy Server role, create RADIUS clients (APs/controllers), configure network policies for wireless access, and set authentication methods (PEAP-MSCHAPv2 or EAP-TLS). Wireless controller setup: configure SSID with WPA2/WPA3-Enterprise, point to RADIUS servers (primary and backup), set RADIUS secret (complex, matching server), and configure reauthentication timer. Certificate deployment: create certificate template for wireless, deploy via Group Policy to domain computers, or use PEAP for username/password only. Security enhancements: implement MAC filtering as secondary control, use dynamic VLAN assignment from RADIUS, enable management frame protection (802.11w), and configure rogue AP detection. Client configuration: select WPA2-Enterprise security, choose authentication method (PEAP or EAP-TLS), validate server certificate, and enter domain credentials. Troubleshooting: check RADIUS server Event Logs, verify certificate trust chain, test with 'ntradping' utility, and monitor wireless controller logs. Best practices: separate guest and corporate networks, implement certificate-based authentication where possible, and regularly rotate RADIUS secrets.",
+    "difficulty": "easy",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-008",
+    "category": "network",
+    "question": "How do you configure and manage Quality of Service (QoS) for VoIP traffic?",
+    "answer": "QoS ensures voice traffic gets priority over data traffic for call quality. VoIP requirements: latency <150ms one-way, jitter <30ms, packet loss <1%, and bandwidth ~80-100kbps per call. Classification methods: mark traffic with DSCP values (EF/46 for voice), identify by port numbers (SIP 5060, RTP 16384-32767), or use access lists for IP ranges. Marking configuration: at phone: configure DSCP in phone settings, at switch: 'mls qos trust dscp' on voice ports, and at router: class-maps to identify traffic. Implement queuing: Priority queue (LLQ) for voice: 'priority percent 20', CBWFQ for other traffic classes, and police excessive traffic if needed. Switch configuration: enable QoS globally: 'mls qos', trust DSCP on trunk ports, and configure voice VLAN with CoS 5. Router configuration example: 'class-map VOICE', 'match dscp ef', then 'policy-map QOS-POLICY', 'class VOICE', 'priority percent 20'. Apply policy: 'interface GigabitEthernet0/1', 'service-policy output QOS-POLICY'. Verification: 'show policy-map interface' for statistics, 'show mls qos' on switches, and monitor call quality metrics. Best practices: don't over-provision priority queue, implement admission control, test during peak usage, and monitor drops and delays.",
+    "difficulty": "easy",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-009",
+    "category": "network",
+    "question": "Explain OSPF routing protocol configuration and troubleshooting.",
+    "answer": "OSPF is a link-state protocol using Dijkstra's algorithm for best path calculation. Basic configuration: 'router ospf 1' (process ID), 'network 192.168.1.0 0.0.0.255 area 0', and 'router-id 1.1.1.1' (manual ID). OSPF areas: Area 0 is backbone (all areas must connect), stub areas reduce database size, and totally stubby areas block Type 3-5 LSAs. Network types: Broadcast (Ethernet, DR/BDR election), Point-to-point (no DR needed), and NBMA (Frame Relay, manual neighbors). Neighbor states progression: Down, Init, 2-Way, ExStart, Exchange, Loading, and Full. Troubleshooting commands: 'show ip ospf neighbor' for adjacencies, 'show ip ospf database' for LSDB, 'show ip route ospf' for learned routes, and 'debug ip ospf adj' for adjacency issues. Common problems: mismatched area IDs, different network types, MTU mismatch, and authentication mismatch. DR/BDR election: highest priority wins (default 1), highest router ID if tie, and set priority 0 to never become DR. Authentication: plain text (Type 1) or MD5 (Type 2), configured per interface. Cost manipulation: 'ip ospf cost' per interface, or 'auto-cost reference-bandwidth' globally. Best practices: use loopbacks for router IDs, summarize at area borders, and implement authentication.",
+    "difficulty": "easy",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-010",
+    "category": "network",
+    "question": "How do you design and implement network segmentation for security?",
+    "answer": "Network segmentation isolates different security zones to limit breach impact. Design principles: identify data classification levels, group similar security requirements, minimize cross-zone traffic, and implement zero-trust approach. Common segments: DMZ for public-facing services, management network for infrastructure, user VLANs by department, server VLANs by application tier, IoT/BYOD isolated networks, and guest network completely separated. Implementation: use VLANs for Layer 2 separation, implement router/firewall between segments, configure ACLs for traffic control, and use private VLANs for additional isolation. Firewall rules: default deny between zones, explicitly allow required traffic, log all inter-zone connections, and implement IPS for threat detection. Access control: 802.1X for dynamic VLAN assignment, MAC authentication bypass for non-802.1X devices, captive portal for guest access, and NAC for compliance checking. Monitoring: NetFlow for traffic analysis, SIEM for security events, regular penetration testing, and configuration compliance auditing. Best practices: document all flows between segments, implement jump servers for administration, use separate credentials per zone, regularly review and update rules, and plan for east-west traffic inspection. Consider microsegmentation for critical assets using software-defined networking.",
+    "difficulty": "easy",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-011",
+    "category": "network",
+    "question": "Design a redundant network architecture for a two-site business with 200 users.",
+    "answer": "Design dual-site architecture with high availability at each layer. Core/Distribution: redundant core switches at each site (stack or VSS), dual WAN routers for internet/MPLS, cross-connect between core switches (LACP), and Layer 3 at distribution for fast convergence. Site connectivity: primary MPLS circuit (10Gbps), secondary internet VPN (1Gbps), and automatic failover using IP SLA tracking. Routing design: OSPF or EIGRP internally, BGP for WAN if multiple carriers, summarization at site boundaries, and floating static routes for backup. Access layer: dual-uplink to distribution switches, spanning-tree root at distribution, and PoE+ for phones and wireless APs. Wireless: controllers at each site (HA pair), AP groups for local traffic switching, and FlexConnect for WAN survivability. Security: firewalls in HA active/standby, IPS at internet edge, and site-to-site VPN as backup. Internet edge: dual ISPs with BGP or failover, load balancing for outbound traffic, and public IP redundancy. Server infrastructure: virtualization cluster at primary site, replicated critical services at secondary, and stretched VLANs for vMotion if needed. Monitoring: centralized NMS at primary site, NetFlow collectors at both sites, and out-of-band management network. DR considerations: RPO/RTO requirements documented, automatic failover for critical services, and regular failover testing scheduled.",
+    "difficulty": "easy",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-012",
+    "category": "network",
+    "question": "How do you implement and troubleshoot BGP in an enterprise environment?",
+    "answer": "BGP configuration starts with AS number assignment and neighbor relationships. Basic setup: 'router bgp 65001', 'neighbor 10.1.1.1 remote-as 65002', 'network 192.168.0.0 mask 255.255.0.0'. eBGP vs iBGP: eBGP between different AS (TTL=1), iBGP within same AS (full mesh required), and use route reflectors for scalability. Path selection (in order): highest weight (local), highest local preference, originated locally, shortest AS path, lowest origin type, lowest MED, eBGP over iBGP, lowest IGP metric to next-hop, and lowest router ID. Advertising routes: network statement with exact match, redistribute from IGP (use route-maps), and aggregate-address for summarization. Filtering: prefix-lists for IP filtering, AS-path filters for AS-based, route-maps for complex policy, and communities for tagging routes. Troubleshooting: 'show ip bgp summary' for peer status, 'show ip bgp' for BGP table, 'debug ip bgp updates' for real-time, and 'clear ip bgp * soft' for policy changes. Common issues: incorrect peer IP or AS, MD5 authentication mismatch, filtered by policy, and next-hop unreachable. Best practices: use peer-groups for scalability, implement prefix limits, filter private AS numbers, use MD5 authentication, and document all policies thoroughly.",
+    "difficulty": "easy",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-013",
+    "category": "network",
+    "question": "Explain how to implement network automation using Python and APIs.",
+    "answer": "Network automation reduces manual errors and improves efficiency. Python basics for networking: Netmiko for SSH connections, Requests for REST APIs, Jinja2 for config templates, and YAML/JSON for data structures. Netmiko example: 'from netmiko import ConnectHandler', define device dictionary, 'net_connect = ConnectHandler(**device)', 'output = net_connect.send_command(\"show ip int brief\")'. REST API automation: authenticate and get token, make GET requests for data, POST/PUT for configuration, and handle JSON responses. Template approach: create Jinja2 templates for configs, define variables in YAML, render templates with data, and push to multiple devices. Error handling: try/except blocks for connection issues, validate before applying configs, rollback on failure, and log all actions. Ansible for orchestration: inventory file for devices, playbooks for tasks, roles for reusability, and vault for passwords. Version control: Git for script management, separate dev/prod branches, peer review process, and documentation in README. APIs to leverage: RESTCONF for standard-based, NETCONF for transaction support, vendor APIs (Meraki, DNA Center), and monitoring APIs (SNMP, streaming telemetry). Best practices: test in lab environment, implement gradual rollout, maintain rollback capability, and document all automation.",
+    "difficulty": "easy",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-014",
+    "category": "network",
+    "question": "How do you design and implement SD-WAN for a multi-site organization?",
+    "answer": "SD-WAN provides intelligent path selection and simplified WAN management. Architecture components: edge devices at each site, orchestrator for central management, controllers for control plane, and analytics for visibility. Transport independence: MPLS for guaranteed performance, broadband internet for cost savings, LTE for backup/temporary sites, and active-active usage of all links. Design considerations: application requirements (latency, bandwidth), number and location of sites, existing WAN contracts, and cloud connectivity needs (AWS, Azure). Policy definition: business-critical apps on MPLS, bulk traffic on internet, real-time traffic prioritized, and SaaS traffic direct to internet. Implementation steps: deploy edge devices at sites, connect to orchestrator, configure transport links, and define application policies. Application identification: deep packet inspection, first packet classification, and custom application definitions. Path selection: measure loss, latency, jitter, select best path per application, and automatic failover on degradation. Security integration: built-in firewall capabilities, IPS/IDS functionality, encrypted tunnels between sites, and cloud security service chaining. QoS and prioritization: application-based policies, bandwidth guarantees, and traffic shaping per site. Cloud on-ramp: direct connectivity to IaaS/SaaS, optimized Office 365 routing, and virtual edge in cloud. Monitoring: real-time application performance, transport health metrics, and predictive analytics. Migration approach: hybrid mode initially, gradual application migration, and maintain MPLS during transition.",
+    "difficulty": "easy",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-015",
+    "category": "network",
+    "question": "Describe implementing Zero Trust Network Architecture (ZTNA) in an enterprise.",
+    "answer": "Zero Trust assumes no implicit trust - verify everything. Core principles: never trust, always verify; least privilege access; assume breach; and verify explicitly. Architecture components: identity provider (IdP) for authentication, policy engine for decisions, policy enforcement points (PEPs), and continuous monitoring systems. Implementation phases: identify protect surfaces (data, assets, applications, services), map transaction flows, architect Zero Trust network, create Zero Trust policy, and monitor and maintain. Microsegmentation: software-defined perimeter (SDP), identity-based segmentation, application-layer controls, and east-west traffic inspection. Identity and Access: multi-factor authentication (MFA) mandatory, conditional access policies, privileged access management (PAM), and continuous authentication. Device trust: device compliance checking, managed vs unmanaged classification, health attestation, and certificate-based authentication. Network design: eliminate flat networks, segment by identity not location, encrypted micro-tunnels, and cloud-native security. Policy enforcement: context-aware decisions (user, device, location, behavior), dynamic policy updates, risk-based access control, and session monitoring. Technology stack: SASE for cloud delivery, CASB for SaaS control, EDR for endpoint security, SIEM for correlation, and SOAR for automation. Challenges: legacy application compatibility, complexity of implementation, user experience balance, and performance considerations. Success metrics: reduced attack surface, faster incident response, improved compliance, and reduced breach impact.",
+    "difficulty": "easy",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-016",
+    "category": "network",
+    "question": "Explain the difference between HSRP, VRRP, and GLBP and in which scenario you would use each.",
+    "answer": "HSRP (Hot Standby Router Protocol) is a Cisco-proprietary protocol that provides gateway redundancy by creating a virtual router with a single virtual IP and MAC address. One router is active, and another is in standby. I would use HSRP in an all-Cisco environment for straightforward active/standby redundancy. VRRP (Virtual Router Redundancy Protocol) is an open standard similar to HSRP, allowing an active router and multiple backup routers. I would choose VRRP in a multi-vendor environment to ensure compatibility. GLBP (Gateway Load Balancing Protocol) is also Cisco-proprietary and provides redundancy plus load balancing. It allows multiple routers to be active simultaneously, forwarding traffic for the same virtual IP. I would use GLBP when I need to utilize the bandwidth of all my gateway routers, not just have one sitting idle.",
+    "difficulty": "easy",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-017",
+    "category": "network",
+    "question": "You are seeing intermittent packet loss to a specific server. How would you use ping and traceroute with specific options to diagnose the problem?",
+    "answer": "I would start with a continuous ping using 'ping -t <server_ip>' (or 'ping <server_ip>' on Linux) to see if the packet loss is consistent or happens in bursts. I would also use a large packet size with 'ping -l 1500 <server_ip>' to check for MTU issues. Next, I would use traceroute (tracert on Windows) to identify the path to the server and see at which hop the latency increases or packet loss begins. For more detail, I would use a tool like MTR (My Traceroute) or run 'pathping <server_ip>' on Windows, which combines ping and traceroute to show packet loss at each hop along the path. This helps pinpoint if the issue is on our local network, the ISP's network, or the server's network.",
+    "difficulty": "easy",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-018",
+    "category": "network",
+    "question": "What is the purpose of a firewall's state table, and how does it differentiate stateful from stateless firewalls?",
+    "answer": "A state table, or connection table, is the core of a stateful firewall. It keeps track of all active network connections passing through it. When a user initiates a connection from inside the network to the outside, the firewall creates an entry in the state table. This entry includes the source and destination IP addresses, port numbers, and connection state. Because of this table, the firewall knows that the return traffic is expected and automatically allows it back in without needing a specific inbound rule. A stateless firewall, on the other hand, does not maintain a state table. It inspects every packet individually and makes a decision based solely on the configured ACLs. This means you would need to create explicit rules for both inbound and outbound traffic, making it less secure and more complex to manage.",
+    "difficulty": "medium",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-019",
+    "category": "network",
+    "question": "How would you configure a port-channel (LACP) between two switches, and what are the benefits?",
+    "answer": "To configure a port-channel using LACP, I would first select the physical interfaces on both switches. On each switch, I would create a port-channel interface, for example, 'interface port-channel 1'. Then, on the physical interfaces, I would assign them to the port-channel using the command 'channel-group 1 mode active'. The 'active' mode tells the switch to actively try to form an LACP negotiation. The benefits are twofold: first, it increases the available bandwidth between the switches by bundling the links together. For example, two 1Gbps links becomes a 2Gbps link. Second, it provides redundancy. If one of the physical links in the port-channel fails, traffic will automatically be redirected to the remaining links with no downtime.",
+    "difficulty": "medium",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-020",
+    "category": "network",
+    "question": "A user is complaining that their VoIP calls are choppy. What are the likely network causes and how would you investigate?",
+    "answer": "Choppy VoIP calls are usually caused by jitter, which is the variation in packet arrival time, or packet loss. I would first check the QoS configuration on the network to ensure that voice traffic is being properly classified, marked with DSCP EF, and placed in a priority queue. I would then investigate the path the voice traffic is taking. I would use a tool like Wireshark to capture the RTP stream and analyze the jitter and packet loss. I would also check the bandwidth utilization on the links between the phone and the call processor to see if there is any congestion. Finally, I would check for duplex mismatches or other physical layer errors on the switch ports that the phones are connected to.",
+    "difficulty": "medium",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-021",
+    "category": "network",
+    "question": "What is the difference between a standard and an extended ACL in a Cisco environment?",
+    "answer": "A standard ACL is the most basic type of access control list. It can only filter traffic based on the source IP address. Because of this limitation, you should place standard ACLs as close to the destination as possible to avoid unintentionally blocking traffic. An extended ACL is much more granular. It can filter traffic based on the source and destination IP addresses, the protocol (like TCP, UDP, or ICMP), and the source and destination port numbers. This allows for much more specific control. For example, you can use an extended ACL to allow a specific server to access another server on a specific port. Because they are so specific, extended ACLs should be placed as close to the source as possible to block unwanted traffic at the entry point to the network.",
+    "difficulty": "medium",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-022",
+    "category": "network",
+    "question": "Explain the concept of route redistribution and a potential problem it can cause.",
+    "answer": "Route redistribution is the process of taking routes learned from one routing protocol, like OSPF, and advertising them into another routing protocol, like EIGRP. This is often necessary in large, complex networks that have been built over time or have merged with other networks. A major potential problem with route redistribution is the creation of routing loops. This can happen because each routing protocol has its own metric and algorithm for determining the best path. To prevent this, it's crucial to use route maps to filter which routes are redistributed and to set the seed metric of the redistributed routes to a value that makes sense in the new protocol. It is also important to control redistribution points, ideally having only one or two routers performing redistribution between any two protocols.",
+    "difficulty": "medium",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-023",
+    "category": "network",
+    "question": "What is SNMP, and what is the difference between SNMPv2c and SNMPv3?",
+    "answer": "SNMP, or Simple Network Management Protocol, is a standard protocol used for monitoring and managing network devices. It allows a network management station to query devices for information like CPU utilization, memory usage, and interface status. The main difference between SNMPv2c and SNMPv3 is security. SNMPv2c uses a simple community string, which is like a password, for authentication. This community string is sent in clear text, which is a major security risk. SNMPv3 addresses this by providing strong authentication using usernames and passwords, and encryption to ensure that the data being sent between the management station and the device is secure. For this reason, SNMPv3 is the recommended version to use in any production environment.",
+    "difficulty": "medium",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-024",
+    "category": "network",
+    "question": "You need to provide internet access to a guest wireless network but keep it completely separate from the corporate network. How would you achieve this?",
+    "answer": "I would create a new VLAN specifically for the guest network, for example, VLAN 100. I would then create a new SSID on the wireless controller and assign it to this guest VLAN. The guest VLAN would have its own DHCP scope to provide IP addresses to the guest devices. To keep it separate from the corporate network, I would create a firewall rule that denies any traffic from the guest VLAN to any of the corporate network subnets. The only traffic I would permit from the guest VLAN is outbound to the internet. This ensures that guests can access the internet but have no visibility or access to any internal corporate resources.",
+    "difficulty": "medium",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-025",
+    "category": "network",
+    "question": "What is the purpose of a network tap and when would you use it over a SPAN port?",
+    "answer": "A network tap is a hardware device that is physically inserted into a network link and creates an exact copy of all the traffic, including physical layer errors, without altering the traffic in any way. A SPAN (Switched Port Analyzer) port, on the other hand, is a feature on a switch that copies traffic from one or more source ports to a destination port. I would use a network tap when I need a 100% accurate copy of the traffic for security monitoring or deep packet analysis, as a SPAN port can sometimes drop packets if the switch is heavily loaded. Taps are also fail-safe; if the tap loses power, the network link continues to function. A SPAN port is a good choice for temporary troubleshooting or when a tap is not available, but for permanent, critical monitoring, a tap is the superior solution.",
+    "difficulty": "medium",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-026",
+    "category": "network",
+    "question": "Explain the difference between NAT, PAT, and a static NAT.",
+    "answer": "NAT (Network Address Translation) is the process of changing the source or destination IP address of a packet as it passes through a router or firewall. PAT (Port Address Translation), also known as NAT overload, is the most common type of NAT. It translates multiple private IP addresses into a single public IP address by using different port numbers to keep track of the connections. This is how most home and small business networks connect to the internet. A static NAT, on the other hand, is a one-to-one mapping between a private IP address and a public IP address. This is typically used when you need to make an internal server, like a web server, accessible from the internet. You would create a static NAT to map a public IP address to the private IP address of the web server.",
+    "difficulty": "medium",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-027",
+    "category": "network",
+    "question": "How does a DNS query get resolved, from the moment a user types a URL in their browser?",
+    "answer": "When a user types a URL, the computer first checks its local DNS cache. If the address is not there, it sends a query to its configured DNS server, which is usually provided by the local DHCP server. This server, known as a recursive resolver, then begins the resolution process. If it doesn't have the address in its cache, it sends a query to one of the internet's root DNS servers. The root server will respond with the address of the Top-Level Domain (TLD) server for the domain (e.g., the .com server). The recursive resolver then queries the TLD server, which responds with the address of the authoritative name server for the specific domain. Finally, the recursive resolver queries the authoritative name server, which holds the actual DNS record, and gets the IP address. This IP address is then returned to the user's computer, and the computer can now establish a connection to the website.",
+    "difficulty": "medium",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-028",
+    "category": "network",
+    "question": "You are designing a new office network for 500 users. How would you decide on the IP addressing and subnetting scheme?",
+    "answer": "For 500 users, I would need more than a single /24 subnet. I would likely use a /22 subnet, which provides 1022 usable IP addresses. This gives us enough addresses for all the users, plus printers, servers, and other network devices, and allows for future growth. I would then break this /22 network down into smaller subnets for different purposes to improve security and organization. For example, I would create separate VLANs and subnets for corporate users, guest wireless, servers, and VoIP phones. This segmentation would be enforced by a firewall or a layer 3 switch, with ACLs to control the traffic between the subnets.",
+    "difficulty": "medium",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-029",
+    "category": "network",
+    "question": "What is multicast, and how is it different from unicast and broadcast?",
+    "answer": "Unicast is a one-to-one communication, where a single sender sends a packet to a single receiver. Broadcast is a one-to-all communication, where a single sender sends a packet to all devices on a network segment. Multicast is a one-to-many communication. A single sender sends a packet to a specific multicast group address, and only the devices that have subscribed to that group will receive the packet. This is much more efficient than broadcast for applications like IPTV or video conferencing, as it doesn't flood the network with unwanted traffic. Protocols like PIM (Protocol Independent Multicast) are used to route multicast traffic across a network.",
+    "difficulty": "medium",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-030",
+    "category": "network",
+    "question": "What is the function of the Spanning Tree Protocol (STP) and what problem does it solve?",
+    "answer": "The Spanning Tree Protocol is a Layer 2 protocol that prevents switching loops in a network with redundant paths. Switching loops can be catastrophic, as they can cause broadcast storms that can bring down the entire network. STP solves this problem by intelligently blocking redundant paths. It does this by electing a root bridge and then calculating the best path from all other switches to the root bridge. Any ports that are not part of this best path are put into a blocking state, which prevents the loop from forming. If the primary path fails, STP will automatically unblock the redundant path to restore connectivity.",
+    "difficulty": "medium",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-031",
+    "category": "network",
+    "question": "You suspect a device on your network is infected with malware and is communicating with a command-and-control server. How would you investigate this?",
+    "answer": "I would start by isolating the device from the network to prevent it from infecting other devices. I would then use a tool like Wireshark to capture the traffic from the device. I would look for any suspicious connections to unknown IP addresses or domains, especially on non-standard ports. I would also look for any DNS queries for unusual or known malicious domains. I would then use a threat intelligence platform to look up the suspicious IP addresses and domains to see if they are associated with any known malware or botnets. I would also check the firewall logs for any outbound connections from the device that were blocked. This information would help me to identify the malware and the command-and-control server.",
+    "difficulty": "medium",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-032",
+    "category": "network",
+    "question": "What is the purpose of a DMZ, and how is it typically configured?",
+    "answer": "A DMZ, or demilitarized zone, is a perimeter network that protects an organization's internal network from untrusted traffic. It is a small, isolated network that sits between the internal network and the internet. The DMZ is where you would place any servers that need to be accessible from the internet, such as web servers, email servers, and DNS servers. It is typically configured using a firewall with three interfaces: one for the internal network, one for the external network (the internet), and one for the DMZ. The firewall rules would be configured to allow traffic from the internet to the DMZ, but not to the internal network. It would also allow traffic from the internal network to the DMZ, but would strictly control any traffic initiated from the DMZ to the internal network.",
+    "difficulty": "medium",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-033",
+    "category": "network",
+    "question": "Explain the difference between a hot, warm, and cold site for disaster recovery.",
+    "answer": "A hot site is a fully equipped and operational data center that is ready to take over immediately in the event of a disaster. It has all the necessary hardware, software, and network connectivity, and the data is replicated in near real-time. A warm site is a compromise between a hot and a cold site. It has the hardware and network connectivity, but the software and data need to be restored from backups. This can take several hours or even days. A cold site is the most basic option. It is simply a data center space with power and cooling, but no equipment. In the event of a disaster, you would need to bring in your own equipment and restore everything from scratch. The choice between a hot, warm, and cold site depends on the organization's recovery time objective (RTO) and budget.",
+    "difficulty": "medium",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-034",
+    "category": "network",
+    "question": "What is BGP, and why is it used for internet routing?",
+    "answer": "BGP, or Border Gateway Protocol, is the routing protocol that is used to exchange routing information between different autonomous systems (AS) on the internet. An autonomous system is a large network or group of networks that is under the control of a single administrative entity. BGP is used for internet routing because it is a path-vector protocol, which means it makes routing decisions based on the path that the traffic will take, not just the distance. This allows network administrators to implement complex routing policies to control how traffic enters and leaves their network. BGP is also very scalable and can handle the massive size of the internet's routing table.",
+    "difficulty": "medium",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-035",
+    "category": "network",
+    "question": "How would you troubleshoot a site-to-site VPN tunnel that is not coming up?",
+    "answer": "I would start by checking the configuration on both ends of the tunnel to ensure that all the parameters match. This includes the pre-shared key, the encryption and hashing algorithms, the Diffie-Hellman group, and the lifetime of the security association. I would then check the firewall logs on both ends to see if the IKE (Internet Key Exchange) packets are being blocked. I would also check to see if there is a NAT device between the two VPN gateways, as this can sometimes interfere with the VPN connection. If everything looks correct, I would use the debug commands on the VPN gateways to get more detailed information about the IKE negotiation process. This would help me to pinpoint the exact cause of the failure.",
+    "difficulty": "hard",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-036",
+    "category": "network",
+    "question": "What is the purpose of a reverse proxy, and how is it different from a forward proxy?",
+    "answer": "A forward proxy is a server that sits between a user's computer and the internet. It is used to forward requests from the user to the internet and can be used for things like content filtering, caching, and anonymity. A reverse proxy, on the other hand, is a server that sits in front of one or more web servers. It accepts requests from the internet and forwards them to the appropriate web server. A reverse proxy is used for things like load balancing, SSL termination, and caching. The key difference is that a forward proxy is used by clients to access the internet, while a reverse proxy is used by servers to provide services to the internet.",
+    "difficulty": "hard",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-037",
+    "category": "network",
+    "question": "What is SD-WAN, and what are some of its key benefits?",
+    "answer": "SD-WAN, or software-defined wide area network, is a new approach to networking that uses software to control and manage the WAN. It allows organizations to use multiple types of connections, such as MPLS, broadband internet, and LTE, to connect their sites. One of the key benefits of SD-WAN is that it can automatically route traffic over the best available path based on the application's requirements. For example, it can send real-time traffic, like VoIP, over the MPLS connection, and less critical traffic, like email, over the broadband connection. This can improve application performance and reduce costs. SD-WAN also provides centralized management and visibility, which makes it much easier to manage a large and complex WAN.",
+    "difficulty": "hard",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-038",
+    "category": "network",
+    "question": "You need to migrate a data center to a new location with minimal downtime. What would be your high-level plan?",
+    "answer": "My high-level plan would be to first build out the new data center with all the necessary hardware, software, and network connectivity. I would then establish a high-speed, low-latency connection between the old and new data centers. I would use this connection to replicate all the data from the old data center to the new one. Once the data is replicated, I would begin migrating the applications one by one. For each application, I would perform a final data sync, and then I would update the DNS records to point to the new IP address. I would then test the application to ensure it is working correctly. I would repeat this process for all the applications until the migration is complete. This phased approach would minimize downtime and allow me to troubleshoot any issues as they arise.",
+    "difficulty": "hard",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-039",
+    "category": "network",
+    "question": "What is the difference between IDS and IPS?",
+    "answer": "IDS, or Intrusion Detection System, is a passive security system that monitors network traffic for suspicious activity. If it detects a potential threat, it will send an alert to the network administrator, but it will not take any action to block the traffic. IPS, or Intrusion Prevention System, is an active security system. Like an IDS, it monitors network traffic for suspicious activity, but if it detects a threat, it will take action to block the traffic. For example, it can drop the malicious packets or block the IP address of the attacker. An IPS is more effective at preventing attacks, but it also has the potential to block legitimate traffic if it is not configured correctly.",
+    "difficulty": "hard",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-040",
+    "category": "network",
+    "question": "What is a network baseline, and why is it important for troubleshooting?",
+    "answer": "A network baseline is a snapshot of the network's normal performance. It includes metrics like bandwidth utilization, latency, packet loss, and CPU and memory usage on network devices. A baseline is important for troubleshooting because it allows you to identify when the network is not performing as expected. For example, if you know that the normal bandwidth utilization on a link is 50%, and you see that it is suddenly at 90%, you know that there is a problem. Without a baseline, it would be difficult to know if the 90% utilization is normal or not. A baseline should be established over a period of time to capture the network's performance during different times of the day and week.",
+    "difficulty": "hard",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-041",
+    "category": "network",
+    "question": "What is a MAC address, and how is it used in a switched network?",
+    "answer": "A MAC address, or Media Access Control address, is a unique hardware identifier that is assigned to every network interface card (NIC). It is a 48-bit address that is burned into the NIC by the manufacturer. In a switched network, MAC addresses are used to forward frames at Layer 2. When a switch receives a frame, it looks at the destination MAC address and compares it to its MAC address table. The MAC address table is a list of all the MAC addresses that the switch has learned and the port that they are connected to. The switch then forwards the frame out the appropriate port. If the switch does not have an entry for the destination MAC address, it will flood the frame out all ports except the one it was received on.",
+    "difficulty": "hard",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-042",
+    "category": "network",
+    "question": "What is the purpose of a default gateway?",
+    "answer": "A default gateway is a router that is used to send traffic to a destination that is not on the local network. When a computer wants to send a packet to another device, it first checks to see if the destination is on the same local network. If it is, it sends the packet directly to the destination. If the destination is not on the local network, the computer sends the packet to its default gateway. The default gateway then looks at its routing table to determine the best path to the destination and forwards the packet accordingly. Without a default gateway, a computer would only be able to communicate with devices on its own local network.",
+    "difficulty": "hard",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-043",
+    "category": "network",
+    "question": "What is the difference between TCP and UDP?",
+    "answer": "TCP, or Transmission Control Protocol, is a connection-oriented protocol that provides reliable, ordered, and error-checked delivery of data. It is used for applications where it is important that all the data is received in the correct order, such as web browsing, email, and file transfers. UDP, or User Datagram Protocol, is a connectionless protocol that does not provide any of the reliability features of TCP. It is much faster than TCP, but it does not guarantee that the data will be delivered or that it will be delivered in the correct order. UDP is used for applications where speed is more important than reliability, such as streaming video, online gaming, and VoIP.",
+    "difficulty": "hard",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-044",
+    "category": "network",
+    "question": "What is a VLAN, and what are the benefits of using them?",
+    "answer": "A VLAN, or Virtual Local Area Network, is a way of logically segmenting a physical network into multiple broadcast domains. This allows you to group devices together based on their function or security requirements, regardless of their physical location. One of the main benefits of using VLANs is that they can improve network performance by reducing the amount of broadcast traffic. They can also improve security by allowing you to create separate networks for different groups of users and to control the traffic between them with a firewall or ACLs. VLANs also make it easier to manage the network, as you can make changes to the network configuration without having to physically move any cables.",
+    "difficulty": "hard",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-045",
+    "category": "network",
+    "question": "What is a subnet mask, and how is it used?",
+    "answer": "A subnet mask is a 32-bit number that is used to divide an IP address into a network portion and a host portion. The network portion of the address identifies the network that the device is on, and the host portion identifies the specific device on that network. When a computer wants to send a packet to another device, it uses the subnet mask to determine if the destination is on the same local network. It does this by performing a bitwise AND operation between its own IP address and the subnet mask, and between the destination IP address and the subnet mask. If the results are the same, the destination is on the same local network. If they are different, the destination is on a different network, and the packet must be sent to the default gateway.",
+    "difficulty": "hard",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-046",
+    "category": "network",
+    "question": "What is the OSI model, and what are the seven layers?",
+    "answer": "The OSI, or Open Systems Interconnection, model is a conceptual framework that standardizes the functions of a telecommunication or computing system in seven layers. The seven layers are: Layer 7, the Application layer, which is where the user interacts with the network; Layer 6, the Presentation layer, which is responsible for data formatting and encryption; Layer 5, the Session layer, which manages the communication sessions between devices; Layer 4, the Transport layer, which provides reliable or unreliable data delivery; Layer 3, the Network layer, which is responsible for logical addressing and routing; Layer 2, the Data Link layer, which is responsible for physical addressing and error detection; and Layer 1, the Physical layer, which is the actual physical medium that the data is transmitted over.",
+    "difficulty": "hard",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-047",
+    "category": "network",
+    "question": "What is the difference between a hub, a switch, and a router?",
+    "answer": "A hub is a simple Layer 1 device that repeats any signal it receives on one port out all other ports. It is not very efficient, as it creates a single collision domain and a single broadcast domain. A switch is a more intelligent Layer 2 device that learns the MAC addresses of the devices connected to it and forwards traffic only to the intended destination. This creates a separate collision domain for each port, which improves performance. A router is a Layer 3 device that connects different networks together. It makes forwarding decisions based on IP addresses and can be used to create separate broadcast domains and to implement security policies.",
+    "difficulty": "hard",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-048",
+    "category": "network",
+    "question": "What is PoE, and what are some of its common applications?",
+    "answer": "PoE, or Power over Ethernet, is a technology that allows electrical power to be transmitted over the same Ethernet cable that is used for data. This eliminates the need for a separate power outlet for the device. Some of the common applications for PoE are VoIP phones, wireless access points, and IP security cameras. These devices are often located in places where it would be difficult or expensive to run a separate power outlet, so PoE provides a convenient and cost-effective solution.",
+    "difficulty": "hard",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-049",
+    "category": "network",
+    "question": "What is a firewall, and what is its primary function?",
+    "answer": "A firewall is a network security device that monitors and controls incoming and outgoing network traffic based on a set of security rules. Its primary function is to create a barrier between a trusted internal network and an untrusted external network, such as the internet. A firewall can be a hardware device, a software program, or a combination of both. It can be configured to block traffic from specific IP addresses, ports, or protocols, and it can also be used to create a DMZ to protect internal servers that need to be accessible from the internet.",
+    "difficulty": "hard",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  },
+  {
+    "id": "network-050",
+    "category": "network",
+    "question": "What is DNS, and what is its purpose?",
+    "answer": "DNS, or Domain Name System, is a hierarchical and decentralized naming system for computers, services, or other resources connected to the internet or a private network. Its primary purpose is to translate human-readable domain names, like www.google.com, into machine-readable IP addresses, like 172.217.12.142. This is necessary because computers use IP addresses to communicate with each other, but domain names are much easier for humans to remember. DNS is a critical component of the internet, and without it, the internet as we know it would not be usable.",
+    "difficulty": "hard",
+    "tags": [
+      "networking",
+      "infrastructure"
+    ]
+  }
+]

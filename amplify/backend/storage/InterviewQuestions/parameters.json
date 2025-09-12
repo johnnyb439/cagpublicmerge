@@ -1,0 +1,7 @@
+{
+  "tableName": "InterviewQuestions",
+  "partitionKeyName": "category",
+  "partitionKeyType": "S",
+  "sortKeyName": "questionId", 
+  "sortKeyType": "S"
+}

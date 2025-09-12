@@ -1,0 +1,926 @@
+[
+  {
+    "id": "helpdesk-001",
+    "category": "helpdesk",
+    "question": "A user forgot their password and needs to access their computer. What steps do you take to help them?",
+    "answer": "**Step 1: Identity Verification**\n• Ask security questions or check employee ID\n• Verify caller through established protocols\n• Confirm authorization for password reset\n\n**Step 2: Password Reset Process**\n• Access Active Directory or identity management portal\n• Locate and select the user's account\n• Generate temporary password (complex, expires on first use)\n• Provide password securely (in-person or verified phone)\n\n**Step 3: User Instructions**\n• Instruct immediate password change upon login\n• Remind of requirements: 8+ characters, uppercase, lowercase, numbers, special characters\n• Explain password best practices\n\n**Step 4: Documentation**\n• Record in ticket system: date, time, verification method\n• Note any issues or special circumstances\n• Update user contact information if needed\n\n**Step 5: Follow-up**\n• Show self-service password reset portal\n• Provide documentation for future reference\n• Confirm successful login after reset",
+    "difficulty": "easy",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-002",
+    "category": "helpdesk",
+    "question": "How do you properly document a support ticket from start to resolution?",
+    "answer": "**Initial Contact Documentation**\n• User name and contact information\n• Date/time of request\n• Problem description (brief but specific)\n• Priority level and business impact\n\n**During Troubleshooting**\n• Each step taken with timestamps\n• Results of each action (success/failure)\n• Error messages captured verbatim\n• Time spent on each troubleshooting phase\n• Tools and resources used\n\n**Resolution Details**\n• Root cause identified\n• Solution implemented\n• Parts/software/licenses used\n• Total resolution time\n• Verification steps performed\n\n**Closure Requirements**\n• Clear problem/solution summary\n• User confirmation of resolution\n• Knowledge base articles referenced or created\n• Proper categorization for metrics\n• Follow-up actions if needed\n\n**Benefits**: Builds knowledge base, tracks patterns, improves future response times",
+    "difficulty": "easy",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-003",
+    "category": "helpdesk",
+    "question": "A new employee needs their workstation set up. Walk through the process.",
+    "answer": "**Pre-Setup Review**\n• Check new hire ticket: username, department, software requirements\n• Verify start date and urgency\n• Gather necessary licenses and access credentials\n\n**Hardware Preparation**\n• Unbox and inspect all components\n• Connect monitor, keyboard, mouse\n• Verify power and network connections\n• Check for any physical damage\n\n**System Configuration**\n• Enter BIOS to verify hardware detection\n• Boot from network/USB for imaging\n• Join domain with proper naming convention\n• Apply latest Windows updates and patches\n\n**User Setup**\n• Create domain user profile\n• Install required software (Office, department-specific apps)\n• Configure Outlook with email account\n• Set up OneDrive/cloud storage\n\n**Peripheral Configuration**\n• Install and test printer drivers\n• Map network printers and drives\n• Configure scanner/other devices\n• Test all USB ports and connections\n\n**Final Validation**\n• Test all applications launch correctly\n• Verify internet/intranet access\n• Confirm security software is active\n• Create desktop shortcuts for common resources\n\n**Handover**\n• Document setup completion\n• Provide quick reference guide\n• Share IT contact information\n• Schedule follow-up if needed",
+    "difficulty": "easy",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-004",
+    "category": "helpdesk",
+    "question": "A user says their computer is running very slowly. What are your first steps to help them?",
+    "answer": "**Quick Diagnostics**\n• Open Task Manager (Ctrl+Shift+Esc)\n• Check CPU usage (normal: <50% idle)\n• Check memory usage (normal: <80%)\n• Check disk usage (concern if 100%)\n• Identify resource-heavy programs\n\n**Immediate Solutions**\n• Restart if uptime > 7 days\n• Close unnecessary browser tabs\n• End unresponsive programs\n• Check for background Windows updates\n• Verify antivirus isn't scanning\n\n**Startup Optimization**\n• Open Task Manager > Startup tab\n• Disable unnecessary auto-start programs\n• Focus on 'High impact' items\n• Keep only essential programs\n\n**Storage Cleanup**\n• Run Disk Cleanup utility\n• Empty Recycle Bin\n• Clear browser cache/cookies\n• Delete temporary files (%temp%)\n• Ensure 15%+ free disk space\n\n**Advanced Checks**\n• Review Event Viewer for errors\n• Run chkdsk for drive errors\n• Run Windows Memory Diagnostic\n• Check for malware with full scan\n• Monitor temperature for overheating\n\n**Documentation**: Record successful fixes for knowledge base",
+    "difficulty": "easy",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-005",
+    "category": "helpdesk",
+    "question": "How do you help a user connect to a network printer?",
+    "answer": "**Information Gathering**\n• Printer name or IP address\n• Network printer vs shared printer\n• Previous usage history\n• Required print capabilities (color, duplex, etc.)\n\n**Windows Setup - Auto Detection**\n• Settings > Devices > Printers & scanners\n• Click 'Add a printer or scanner'\n• Wait for automatic detection\n• Select printer and click 'Add device'\n\n**Manual IP Configuration**\n• Click 'The printer that I want isn't listed'\n• Select 'Add printer using TCP/IP address'\n• Enter printer IP address\n• Let Windows install drivers automatically\n\n**Shared Printer Setup**\n• Choose 'Select a shared printer by name'\n• Enter path: \\\\servername\\printername\n• Or browse network to locate\n• Authenticate if prompted\n\n**Verification**\n• Print test page\n• Verify output quality\n• Set as default if primary printer\n• Test from user's applications\n\n**Common Troubleshooting**\n• Verify user has print permissions\n• Update printer drivers if needed\n• Confirm printer is online\n• Check same network segment/VLAN\n• Clear print spooler if stuck\n\n**Documentation**: Record printer details and connection method",
+    "difficulty": "easy",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-006",
+    "category": "helpdesk",
+    "question": "A user can't access their email in Outlook. How do you troubleshoot this?",
+    "answer": "**Initial Assessment**\n• Identify specific error (not opening, not connecting, password prompts)\n• Note any error messages verbatim\n• Check when issue started\n\n**Basic Connectivity Checks**\n• Verify internet connectivity\n• Test webmail access (confirms account active)\n• Check other Office 365 services\n• Verify VPN connection if remote\n\n**Outlook Account Settings**\n• File > Account Settings\n• Verify server names are correct\n• Confirm username is full email address\n• Test account settings button\n\n**Common Fixes**\n• **Safe Mode**: outlook.exe /safe\n• **Repair Profile**: Control Panel > Mail\n• **Recreate Profile**: If corrupted\n• **Clear Credentials**: Credential Manager\n• **Rebuild OST**: For cached Exchange\n\n**Authentication Issues**\n• Verify password is correct\n• Check for 2FA requirements\n• Confirm account not locked\n• Review recent password changes\n\n**Exchange-Specific**\n• Test autodiscover functionality\n• Check connection status (Ctrl+right-click tray icon)\n• Verify on corporate network or VPN\n• Review certificate issues\n\n**Follow-up Actions**\n• Document successful solution\n• Set up mobile email as backup\n• Educate on warning signs",
+    "difficulty": "easy",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-007",
+    "category": "helpdesk",
+    "question": "How do you troubleshoot a computer that keeps getting Blue Screen of Death (BSOD) errors?",
+    "answer": "**Immediate Actions**\n• Document STOP code (e.g., MEMORY_MANAGEMENT)\n• Note full error message\n• Check if reproducible\n• Photograph screen if recurring\n\n**Event Log Analysis**\n• Open Event Viewer > Windows Logs > System\n• Look for critical errors before crash\n• Identify patterns or triggers\n• Note driver/hardware warnings\n\n**Software Diagnostics**\n• **Safe Mode Boot**: Test stability\n• **Recent Changes**: Uninstall new programs/updates\n• **Driver Updates**: Graphics, chipset, network\n• **System File Check**: sfc /scannow\n• **DISM**: DISM /Online /Cleanup-Image /RestoreHealth\n\n**Hardware Testing**\n• **Memory**: Windows Memory Diagnostic\n• **Hard Drive**: chkdsk /f /r\n• **Temperature**: Monitor with HWMonitor\n• **Physical**: Reseat RAM, cards, cables\n\n**Advanced Analysis**\n• Use BlueScreenView for dump analysis\n• Identify failing driver/component\n• Check WhoCrashed for plain English explanation\n• Review minidump files\n\n**Driver-Specific Actions**\n• Roll back problematic driver\n• Update from manufacturer site\n• Remove related hardware temporarily\n• Test with generic drivers\n\n**Persistent Issues**\n• Clean boot to isolate conflicts\n• Windows Reset (keep files)\n• Backup and clean install\n• Hardware replacement if tests fail\n\n**Documentation**: Track patterns, attempted fixes, and outcomes for escalation",
+    "difficulty": "easy",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-008",
+    "category": "helpdesk",
+    "question": "A department printer is printing with streaks and smudges. What's your troubleshooting approach?",
+    "answer": "**Initial Assessment**\n• Identify printer type (laser vs inkjet)\n• Note pattern of streaks/smudges\n• Check when issue started\n• Review recent maintenance history\n\n**Laser Printer Solutions**\n• **Toner Issues**:\n  - Check toner levels\n  - Remove and redistribute toner\n  - Inspect for leaks or damage\n• **Cleaning Steps**:\n  - Run cleaning page utility\n  - Clean corona wire (if accessible)\n  - Remove paper debris\n  - Clean transfer roller\n• **Component Check**:\n  - Inspect imaging drum\n  - Check fuser unit\n  - Examine paper path\n\n**Inkjet Printer Solutions**\n• **Print Head Maintenance**:\n  - Run cleaning utility (2-3 cycles)\n  - Deep clean if available\n  - Manual head cleaning if needed\n• **Ink System**:\n  - Check all ink levels\n  - Replace low/empty cartridges\n  - Verify genuine ink used\n• **Alignment**:\n  - Run head alignment\n  - Calibrate color settings\n\n**Common Solutions (Both Types)**\n• Verify correct paper type selected\n• Check paper condition (not damp/damaged)\n• Clean paper path with lint-free cloth\n• Test different paper stock\n• Adjust print quality settings\n\n**Hardware Evaluation**\n• Check warranty status\n• Inspect pickup rollers for wear\n• Consider drum replacement (laser)\n• Evaluate print head replacement (inkjet)\n\n**Prevention & Training**\n• Schedule regular maintenance\n• Train users on cleaning cycles\n• Document successful fixes\n• Create maintenance schedule",
+    "difficulty": "easy",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-009",
+    "category": "helpdesk",
+    "question": "Walk me through setting up a VPN connection for a remote worker.",
+    "answer": "**Prerequisites**\n• VPN credentials (username/password)\n• VPN server address or hostname\n• Any required certificates/tokens\n• AD permissions verified\n• Stable internet connection\n\n**Windows Built-in VPN Setup**\n• Navigate: Settings > Network & Internet > VPN\n• Click 'Add VPN connection'\n• Provider: Windows (built-in)\n• Connection name: [Company VPN]\n• Server: [vpn.company.com or IP]\n• VPN type: Automatic or L2TP/IPSec\n• Sign-in info: Username/password\n• Save configuration\n\n**Corporate VPN Client**\n• Download from company portal\n• Run installer as administrator\n• Enter server address when prompted\n• Install required certificates\n• Configure settings:\n  - Split tunneling (if allowed)\n  - DNS servers\n  - Auto-connect options\n\n**Connection Testing**\n• Initiate VPN connection\n• Verify successful authentication\n• Test internal resources:\n  - Ping internal servers\n  - Access intranet sites\n  - Check mapped drives\n  - Launch corporate apps\n\n**Common Issues & Solutions**\n• **Port Blocking**: Check firewall for ports 500, 4500, 1723\n• **Authentication Fails**: Verify credentials not expired\n• **Connection Drops**: Check internet stability\n• **No Access**: Verify correct VPN group/profile\n• **Slow Speed**: Test different protocols\n\n**User Documentation**\n• Provide server address\n• Support contact information\n• Troubleshooting guide\n• Usage policies",
+    "difficulty": "easy",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-010",
+    "category": "helpdesk",
+    "question": "A user reports their files are missing from their desktop. How do you help recover them?",
+    "answer": "**Immediate Response**\n• Reassure user - files often recoverable\n• Stop using computer to prevent overwriting\n• Note when files last seen\n• Identify critical files needed\n\n**Quick Checks**\n• **Recycle Bin**: Check for deleted items\n• **Wrong Profile**: Verify correct user logged in\n• **Moved Files**: Search by filename\n• **Hidden Files**: Enable viewing hidden items\n\n**Common Locations**\n• C:\\Users\\[username]\\Desktop\n• Documents folder (redirected desktop)\n• Downloads folder\n• OneDrive Desktop folder\n• Windows.old (after updates)\n\n**Search Strategies**\n• Use Windows Search for filenames\n• Search by extension: *.docx, *.xlsx, *.pdf\n• Check 'Recent' in File Explorer\n• Review recent docs in Office apps\n\n**Recovery Methods**\n• **Previous Versions**: Right-click > Restore previous versions\n• **File History**: If enabled in Windows\n• **Shadow Copies**: Volume shadow copy service\n• **Backup Software**: Check if running\n\n**Cloud Storage Check**\n• OneDrive online portal\n• Cloud recycle bin (30 days)\n• Version history in cloud\n• Sync status and conflicts\n\n**Advanced Recovery**\n• Use Recuva or similar tools\n• Check network backup availability\n• IT backup restoration request\n• Professional data recovery (last resort)\n\n**Prevention Setup**\n• Enable File History\n• Configure OneDrive backup\n• Set up regular backups\n• Educate on backup importance",
+    "difficulty": "easy",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-011",
+    "category": "helpdesk",
+    "question": "How do you troubleshoot DNS resolution issues on a Windows machine?",
+    "answer": "I'd start with basic DNS diagnostics using nslookup to test name resolution: query a known domain like google.com, check if it returns the correct IP, and try using different DNS servers (8.8.8.8). Check current DNS configuration: run ipconfig /all to see assigned DNS servers, verify they're correct for the network, and ensure no typos in server addresses. Clear DNS cache: run ipconfig /flushdns as administrator, restart DNS Client service, and clear browser DNS cache too. Test with IP addresses: ping website by IP (bypasses DNS), if IP works but name doesn't, confirms DNS issue, and check hosts file for incorrect entries. Advanced troubleshooting: check if NXDOMAIN or timeout errors, verify DNS suffix search list is correct, test if forwarders working on DNS server, and use Wireshark to capture DNS queries/responses. Network-level checks: verify firewall allows port 53 (UDP/TCP), check if ISP having DNS issues, test if DNSSEC validation failing, and try alternative DNS (Cloudflare: 1.1.1.1). For domain-joined computers: verify can reach domain controllers, check if using correct internal DNS, and test if conditional forwarders working. Document which DNS servers work for future reference.",
+    "difficulty": "easy",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-012",
+    "category": "helpdesk",
+    "question": "Explain how Group Policy works and how you'd troubleshoot GPO issues.",
+    "answer": "Group Policy applies settings hierarchically from domain controllers to computers and users. The order is: Local, Site, Domain, then Organizational Unit (OU) policies, with later policies overriding earlier ones. Policies refresh every 90 minutes for workstations (plus random 0-30 minute offset), immediately with gpupdate /force command, and always at computer startup and user logon. To troubleshoot GPO issues, I'd run gpresult /r to see applied policies, use gpresult /h report.html for detailed HTML report, and check if computer/user in correct OU. Verify policy application: run rsop.msc for Resultant Set of Policy, check Event Viewer > Applications and Services > Microsoft > Windows > GroupPolicy, and use gpupdate /force to manually refresh. Common issues: check if policy is linked and enabled, verify security filtering includes user/computer, ensure no WMI filters blocking application, and check for policy conflicts or denials. Test policy inheritance: look for 'Block Inheritance' on OUs, check for 'Enforced' policies overriding blocks, and verify policy precedence order. DNS and replication: ensure client can reach domain controllers, check if policies replicated between DCs, and verify SYSVOL share accessible. Document which policies should apply and create test OUs for policy testing.",
+    "difficulty": "easy",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-013",
+    "category": "helpdesk",
+    "question": "A critical application server is performing poorly. How do you diagnose and resolve performance issues?",
+    "answer": "I'd start with Windows Performance Monitor to establish baseline metrics: CPU utilization (average and peaks), memory usage and page file activity, disk I/O and queue length, and network throughput and errors. Check Task Manager and Resource Monitor: identify top processes by CPU/memory, look for handle or thread leaks, monitor disk activity by process, and check network connections. Review Event Logs: look for application errors or warnings, check System log for hardware issues, and review application-specific logs. Server-specific checks: verify adequate RAM (check if paging excessively), ensure disk space >15% free on all drives, check if antivirus scanning during business hours, and verify scheduled tasks not conflicting. Database considerations: check for long-running queries, verify maintenance plans running (index rebuilds), monitor transaction log growth, and check for blocking/deadlocks. Network analysis: test latency to database/services, verify bandwidth utilization, check for packet loss or errors, and ensure NIC settings optimal (offloading, RSS). Performance tuning: adjust application pool settings (IIS), modify SQL memory allocation if needed, consider adding RAM or CPU resources, and implement caching where appropriate. Create performance baseline for comparison and document all changes made.",
+    "difficulty": "easy",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-014",
+    "category": "helpdesk",
+    "question": "How would you implement and manage BitLocker encryption across multiple workstations?",
+    "answer": "I'd implement BitLocker through Group Policy for centralized management. First, verify requirements: TPM 1.2 or 2.0 chip present (preferred), UEFI firmware with Secure Boot, and Windows 10/11 Pro or Enterprise. Configure Group Policy: Computer Configuration > Administrative Templates > Windows Components > BitLocker, set encryption method (AES 256-bit recommended), configure TPM startup PIN requirements, and enable recovery key backup to AD. Deployment process: push policy to target computers via GPO, use manage-bde or PowerShell for remote enabling, and monitor encryption status via MBAM or scripts. Recovery key management: ensure keys backed up to Active Directory, document recovery key retrieval process, test recovery procedures regularly, and maintain secure offline backup. Configure protectors: TPM only for user convenience, TPM + PIN for higher security, and consider TPM + PIN + USB key for sensitive systems. Monitor compliance: use PowerShell scripts to check encryption status, create reports for management, and alert on non-compliant systems. Common issues: suspended BitLocker after updates (resume required), recovery mode after hardware changes, and TPM errors requiring reset. Document BitLocker policies and train helpdesk on recovery procedures. Consider Microsoft BitLocker Administration and Monitoring (MBAM) for enterprise management.",
+    "difficulty": "easy",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-015",
+    "category": "helpdesk",
+    "question": "Describe how you would plan and execute a Windows 10 to Windows 11 migration for 50 workstations.",
+    "answer": "I'd start with compatibility assessment using PC Health Check on all machines: verify TPM 2.0 and Secure Boot support, check for 4GB RAM and 64GB storage minimum, identify incompatible hardware needing replacement, and test all business-critical applications. Create deployment plan: use phased approach (IT first, then pilot group, then departments), schedule around business operations, and plan for 2-3 hours per machine. Prepare deployment infrastructure: create Windows 11 image with standard software, use MDT or SCCM for deployment, and set up deployment shares with drivers. Pre-migration tasks: full backup of user data (mandatory), document current configurations, create rollback plan if issues arise, and communicate timeline to users. Deployment methods: in-place upgrade for compatible machines (preserves data/apps), clean install for better performance (requires data migration), and use Windows Autopilot for new machines. Testing phase: deploy to IT team first, then 5-10 pilot users from different departments, document all issues and solutions, and refine process based on feedback. Post-migration: verify all applications working, restore user data and settings, provide quick reference guides for UI changes, and offer floor support for first week. Track metrics: document upgrade success rate, time per machine, and user satisfaction. Maintain detailed logs for troubleshooting and prepare monthly progress reports for management.",
+    "difficulty": "easy",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-016",
+    "category": "helpdesk",
+    "question": "Explain Active Directory structure and how you'd troubleshoot authentication issues.",
+    "answer": "Active Directory uses a hierarchical structure: Forest at the top (security boundary), Domains within forests (administrative boundary), Organizational Units (OUs) for organizing objects, and objects like users, computers, and groups. Authentication flow: user enters credentials at workstation, Kerberos protocol authenticates against domain controller, ticket-granting ticket (TGT) issued for session, and service tickets granted for resource access. To troubleshoot authentication issues, check basic connectivity: ping domain controller by name and IP, verify DNS resolving DC correctly, and ensure time sync within 5 minutes. User account checks: verify account not locked or disabled, check password hasn't expired, ensure logon hours and workstation restrictions, and confirm user in correct groups. Test authentication: try different user account on same machine, try problem account on different machine, and use runas command to test credentials. Advanced diagnostics: check Event Viewer on DC for audit failures, use netdom to verify secure channel, run dcdiag on domain controllers, and verify Kerberos tickets with klist. Common fixes: reset computer account in AD, rejoin computer to domain, clear cached credentials, and update Group Policy. For trust issues: verify trust relationship with netdom, check SID history for migrated accounts, and ensure all DCs replicating properly. Document authentication paths and maintain DC health monitoring.",
+    "difficulty": "easy",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-017",
+    "category": "helpdesk",
+    "question": "A user reports their computer displays a 'No boot device found' error. What are the potential causes and how would you troubleshoot this systematically?",
+    "answer": "This error indicates the BIOS/UEFI cannot find a bootable operating system. I'd start by checking the boot order in BIOS settings to ensure the correct drive is prioritized. Common causes include: loose SATA/M.2 connections (reseat cables and drives), failed hard drive (run diagnostics using manufacturer tools), corrupted boot sector (use Windows Recovery to run bootrec /fixboot and /fixmbr), incorrect BIOS settings (verify AHCI/RAID mode matches OS installation), or disabled boot device (check if drive appears in BIOS). For deeper issues, I'd boot from Windows installation media to access recovery tools, run chkdsk /f to check for disk errors, and use diskpart to verify partition structure. If the drive isn't detected in BIOS at all, it likely indicates hardware failure requiring replacement. I'd also check for recent hardware changes that might have affected boot configuration.",
+    "difficulty": "easy",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-018",
+    "category": "helpdesk",
+    "question": "Explain the differences between RAM types (DDR3, DDR4, DDR5) and how to identify compatibility issues when upgrading memory.",
+    "answer": "DDR generations differ in speed, voltage, and physical design. DDR3 operates at 1.5V with speeds from 800-2133MHz, DDR4 at 1.2V with 2133-3200MHz standard speeds, and DDR5 at 1.1V starting at 4800MHz. Each has different pin counts (DDR3: 240, DDR4/DDR5: 288) and notch positions preventing incorrect installation. To identify compatibility, I'd check: motherboard specifications for supported RAM type and maximum capacity, CPU memory controller limitations, number of available slots and maximum per-slot capacity, and whether dual-channel configuration is required. Tools like CPU-Z show current memory configuration, while the motherboard manual lists qualified vendor lists (QVL). Common issues include: mixing different speeds (system runs at slowest speed), incompatible timings causing instability, and exceeding chipset limitations. Always match existing RAM specifications when adding modules, and run memory diagnostics after installation to verify stability.",
+    "difficulty": "easy",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-019",
+    "category": "helpdesk",
+    "question": "A laser printer is producing pages with vertical lines running down the entire length. What components would you check and in what order?",
+    "answer": "Vertical lines on laser printer output typically indicate issues with the imaging system. I'd troubleshoot in this order: First, print a cleaning page to remove toner buildup. If lines persist, I'd inspect the toner cartridge for damage or leaks - often scratches on the drum surface cause consistent lines. Next, I'd check the transfer roller for toner accumulation or damage, cleaning it with approved methods. The fuser assembly could have damage or debris causing lines during the heating process. For persistent issues, I'd examine the laser scanner unit for dust on mirrors or lens requiring careful cleaning. The charge roller (if separate from cartridge) might have damage or contamination. I'd also verify proper paper type settings as incorrect settings affect toner application. Documentation should include: line positions, whether lines appear on all print jobs, and if they're the same color as the print or different. Most issues resolve with cartridge replacement, but persistent problems indicate printer mechanism issues.",
+    "difficulty": "easy",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-020",
+    "category": "helpdesk",
+    "question": "Describe proper ESD (Electrostatic Discharge) procedures when working on computer components and explain why each step is important.",
+    "answer": "ESD protection is critical as static discharge can damage sensitive components even without visible signs. Proper procedures include: Using an anti-static wrist strap connected to a grounded surface - this equalizes electrical potential between you and components. Working on anti-static mats provides a controlled discharge path for static buildup. Before handling components, touch a grounded metal surface to discharge static. Store components in anti-static bags which have a conductive outer layer creating a Faraday cage effect. Keep humidity between 40-60% as dry air increases static buildup. Remove components by edges, avoiding contact with pins or circuits. Never place components on carpeted or plastic surfaces which generate static. Power down and unplug systems before work, but keep power supplies connected to maintain ground reference. Avoid wearing static-generating clothing like wool or synthetic materials. These precautions matter because ESD damage can be immediate (complete failure) or latent (degraded performance over time), and components like RAM, CPUs, and expansion cards are particularly vulnerable.",
+    "difficulty": "easy",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-021",
+    "category": "helpdesk",
+    "question": "A user cannot access a network share but can browse the internet. Walk through your troubleshooting process including specific commands and tools.",
+    "answer": "Since internet works, basic connectivity is functioning. I'd start by pinging the file server by both IP address and hostname to test basic connectivity and name resolution. If ping by IP works but hostname fails, it's a DNS issue - check with nslookup and ipconfig /all for DNS settings. Next, I'd verify SMB connectivity using 'net view \\servername' to list available shares. Common issues include: Windows Firewall blocking SMB ports (445, 139) - check Windows Defender Firewall rules. Credential problems - use 'net use * /delete' to clear cached credentials, then remap with correct username. Permission issues - verify user account has share and NTFS permissions on the server. Time synchronization - SMB requires synchronized clocks, check with w32tm /query /status. Network discovery disabled - ensure network profile is Private/Domain, not Public. I'd also check Event Viewer for specific error codes, verify the share exists and server service is running, and test with a different user account to isolate profile issues. Document successful access methods for future reference.",
+    "difficulty": "easy",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-022",
+    "category": "helpdesk",
+    "question": "A user's computer is running slow. What are the first things you would check?",
+    "answer": "First, I'd check the Task Manager for any resource-hogging applications. Then, I'd look at the startup programs and disable any unnecessary ones. I would also check the amount of free disk space and run a disk cleanup if needed. Finally, I'd scan for malware and viruses, as they are a common cause of slow performance.",
+    "difficulty": "easy",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-023",
+    "category": "helpdesk",
+    "question": "A user can't connect to the internet. How would you troubleshoot this?",
+    "answer": "I'd start by checking the physical connections, ensuring the Ethernet cable is plugged in correctly. Then I'd try to ping the gateway and an external website like google.com to determine if it's a local network or internet issue. I'd also check the IP configuration using ipconfig and try releasing and renewing the IP address. If it's a wireless connection, I'd make sure the Wi-Fi is enabled and they are connected to the correct network.",
+    "difficulty": "easy",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-024",
+    "category": "helpdesk",
+    "question": "A user forgot their password. What is the process for resetting it?",
+    "answer": "The process depends on the system, but generally, I would verify the user's identity through security questions or a secondary email/phone number. Once verified, I would use the system's password reset tool to generate a temporary password or a reset link. I would then provide the user with the temporary password and instruct them to change it immediately upon logging in.",
+    "difficulty": "easy",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-025",
+    "category": "helpdesk",
+    "question": "A user is having trouble printing. What steps would you take to resolve this?",
+    "answer": "I would first check if the printer is turned on and connected to the network. Then, I'd check the printer queue for any stuck jobs and clear them. I'd also make sure the correct printer is selected as the default. If the issue persists, I'd try reinstalling the printer drivers and restarting both the computer and the printer.",
+    "difficulty": "easy",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-026",
+    "category": "helpdesk",
+    "question": "A user says their email is not working. What questions would you ask to narrow down the problem?",
+    "answer": "I would ask if they are using a desktop client or webmail. I'd also ask for the specific error message they are receiving. I'd inquire if they can send, receive, or neither. I'd also ask if the issue is happening on multiple devices. This information helps determine if the problem is with their client, their account, or the email server itself.",
+    "difficulty": "easy",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-027",
+    "category": "helpdesk",
+    "question": "What is the difference between a virus and malware?",
+    "answer": "Malware is a broad term for any malicious software, while a virus is a specific type of malware that infects other files and spreads. So, all viruses are malware, but not all malware are viruses. Other types of malware include worms, trojans, and ransomware.",
+    "difficulty": "easy",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-028",
+    "category": "helpdesk",
+    "question": "A user's computer is making a loud clicking noise. What could be the problem?",
+    "answer": "A loud clicking noise often indicates a failing hard drive. I would immediately advise the user to back up their data if possible and then run hardware diagnostics to confirm the issue. If the hard drive is failing, it will need to be replaced.",
+    "difficulty": "easy",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-029",
+    "category": "helpdesk",
+    "question": "How would you handle a user who is very frustrated and angry?",
+    "answer": "I would remain calm and professional. I would listen to their concerns without interrupting and empathize with their frustration. I would reassure them that I am there to help and would focus on finding a solution to their problem as quickly as possible. I would also keep them informed of my progress.",
+    "difficulty": "medium",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-030",
+    "category": "helpdesk",
+    "question": "A user needs to access a shared network drive but can't. What would you check?",
+    "answer": "I would first verify that the user is connected to the company network, either directly or through a VPN. Then, I would check their permissions for the shared drive. I would also try to access the drive using its IP address instead of its name to rule out a DNS issue. Finally, I would check if the file server is online and accessible.",
+    "difficulty": "medium",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-031",
+    "category": "helpdesk",
+    "question": "What is the purpose of Safe Mode in Windows?",
+    "answer": "Safe Mode starts Windows in a basic state, with a limited set of files and drivers. It's used for troubleshooting problems that don't occur in Safe Mode, which helps to narrow down the cause of the issue. For example, if a problem doesn't happen in Safe Mode, you can rule out the default settings and basic device drivers as the cause.",
+    "difficulty": "medium",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-032",
+    "category": "helpdesk",
+    "question": "A user is getting a 'blue screen of death' (BSOD). What information would you gather?",
+    "answer": "I would ask the user to provide the error message or stop code displayed on the blue screen. I would also ask what they were doing on the computer when the error occurred. I would then check the system logs for any relevant information. This information is crucial for diagnosing the cause of the BSOD.",
+    "difficulty": "medium",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-033",
+    "category": "helpdesk",
+    "question": "How do you stay up-to-date with the latest technology and IT trends?",
+    "answer": "I regularly read tech blogs and news sites, follow industry experts on social media, and participate in online forums. I also take online courses and watch tutorials to learn new skills. I believe continuous learning is essential in the IT field.",
+    "difficulty": "medium",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-034",
+    "category": "helpdesk",
+    "question": "A user wants to install a new piece of software. What is the first thing you should do?",
+    "answer": "I would first check if the software is on the company's approved software list. If it is, I would then check the system requirements to ensure the user's computer can run it. If it's not on the approved list, I would explain the company's policy on unauthorized software and escalate the request to the appropriate department.",
+    "difficulty": "medium",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-035",
+    "category": "helpdesk",
+    "question": "What is the difference between RAM and a hard drive?",
+    "answer": "RAM (Random Access Memory) is volatile memory that stores data the computer is actively using. A hard drive is non-volatile storage that stores data permanently, even when the computer is turned off. RAM is much faster than a hard drive, but it's also more expensive and has a smaller capacity.",
+    "difficulty": "medium",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-036",
+    "category": "helpdesk",
+    "question": "A user's monitor is not displaying anything. How would you troubleshoot this?",
+    "answer": "I would first check if the monitor is turned on and the power cable is plugged in. Then, I would check the video cable connection between the monitor and the computer. I would also try connecting the monitor to a different computer to see if the monitor itself is the problem. If the monitor works on another computer, the issue is likely with the user's computer.",
+    "difficulty": "medium",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-037",
+    "category": "helpdesk",
+    "question": "What is a phishing scam and how can you recognize one?",
+    "answer": "A phishing scam is a fraudulent attempt to obtain sensitive information, such as usernames, passwords, and credit card details, by disguising as a trustworthy entity in an electronic communication. You can recognize them by looking for red flags like generic greetings, poor grammar and spelling, a sense of urgency, and suspicious links or attachments.",
+    "difficulty": "medium",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-038",
+    "category": "helpdesk",
+    "question": "A user's keyboard is not working. What would you do?",
+    "answer": "I would first ask the user to try a different USB port. If it's a wireless keyboard, I would check the batteries. I would also try plugging the keyboard into a different computer to see if the keyboard is faulty. If the keyboard works on another computer, the issue is likely with the user's computer's drivers or hardware.",
+    "difficulty": "medium",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-039",
+    "category": "helpdesk",
+    "question": "What is the command to check your IP address in Windows?",
+    "answer": "The command is 'ipconfig'. You can run it from the Command Prompt.",
+    "difficulty": "medium",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-040",
+    "category": "helpdesk",
+    "question": "A user is complaining that their computer is overheating. What would you suggest?",
+    "answer": "I would suggest they ensure the computer's vents are not blocked and that it's in a well-ventilated area. I would also suggest they clean the dust out of the vents and fans. If the issue persists, the thermal paste on the CPU may need to be replaced, or there could be a problem with the cooling fan itself.",
+    "difficulty": "medium",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-041",
+    "category": "helpdesk",
+    "question": "What is two-factor authentication (2FA)?",
+    "answer": "Two-factor authentication is a security process where users provide two different authentication factors to verify themselves. This adds an extra layer of security to your accounts. For example, you might need to enter your password and then a code sent to your phone.",
+    "difficulty": "medium",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-042",
+    "category": "helpdesk",
+    "question": "A user accidentally deleted an important file. How can you help them recover it?",
+    "answer": "I would first check the Recycle Bin. If the file is not there, I would then check to see if we have a recent backup of the user's data. If we do, I can restore the file from the backup. If there is no backup, I might try using a file recovery tool, but this is not always successful.",
+    "difficulty": "medium",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-043",
+    "category": "helpdesk",
+    "question": "What is the purpose of a firewall?",
+    "answer": "A firewall is a network security system that monitors and controls incoming and outgoing network traffic based on predetermined security rules. It acts as a barrier between a trusted internal network and an untrusted external network, such as the internet.",
+    "difficulty": "medium",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-044",
+    "category": "helpdesk",
+    "question": "A user is having trouble with a specific application. It keeps crashing. What would you do?",
+    "answer": "I would first ask the user to restart the application and their computer. If the issue persists, I would check for any available updates for the application. I would also try reinstalling the application. If it's still crashing, I would check the application's logs for any error messages that could help diagnose the problem.",
+    "difficulty": "medium",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-045",
+    "category": "helpdesk",
+    "question": "What is a VPN and why would you use one?",
+    "answer": "A VPN (Virtual Private Network) creates a secure connection over a public network, like the internet. You would use a VPN to access a private network remotely, to protect your browsing activity from prying eyes on public Wi-Fi, and to bypass geographic restrictions on websites and services.",
+    "difficulty": "medium",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-046",
+    "category": "helpdesk",
+    "question": "A user's computer is infected with a virus. What are the steps to remove it?",
+    "answer": "First, I would disconnect the computer from the network to prevent the virus from spreading. Then, I would boot the computer into Safe Mode and run a full scan with a reputable antivirus program. After the scan is complete, I would remove any detected threats. Finally, I would reconnect the computer to the network and advise the user to change all of their passwords.",
+    "difficulty": "medium",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-047",
+    "category": "helpdesk",
+    "question": "What is the difference between HTTP and HTTPS?",
+    "answer": "HTTPS is the secure version of HTTP. The 'S' at the end of HTTPS stands for 'Secure'. It means all communications between your browser and the website are encrypted. This is important for protecting your sensitive information, such as passwords and credit card numbers.",
+    "difficulty": "medium",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-048",
+    "category": "helpdesk",
+    "question": "A user is asking for a recommendation for a new printer. What factors would you consider?",
+    "answer": "I would ask them about their printing needs. For example, how much do they print? Do they need to print in color? Do they need to scan, copy, or fax? I would also consider their budget. Based on their answers, I would recommend a printer that meets their needs and is within their budget.",
+    "difficulty": "medium",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-049",
+    "category": "helpdesk",
+    "question": "What is a 'ticket' in a helpdesk system?",
+    "answer": "A ticket is a record of a user's request for help. It contains information about the user, the problem they are experiencing, and any steps that have been taken to resolve the issue. Tickets are used to track and manage user requests and to ensure that all requests are handled in a timely manner.",
+    "difficulty": "medium",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-050",
+    "category": "helpdesk",
+    "question": "A user is having trouble with their webcam. What would you check?",
+    "answer": "I would first check if the webcam is enabled in the computer's settings. I would also check if the correct webcam is selected in the application they are using. I would then check the webcam's drivers to make sure they are up to date. If the issue persists, I would try plugging the webcam into a different USB port or testing it on a different computer.",
+    "difficulty": "medium",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-051",
+    "category": "helpdesk",
+    "question": "What is the 'ping' command used for?",
+    "answer": "The 'ping' command is used to test the reachability of a host on an IP network. It sends a message to the host and waits for a reply. This can be used to check if a computer is connected to the network and to measure the latency between two devices.",
+    "difficulty": "medium",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-052",
+    "category": "helpdesk",
+    "question": "A user is complaining about pop-up ads on their computer. What is the likely cause and how would you fix it?",
+    "answer": "The likely cause is adware, which is a type of malware that displays unwanted advertisements. I would run a scan with an anti-adware program to remove it. I would also advise the user to be careful about what they download and to use a pop-up blocker in their web browser.",
+    "difficulty": "medium",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-053",
+    "category": "helpdesk",
+    "question": "What is a 'clean boot' and when would you use it?",
+    "answer": "A clean boot starts Windows with a minimal set of drivers and startup programs. This helps you to identify if a background program is causing a problem. You would use a clean boot when you are troubleshooting a problem that you suspect is being caused by a conflict between two or more programs.",
+    "difficulty": "medium",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-054",
+    "category": "helpdesk",
+    "question": "A user is having trouble connecting to a wireless network that they have connected to before. What would you suggest?",
+    "answer": "I would suggest they 'forget' the network and then try to reconnect to it. This will clear any saved settings for the network and force the computer to re-authenticate. I would also suggest they restart their router and their computer.",
+    "difficulty": "medium",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-055",
+    "category": "helpdesk",
+    "question": "What is the Event Viewer in Windows and what is it used for?",
+    "answer": "The Event Viewer is a tool that displays detailed information about significant events on your computer. This includes errors, warnings, and informational messages from Windows and other applications. It's a very useful tool for troubleshooting problems with your computer.",
+    "difficulty": "medium",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-056",
+    "category": "helpdesk",
+    "question": "A user is asking for advice on how to back up their data. What would you recommend?",
+    "answer": "I would recommend they use a combination of local and cloud-based backup solutions. For local backups, they can use an external hard drive. For cloud-based backups, they can use a service like Google Drive, Dropbox, or OneDrive. I would also advise them to back up their data regularly and to test their backups periodically to ensure they are working correctly.",
+    "difficulty": "medium",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-057",
+    "category": "helpdesk",
+    "question": "What is the principle of least privilege and why is it important in IT security?",
+    "answer": "The principle of least privilege dictates that a user should only have the minimum levels of access – or permissions – needed to perform their job functions. It's important because it significantly reduces the attack surface of a network. If a user account is compromised, the attacker will only have access to the limited resources that the user was authorized to access, preventing them from moving laterally through the network and accessing more sensitive data.",
+    "difficulty": "medium",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-058",
+    "category": "helpdesk",
+    "question": "A user's computer is not turning on. What are the initial troubleshooting steps?",
+    "answer": "First, I would check the most obvious things: Is the power cable securely plugged into both the computer and a working outlet? Is the power strip or surge protector turned on? I would then check the power supply unit (PSU) switch on the back of the computer. If those are all fine, I would try a different power cable and a different outlet to rule out a faulty cable or outlet. If the computer still doesn't turn on, it could be a problem with the PSU or the motherboard.",
+    "difficulty": "hard",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-059",
+    "category": "helpdesk",
+    "question": "What is the difference between a workgroup and a domain?",
+    "answer": "A workgroup is a peer-to-peer network where each computer has its own set of user accounts and security settings. There is no centralized management. A domain is a client/server network where all computers are part of a central database, which is managed by a domain controller. This allows for centralized management of user accounts, security policies, and other resources. Domains are used in business environments for better security and manageability.",
+    "difficulty": "hard",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-060",
+    "category": "helpdesk",
+    "question": "A user is complaining about a slow wireless connection. What are some potential causes?",
+    "answer": "A slow wireless connection can be caused by several factors. It could be due to a weak signal, which can be caused by distance from the router or obstructions like walls. It could also be due to interference from other wireless networks or electronic devices. The issue could also be with the router itself, or with the user's device. Finally, it could be an issue with the internet service provider.",
+    "difficulty": "hard",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-061",
+    "category": "helpdesk",
+    "question": "How would you troubleshoot a computer that is making a beeping sound on startup?",
+    "answer": "A beeping sound on startup is a POST (Power-On Self-Test) error code from the BIOS. The pattern of the beeps indicates the specific hardware problem. I would first identify the manufacturer of the motherboard or BIOS (e.g., AMI, Award, Phoenix) and then look up the beep code in the manufacturer's documentation. This will tell me what the problem is, which could be anything from a memory issue to a video card failure.",
+    "difficulty": "hard",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-062",
+    "category": "helpdesk",
+    "question": "What is the purpose of a DHCP server?",
+    "answer": "A DHCP (Dynamic Host Configuration Protocol) server is a network server that automatically provides and assigns IP addresses, default gateways, and other network parameters to client devices. It saves network administrators the trouble of having to manually configure every device on the network. It also helps to prevent IP address conflicts.",
+    "difficulty": "hard",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-063",
+    "category": "helpdesk",
+    "question": "A user is having trouble opening a specific file. What would you do?",
+    "answer": "I would first ask the user for the file name and type, and the application they are using to open it. I would then check if the user has the correct application installed and if it is up to date. I would also check the file permissions to ensure the user has the right to access the file. If the issue persists, I would try opening the file on a different computer to see if the file itself is corrupted.",
+    "difficulty": "hard",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-064",
+    "category": "helpdesk",
+    "question": "What is the difference between a full and a quick format?",
+    "answer": "A quick format deletes the file system table and the root folder of a drive, but the data is still there and can be recovered. A full format, on the other hand, not only deletes the file system table but also scans the drive for bad sectors and overwrites all the data with zeros. This makes it much more difficult to recover the data. A full format is recommended when you are preparing a drive for a new operating system installation or when you want to securely erase the data.",
+    "difficulty": "hard",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-065",
+    "category": "helpdesk",
+    "question": "A user is complaining that their computer is frozen. What would you suggest?",
+    "answer": "I would first suggest they try to close the frozen application by pressing Ctrl+Alt+Delete and opening the Task Manager. If that doesn't work, I would advise them to perform a hard reboot by holding down the power button until the computer turns off. I would also ask them if they have saved their work, as a hard reboot will result in the loss of any unsaved data. After the computer reboots, I would ask them to open the application again to see if the issue is resolved.",
+    "difficulty": "hard",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-066",
+    "category": "helpdesk",
+    "question": "What is the purpose of the command prompt in Windows?",
+    "answer": "The command prompt is a command-line interpreter application available in most Windows operating systems. It's used to execute commands to perform administrative tasks, troubleshoot problems, and automate tasks. It provides a way to interact with the operating system directly, without using the graphical user interface.",
+    "difficulty": "hard",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-067",
+    "category": "helpdesk",
+    "question": "A user is having trouble with their audio. What would you check?",
+    "answer": "I would first check the physical connections to ensure the speakers or headphones are properly plugged in. I would then check the volume controls on the device and in the operating system. I would also check the sound settings to ensure the correct audio device is selected as the default. If the issue persists, I would try reinstalling the audio drivers.",
+    "difficulty": "hard",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-068",
+    "category": "helpdesk",
+    "question": "What is the difference between a static and a dynamic IP address?",
+    "answer": "A static IP address is a fixed IP address that is manually assigned to a device. A dynamic IP address is an IP address that is automatically assigned to a device by a DHCP server. Static IP addresses are typically used for servers and other devices that need to be easily accessible on the network. Dynamic IP addresses are typically used for client devices, such as laptops and smartphones.",
+    "difficulty": "hard",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-069",
+    "category": "helpdesk",
+    "question": "A user is complaining about a specific website not loading. What would you do?",
+    "answer": "I would first ask the user for the URL of the website. I would then try to access the website on my own computer to see if the issue is with the website itself. If I can access the website, I would ask the user to try a different web browser and to clear their browser's cache and cookies. I would also have them try to ping the website to see if it is reachable. If the issue persists, it could be a DNS issue or a problem with their computer's network configuration.",
+    "difficulty": "hard",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-070",
+    "category": "helpdesk",
+    "question": "What is the purpose of a UPS?",
+    "answer": "A UPS (Uninterruptible Power Supply) is a device that provides battery backup power to a computer or other electronic device in the event of a power outage. This gives the user time to save their work and shut down the device properly. A UPS also provides surge protection to protect the device from power surges and spikes.",
+    "difficulty": "hard",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-071",
+    "category": "helpdesk",
+    "question": "A user is having trouble with their mouse. What would you check?",
+    "answer": "I would first ask the user to try a different USB port. If it's a wireless mouse, I would check the batteries. I would also try plugging the mouse into a different computer to see if the mouse is faulty. If the mouse works on another computer, the issue is likely with the user's computer's drivers or hardware.",
+    "difficulty": "hard",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-072",
+    "category": "helpdesk",
+    "question": "What is the difference between a 32-bit and a 64-bit operating system?",
+    "answer": "The main difference is the amount of RAM they can support. A 32-bit operating system can only support up to 4GB of RAM, while a 64-bit operating system can support much more. A 64-bit operating system can also run both 32-bit and 64-bit applications, while a 32-bit operating system can only run 32-bit applications.",
+    "difficulty": "hard",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-073",
+    "category": "helpdesk",
+    "question": "A user is complaining that their computer is making a lot of noise. What could be the problem?",
+    "answer": "A noisy computer is usually caused by a fan that is either dirty or failing. I would first ask the user to check if the computer's vents are blocked. If they are, I would advise them to clean the dust out of the vents and fans. If the noise persists, the fan may need to be replaced.",
+    "difficulty": "hard",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-074",
+    "category": "helpdesk",
+    "question": "What is the purpose of a KVM switch?",
+    "answer": "A KVM (Keyboard, Video, Mouse) switch is a hardware device that allows you to control multiple computers from a single keyboard, monitor, and mouse. This is useful in a server room or a data center where you have many servers but limited space for peripherals.",
+    "difficulty": "hard",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-075",
+    "category": "helpdesk",
+    "question": "A user is having trouble with a specific feature in an application. What would you do?",
+    "answer": "I would first ask the user to describe the problem in as much detail as possible. I would then try to replicate the issue on my own computer. If I can replicate it, I would then consult the application's documentation or knowledge base to see if there is a known solution. If I can't find a solution, I would escalate the issue to the application's support team.",
+    "difficulty": "hard",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-076",
+    "category": "helpdesk",
+    "question": "What is the difference between a local and a network printer?",
+    "answer": "A local printer is a printer that is connected directly to a computer, typically via a USB cable. A network printer is a printer that is connected to the network and can be accessed by multiple computers. Network printers are more common in business environments because they are more efficient and easier to manage.",
+    "difficulty": "hard",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-077",
+    "category": "helpdesk",
+    "question": "A user is complaining that their computer is slow to boot up. What would you suggest?",
+    "answer": "I would suggest they check the startup programs in the Task Manager and disable any unnecessary ones. I would also suggest they run a disk cleanup to remove any temporary files and to defragment their hard drive. If the issue persists, it could be a sign of a failing hard drive or a problem with the operating system.",
+    "difficulty": "hard",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-078",
+    "category": "helpdesk",
+    "question": "What is the purpose of a system restore in Windows?",
+    "answer": "System Restore is a feature in Windows that allows you to revert your computer's state to a previous point in time. This can be useful if you have installed a new application or driver that is causing problems. System Restore will not affect your personal files, but it will remove any applications and drivers that were installed after the restore point was created.",
+    "difficulty": "hard",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-079",
+    "category": "helpdesk",
+    "question": "A user is having trouble with their laptop's battery life. What would you suggest?",
+    "answer": "I would suggest they check their power settings to ensure they are optimized for battery life. I would also suggest they reduce the screen brightness and disable any unnecessary background applications. If the issue persists, the battery may be old and need to be replaced.",
+    "difficulty": "hard",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-080",
+    "category": "helpdesk",
+    "question": "What is the difference between a standard user account and an administrator account in Windows?",
+    "answer": "A standard user account has limited permissions and can only perform basic tasks, such as running applications and changing their own user settings. An administrator account has full control over the computer and can perform any task, including installing software, changing system settings, and creating and managing other user accounts. It is a best practice to use a standard user account for everyday tasks and to only use an administrator account when necessary.",
+    "difficulty": "hard",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-081",
+    "category": "helpdesk",
+    "question": "A user is complaining about a specific error message. What is the first thing you should do?",
+    "answer": "The first thing I would do is to ask the user for the exact error message. I would then search for the error message online to see if there is a known solution. I would also check the application's or the operating system's logs for any additional information about the error.",
+    "difficulty": "hard",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-082",
+    "category": "helpdesk",
+    "question": "What is the purpose of a file extension?",
+    "answer": "A file extension is a suffix at the end of a file name that indicates the type of file it is. For example, a .docx file is a Microsoft Word document, and a .jpg file is an image file. The file extension tells the operating system which application to use to open the file.",
+    "difficulty": "hard",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-083",
+    "category": "helpdesk",
+    "question": "A user is having trouble with their internet connection at home. What are some things you would suggest they check?",
+    "answer": "I would suggest they first check if their modem and router are properly connected and if the lights are on. I would then suggest they power cycle their modem and router. If the issue persists, I would suggest they connect their computer directly to the modem with an Ethernet cable to see if the issue is with their Wi-Fi. If they still can't connect, I would suggest they contact their internet service provider.",
+    "difficulty": "hard",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  },
+  {
+    "id": "helpdesk-084",
+    "category": "helpdesk",
+    "question": "What is the purpose of a screen saver?",
+    "answer": "A screen saver is a computer program that blanks the screen or fills it with moving images or patterns when the computer is not in use. The original purpose of a screen saver was to prevent burn-in on older CRT monitors. However, with modern LCD monitors, burn-in is not an issue, so screen savers are now mostly used for entertainment or for security, as they can be configured to require a password to exit.",
+    "difficulty": "hard",
+    "tags": [
+      "troubleshooting",
+      "customer-service"
+    ]
+  }
+]

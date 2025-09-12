@@ -1,0 +1,14 @@
+{
+  "resourceName": "InterviewQuestions",
+  "tableName": "InterviewQuestions",
+  "partitionKey": {
+    "fieldName": "category",
+    "fieldType": "string"
+  },
+  "sortKey": {
+    "fieldName": "questionId",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}

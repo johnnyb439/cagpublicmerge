@@ -18,10 +18,12 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { getCurrentUser, signOut } from 'aws-amplify/auth'
 import Analytics from '@/components/dashboard/Analytics'
 import GoalTracking from '@/components/dashboard/GoalTracking'
 import PersonalizedRecommendations from '@/components/dashboard/PersonalizedRecommendations'
 import DraggableQuickActions from '@/components/dashboard/DraggableQuickActions'
+import ProtectedRoute from '@/components/ProtectedRoute'
 import { isDevMode } from '@/lib/dev-mode'
 
 interface UserData {
@@ -30,27 +32,44 @@ interface UserData {
   clearanceLevel: string
 }
 
-export default function DashboardPage() {
+function DashboardContent() {
   const router = useRouter()
   const [user, setUser] = useState<UserData | null>(null)
   const [activeTab, setActiveTab] = useState('overview')
   const [showAllActivities, setShowAllActivities] = useState(false)
 
   useEffect(() => {
-    // Check if user is logged in
-    const userData = localStorage.getItem('user')
-    if (userData) {
-      setUser(JSON.parse(userData))
-    } else if (!isDevMode) {
-      // Only redirect in production mode
+    loadUserData()
+  }, [])
+
+  const loadUserData = async () => {
+    try {
+      const currentUser = await getCurrentUser()
+      setUser({
+        email: currentUser.signInDetails?.loginId || 'user@example.com',
+        name: currentUser.username || 'User',
+        clearanceLevel: 'SECRET' // Default or from user attributes
+      })
+    } catch (error) {
+      if (isDevMode) {
+        // Dev mode fallback
+        setUser({
+          email: 'dev@cag.com',
+          name: 'Dev User',
+          clearanceLevel: 'SECRET'
+        })
+      }
+    }
+  }
+
+  const handleLogout = async () => {
+    try {
+      await signOut()
+      router.push('/login')
+    } catch (error) {
+      console.error('Error signing out:', error)
       router.push('/login')
     }
-  }, [router])
-
-  const handleLogout = () => {
-    localStorage.removeItem('user')
-    window.dispatchEvent(new CustomEvent('userLogout'))
-    router.push('/login')
   }
 
   if (!user) {
@@ -358,5 +377,13 @@ export default function DashboardPage() {
         )}
       </div>
     </section>
+  )
+}
+
+export default function DashboardPage() {
+  return (
+    <ProtectedRoute>
+      <DashboardContent />
+    </ProtectedRoute>
   )
 }

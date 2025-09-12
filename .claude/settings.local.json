@@ -34,7 +34,12 @@
       "Bash(dir:*)",
       "Bash(git remote add:*)",
       "Bash(grep:*)",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "Read(//var/folders/s_/ptv2jdl50v7467mfdm3txqlc0000gn/T/TemporaryItems/NSIRD_screencaptureui_xWmctJ/**)",
+      "Read(//var/folders/s_/ptv2jdl50v7467mfdm3txqlc0000gn/T/TemporaryItems/NSIRD_screencaptureui_KdCwSl/**)",
+      "Read(//Users/tone/Desktop/**)",
+      "Bash(sudo installer:*)",
+      "Read(//var/folders/s_/ptv2jdl50v7467mfdm3txqlc0000gn/T/TemporaryItems/NSIRD_screencaptureui_5xI4mu/**)"
     ],
     "deny": [],
     "additionalDirectories": [

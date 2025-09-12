@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { User, Lock, Shield, AlertCircle } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { signIn } from 'aws-amplify/auth'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -18,25 +19,20 @@ export default function LoginPage() {
     setError('')
     setLoading(true)
 
-    // Simulate login - in production this would connect to your auth system
-    setTimeout(() => {
-      if (email && password) {
-        // Store minimal user data in localStorage for demo
-        localStorage.setItem('user', JSON.stringify({
-          email,
-          name: email.split('@')[0],
-          clearanceLevel: 'SECRET'
-        }))
-        
-        // Dispatch custom event to notify navbar
-        window.dispatchEvent(new CustomEvent('userLogin'))
-        
-        router.push('/dashboard')
-      } else {
-        setError('Please enter both email and password')
-        setLoading(false)
-      }
-    }, 1000)
+    try {
+      await signIn({
+        username: email,
+        password: password
+      })
+      
+      // Redirect to dashboard after successful login
+      router.push('/dashboard')
+    } catch (error: any) {
+      console.error('Login error:', error)
+      setError(error.message || 'Login failed. Please check your credentials.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (

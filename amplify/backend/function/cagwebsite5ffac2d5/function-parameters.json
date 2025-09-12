@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "auth": {
+      "cagwebsite8730caea": [
+        "read"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

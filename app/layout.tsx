@@ -1,9 +1,18 @@
+
+
+
+
+
+
+
+
+
+
+
+
 import type { Metadata } from 'next'
 import './globals.css'
-import SiteHeader from '@/components/SiteHeader'
-import Footer from '@/components/Footer'
-import LiveChat from '@/components/LiveChat'
-import DevModeInit from '@/components/DevModeInit'
+import AuthProvider from '@/components/AuthProvider'
 
 export const metadata: Metadata = {
   title: 'Cleared Advisory Group - Your Gateway to Cleared IT Opportunities',
@@ -19,14 +28,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen bg-white dark:bg-command-black">
-        <DevModeInit />
-        <SiteHeader />
-        <main className="pt-16">
+        <AuthProvider>
           {children}
-        </main>
-        <Footer />
-        <LiveChat />
+        </AuthProvider>
       </body>
     </html>
   )
 }
+

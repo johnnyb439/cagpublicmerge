@@ -1,0 +1,89 @@
+{
+  "auth": {
+    "cagwebsite8730caea": {
+      "customAuth": false,
+      "dependsOn": [],
+      "frontendAuthConfig": {
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyCharacters": [],
+          "passwordPolicyMinLength": 8
+        },
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "socialProviders": [],
+        "usernameAttributes": [],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito"
+    }
+  },
+  "function": {
+    "cagwebsite5ffac2d5": {
+      "build": true,
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "cagwebsite8730caea"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "cagwebsitef0feb890": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_cagwebsite5ffac2d5_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "cagwebsite5ffac2d5"
+        }
+      ]
+    },
+    "AMPLIFY_function_cagwebsite5ffac2d5_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "cagwebsite5ffac2d5"
+        }
+      ]
+    },
+    "AMPLIFY_function_cagwebsitef0feb890_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "cagwebsitef0feb890"
+        }
+      ]
+    },
+    "AMPLIFY_function_cagwebsitef0feb890_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "cagwebsitef0feb890"
+        }
+      ]
+    }
+  },
+  "storage": {
+    "InterviewQuestions": {
+      "providerPlugin": "awscloudformation",
+      "service": "DynamoDB"
+    }
+  }
+}

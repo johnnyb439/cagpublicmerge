@@ -1,10 +1,92 @@
 'use client'
 
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
+import { getCurrentUser } from 'aws-amplify/auth'
+import { isDevMode } from '@/lib/dev-mode'
 
 export default function Hero() {
+  const [user, setUser] = useState<any>(null)
+  const [mounted, setMounted] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const router = useRouter()
+
+  useEffect(() => {
+    setMounted(true)
+    checkAuthState()
+  }, [])
+
+  const checkAuthState = async () => {
+    try {
+      setIsLoading(true)
+      const currentUser = await getCurrentUser()
+      setUser(currentUser)
+    } catch (error) {
+      if (isDevMode) {
+        // Dev mode fallback
+        setUser({ username: 'dev-user' })
+      } else {
+        setUser(null)
+      }
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleDashboardClick = () => {
+    if (user) {
+      router.push('/dashboard')
+    } else {
+      router.push('/login?next=%2Fdashboard')
+    }
+  }
+
+  const renderCTAs = () => {
+    if (!mounted || isLoading) {
+      return (
+        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+          <div className="w-40 h-12 bg-gray-800 rounded-lg animate-pulse" />
+          <div className="w-32 h-12 bg-gray-800 rounded-lg animate-pulse" />
+        </div>
+      )
+    }
+
+    if (user) {
+      // Signed IN - Show Dashboard
+      return (
+        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <button 
+              onClick={handleDashboardClick}
+              className="text-white font-semibold px-8 py-3 rounded-lg btn-cag-gradient cag-glow"
+            >
+              Go to Dashboard
+            </button>
+          </motion.div>
+        </div>
+      )
+    }
+
+    // Signed OUT - Show Create Account and Log In
+    return (
+      <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <Link href="/register" className="text-white font-semibold px-8 py-3 rounded-lg btn-cag-gradient cag-glow">
+            Create Account
+          </Link>
+        </motion.div>
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <Link href="/login" className="border border-gray-400 hover:border-white text-white font-semibold px-8 py-3 rounded-lg transition-colors duration-300">
+            Log In
+          </Link>
+        </motion.div>
+      </div>
+    )
+  }
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Clean Dark Background */}
@@ -27,18 +109,7 @@ export default function Hero() {
             We help cleared professionals transition into lucrative IT contracting careers with personalized guidance and proven strategies.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link href="/register" className="text-white font-semibold px-8 py-3 rounded-lg btn-cag-gradient cag-glow">
-                Create Account
-              </Link>
-            </motion.div>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link href="/login" className="border border-gray-400 hover:border-white text-white font-semibold px-8 py-3 rounded-lg transition-colors duration-300">
-                Log In
-              </Link>
-            </motion.div>
-          </div>
+          {renderCTAs()}
 
           {/* CAG QR Code */}
           <div className="flex justify-center">

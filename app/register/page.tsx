@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import { User, Mail, Lock, Shield, AlertCircle, Check } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
+import { signUp, confirmSignUp } from 'aws-amplify/auth'
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -18,6 +19,8 @@ export default function RegisterPage() {
   })
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [confirmStep, setConfirmStep] = useState(false)
+  const [confirmationCode, setConfirmationCode] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -41,16 +44,44 @@ export default function RegisterPage() {
 
     setLoading(true)
 
-    // Simulate registration - in production this would connect to your auth system
-    setTimeout(() => {
-      // Store user data
-      localStorage.setItem('user', JSON.stringify({
-        email: formData.email,
-        name: formData.name,
-        clearanceLevel: formData.clearanceLevel
-      }))
-      router.push('/dashboard')
-    }, 1000)
+    try {
+      await signUp({
+        username: formData.email,
+        password: formData.password,
+        options: {
+          userAttributes: {
+            email: formData.email,
+            name: formData.name
+            // 'custom:clearanceLevel': formData.clearanceLevel  // TODO: Add after schema update
+          }
+        }
+      })
+      setConfirmStep(true)
+    } catch (error: any) {
+      console.error('Registration error:', error)
+      setError(error.message || 'Registration failed. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleConfirm = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setError('')
+    setLoading(true)
+
+    try {
+      await confirmSignUp({
+        username: formData.email,
+        confirmationCode: confirmationCode
+      })
+      router.push('/login')
+    } catch (error: any) {
+      console.error('Confirmation error:', error)
+      setError(error.message || 'Confirmation failed. Please check your code.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -88,7 +119,52 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          {/* Form */}
+          {/* Confirmation Step */}
+          {confirmStep ? (
+            <form onSubmit={handleConfirm} className="space-y-6">
+              <div className="text-center mb-6">
+                <h2 className="text-lg font-semibold mb-2">Check Your Email</h2>
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  We've sent a confirmation code to {formData.email}
+                </p>
+              </div>
+              
+              <div>
+                <label htmlFor="confirmationCode" className="block text-sm font-medium mb-2">
+                  Confirmation Code
+                </label>
+                <input
+                  type="text"
+                  id="confirmationCode"
+                  value={confirmationCode}
+                  onChange={(e) => setConfirmationCode(e.target.value)}
+                  className="w-full px-4 py-3 border dark:border-gray-600 bg-white dark:bg-gray-800 rounded-lg focus:outline-none focus:border-dynamic-green dark:text-white text-center text-lg tracking-wider"
+                  placeholder="000000"
+                  required
+                />
+              </div>
+
+              {error && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="flex items-center p-3 bg-red-50 text-red-700 rounded-lg"
+                >
+                  <AlertCircle size={20} className="mr-2" />
+                  <span className="text-sm">{error}</span>
+                </motion.div>
+              )}
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {loading ? 'Confirming...' : 'Confirm Account'}
+              </button>
+            </form>
+          ) : (
+          /* Registration Form */
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label htmlFor="name" className="block text-sm font-medium mb-2">
@@ -222,6 +298,7 @@ export default function RegisterPage() {
               {loading ? 'Creating Account...' : 'Create Account'}
             </button>
           </form>
+          )}
 
           {/* Security Notice */}
           <div className="mt-6 p-4 bg-gray-50 dark:bg-ops-charcoal rounded-lg">

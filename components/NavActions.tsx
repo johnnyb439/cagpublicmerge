@@ -2,55 +2,70 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { User, LogOut } from 'lucide-react'
-
-// Stub function for auth - you can replace this with your actual auth logic
-function getUser() {
-  if (typeof window === 'undefined') return null
-  
-  try {
-    const userData = localStorage.getItem('user')
-    if (userData && userData !== 'null' && userData !== '{}') {
-      const user = JSON.parse(userData)
-      // Only return user if it has meaningful data
-      return user && Object.keys(user).length > 0 ? user : null
-    }
-    return null
-  } catch (error) {
-    return null
-  }
-}
-
-function logout() {
-  if (typeof window !== 'undefined') {
-    localStorage.removeItem('user')
-  }
-}
-
-// Temporary function to simulate login for testing
-function tempLogin() {
-  if (typeof window !== 'undefined') {
-    const testUser = { 
-      id: 1, 
-      name: 'Test User', 
-      email: 'test@example.com' 
-    }
-    localStorage.setItem('user', JSON.stringify(testUser))
-    window.location.reload()
-  }
-}
+import { getCurrentUser, signOut } from 'aws-amplify/auth'
+import { Hub } from 'aws-amplify/utils'
+import { isDevMode } from '@/lib/dev-mode'
 
 export default function NavActions() {
   const [user, setUser] = useState<any>(null)
   const [mounted, setMounted] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+  const router = useRouter()
 
   useEffect(() => {
     setMounted(true)
-    setUser(getUser())
+    checkAuthState()
+
+    // Listen to auth state changes
+    const hubListener = Hub.listen('auth', ({ payload }) => {
+      switch (payload.event) {
+        case 'signedIn':
+          checkAuthState()
+          break
+        case 'signedOut':
+          setUser(null)
+          setIsLoading(false)
+          break
+      }
+    })
+
+    return () => hubListener()
   }, [])
 
+  const checkAuthState = async () => {
+    try {
+      setIsLoading(true)
+      const currentUser = await getCurrentUser()
+      setUser(currentUser)
+    } catch (error) {
+      if (isDevMode) {
+        // Dev mode fallback
+        setUser({ username: 'dev-user' })
+      } else {
+        setUser(null)
+      }
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleSignOut = async () => {
+    try {
+      await signOut()
+      setUser(null)
+      router.push('/')
+    } catch (error) {
+      console.error('Error signing out:', error)
+      // Force signout on error
+      setUser(null)
+      router.push('/')
+    }
+  }
+
   // Prevent hydration mismatch by not rendering until mounted
-  if (!mounted) {
+  if (!mounted || isLoading) {
     return (
       <div className="flex items-center space-x-4">
         <div className="w-20 h-9 bg-gray-800 rounded-md animate-pulse" />
@@ -70,14 +85,7 @@ export default function NavActions() {
           <span>Dashboard</span>
         </Link>
         <button
-          onClick={() => {
-            if (typeof window !== 'undefined') {
-              localStorage.removeItem('user')
-              setUser(null)
-              window.location.href = '/'
-              window.location.reload()
-            }
-          }}
+          onClick={handleSignOut}
           className="flex items-center space-x-2 px-4 py-2 text-sm text-white hover:text-red-400 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-50 rounded-md"
         >
           <LogOut size={16} />
@@ -101,12 +109,6 @@ export default function NavActions() {
       >
         Create Account
       </Link>
-      <button
-        onClick={tempLogin}
-        className="px-4 py-2 text-sm text-yellow-400 hover:text-yellow-300 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:ring-opacity-50 rounded-md border border-yellow-400"
-      >
-        [Test Login]
-      </button>
     </div>
   )
 }

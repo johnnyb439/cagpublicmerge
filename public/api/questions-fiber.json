@@ -1,0 +1,552 @@
+[
+  {
+    "id": "fiber-001",
+    "category": "fiber",
+    "question": "Walk through the complete process of fusion splicing two fibers, including preparation and testing.",
+    "answer": "**Workspace Setup**\n• Clean, stable surface away from wind/dust\n• Proper lighting for visibility\n• Fusion splicer on stable platform\n• All tools organized and accessible\n\n**Cable Preparation**\n• Measure and mark strip lengths accurately\n• Score and remove outer jacket carefully\n• Clean buffer tubes with appropriate wipes\n• Separate fibers without inducing stress\n\n**Fiber Preparation**\n• Strip fiber using precision strippers (1.25 inches typical)\n• Clean with 99% isopropyl alcohol\n• Use lint-free wipes, one-directional motion\n• Inspect fiber end for contamination\n\n**Cleaving Process**\n• Use precision cleaver with fresh blade\n• Ensure proper strip length in cleaver\n• Apply consistent pressure for clean break\n• Verify cleave angle (<0.5 degrees)\n\n**Fusion Process**\n• Place fibers in V-grooves carefully\n• Ensure proper alignment in splicer\n• Close wind cover before fusion\n• Observe arc fusion on screen\n\n**Quality Checks**\n• Inspect splice on splicer screen\n• Verify estimated loss (<0.05dB target)\n• Look for bubbles or alignment issues\n• Re-splice if not acceptable\n\n**Splice Protection**\n• Slide heat shrink over splice point\n• Place in heater for proper time\n• Ensure sleeve fully contracts\n• Allow cooling before handling\n\n**Tray Management**\n• Route fibers maintaining bend radius\n• Secure in designated slots\n• Avoid crossing or tangling\n• Label per documentation standards\n\n**Final Testing**\n• OTDR test bi-directionally\n• Verify splice loss within specs\n• Check for reflectance issues\n• Document all results\n\n**Common Issues**: Contamination, poor cleave angles, incorrect fusion parameters",
+    "difficulty": "easy",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-002",
+    "category": "fiber",
+    "question": "Explain how to use an OTDR to locate a fault in a fiber optic cable, including trace interpretation.",
+    "answer": "**Initial OTDR Setup**\n• Select wavelength: 1310nm (general) or 1550nm (long distance)\n• Set pulse width: shorter for accuracy, longer for distance\n• Configure averaging time for noise reduction\n• Set appropriate distance range\n\n**Launch Cable Setup**\n• Use minimum 500m launch cable\n• Ensure all connections are clean\n• Match fiber type to system under test\n• Verify launch cable condition\n\n**Test Execution**\n• Connect OTDR to launch cable\n• Initiate trace acquisition\n• Wait for averaging to complete\n• Save baseline trace for comparison\n\n**Trace Interpretation**\n• **Axes**: Vertical = power (dB), Horizontal = distance\n• **Slopes**: Downward = fiber attenuation\n• **Events**: Sudden drops = connectors, splices, breaks\n\n**Event Identification**\n• **Connectors**: Small loss with reflection\n• **Mechanical splices**: Loss with reflection\n• **Fusion splices**: Loss without reflection\n• **Breaks**: Large loss with high reflection\n\n**Fault Location Process**\n• Identify anomalous event on trace\n• Note distance reading to event\n• Account for cable slack (3-5% typical)\n• Consider actual cable routing\n\n**Advanced Analysis**\n• Use two-point loss measurement\n• Check event reflectance values\n• Compare with baseline traces\n• Test bi-directionally for accuracy\n\n**Ghost Detection**\n• Identify events beyond fiber end\n• Recognize as reflections of real events\n• Calculate actual location mathematically\n• Exclude from analysis\n\n**Macro-bend Detection**\n• Appears as gradual loss increase\n• May not show reflection\n• Common at incorrect cable storage\n• Verify with visual inspection\n\n**Documentation**\n• Save traces with descriptive names\n• Export data for reports\n• Maintain historical records\n• Create event maps for reference",
+    "difficulty": "easy",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-003",
+    "category": "fiber",
+    "question": "Describe the different types of fiber optic connectors and their specific applications, including proper cleaning procedures.",
+    "answer": "Fiber connectors vary by application and require specific handling. SC connectors: push-pull design for easy connection, common in telecom applications, square housing prevents rotation, and typical loss 0.3dB or less. LC connectors: small form factor (half SC size), high-density applications, used in data centers, and similar push-pull mechanism. FC connectors: threaded coupling for stability, used in test equipment, prevents disconnection from vibration, and common in CATV applications. ST connectors: bayonet-style coupling, older installations, being phased out, and requires careful alignment. MPO/MTP connectors: multi-fiber (12, 24, or 72), high-density applications, critical for 40G/100G networks, and requires special cleaning tools. Cleaning procedures: inspect first with fiber scope (400x magnification), identify contamination type, never touch ferrule end face, and clean only when necessary. Dry cleaning method: use one-click cleaners for convenience, lint-free wipes for manual cleaning, figure-8 motion on cleaning surface, and single directional wipe only. Wet cleaning method: apply 99% IPA sparingly, follow with dry wipe immediately, use for stubborn contamination, and ensure complete drying. Specialized cleaning: MPO requires special tools, use appropriate cassette cleaner, clean alignment pins carefully, and inspect each fiber position. Contamination types: dust and dirt most common, oil from fingerprints difficult, dried alcohol leaves residue, and scratches permanent damage. Best practices: always cap unused connectors, inspect before and after cleaning, never reuse cleaning materials, and maintain cleaning supplies properly. Testing after cleaning: verify with optical power meter, check insertion loss specifications, test return loss if required, and document improvements.",
+    "difficulty": "easy",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-004",
+    "category": "fiber",
+    "question": "How do you calculate and design a fiber optic link budget, including loss considerations and power margins?",
+    "answer": "**Basic Budget Calculation**\n• Transmitter power - Receiver sensitivity = Available budget\n• Available budget - Total losses = Power margin\n• Power margin must exceed required minimum (typically 3dB)\n\n**Loss Components**\n• **Connectors**: 0.3-0.5dB each\n• **Fusion splices**: 0.05-0.1dB each\n• **Fiber attenuation**:\n  - 1310nm: 0.35dB/km\n  - 1550nm: 0.25dB/km\n• **Mechanical splices**: 0.1-0.3dB each\n\n**Example Calculation**\n• Transmitter power: -3dBm\n• Receiver sensitivity: -28dBm\n• Available budget: 25dB\n\n**Loss Breakdown**:\n• Fiber (10km @ 1310nm): 3.5dB\n• Connectors (4 × 0.5dB): 2.0dB\n• Splices (10 × 0.1dB): 1.0dB\n• **Total losses**: 6.5dB\n\n**Margin Analysis**\n• Available: 25dB\n• Losses: -6.5dB\n• Repair allowance: -3dB\n• Aging allowance: -1dB\n• **Final margin**: 14.5dB ✓\n\n**Additional Considerations**\n• **Wavelength**: Use worst-case for calculations\n• **Dispersion**: Check chromatic and PMD limits\n• **Temperature**: Allow 1-2dB for variations\n• **Component aging**: Plan for 1-2dB degradation\n\n**Documentation Requirements**\n• Create detailed loss budget spreadsheet\n• Include all component specifications\n• Update with actual measurements\n• Maintain for troubleshooting\n\n**Verification**\n• Measure actual link loss\n• Compare to calculated budget\n• Investigate any discrepancies\n• Establish baseline for monitoring",
+    "difficulty": "easy",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-005",
+    "category": "fiber",
+    "question": "Explain the procedures for installing and terminating a fiber optic patch panel, including cable management.",
+    "answer": "Patch panel installation requires systematic approach for organization and reliability. Panel selection: determine required port count with growth, choose appropriate connector type (SC, LC), select proper mounting (rack or wall), and verify singlemode or multimode compatibility. Pre-installation planning: create labeling scheme beforehand, determine cable routing paths, plan slack storage requirements, and coordinate shutdown if needed. Mounting installation: secure panel at appropriate height, ensure adequate clearance for cables, verify structural support adequate, and maintain accessibility for maintenance. Cable preparation: measure cable length with slack, secure cable to rack properly, maintain bend radius throughout, and use appropriate cable ties. Cable entry: use proper cable clamps, provide strain relief, seal unused openings, and organize by direction or function. Fiber breakout: strip cable jacket carefully, separate buffer tubes methodically, maintain tube identification, and route to designated positions. Termination options: fusion splice pigtails (lowest loss), mechanical connectors (field installable), pre-terminated assemblies (fastest), and consider maintainability needs. Splice organization: use splice trays efficiently, maintain proper fiber routing, avoid fiber crossovers, and secure slack properly. Connector mounting: install adapters securely, verify proper orientation, clean all connections, and install dust caps. Cable management: use horizontal/vertical managers, maintain 30mm minimum bend radius, separate copper from fiber, and avoid over-tightening ties. Labeling requirements: label each port clearly, use permanent labeling method, follow TIA-606 standards, and document in spreadsheet. Testing procedures: test all connections with power meter, verify with OTDR if required, check polarity for duplex, and document all results. Final documentation: create panel layout diagram, maintain test records, photograph completed installation, and update network drawings.",
+    "difficulty": "easy",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-006",
+    "category": "fiber",
+    "question": "Describe the process of troubleshooting high optical loss in a fiber link, including systematic isolation techniques.",
+    "answer": "High loss troubleshooting requires systematic isolation approach. Initial verification: confirm loss measurement accurate, verify test equipment calibrated, check reference cables condition, and ensure proper test wavelength. Test setup validation: clean all test connections, verify launch conditions correct, check power meter settings, and establish new reference if needed. Baseline comparison: compare current to acceptance tests, review historical measurements, check for gradual degradation, and identify when problem started. Segment isolation: test individual segments separately, work from source outward, identify highest loss section, and focus troubleshooting there. Connector inspection: use fiber microscope 400x minimum, check for contamination or damage, clean if necessary, and re-test after cleaning. Common contamination: dust and dirt particles, fingerprint oils, dried cleaning fluids, and ferrule surface scratches. Splice investigation: locate splices with OTDR, check splice loss values, compare bi-directional measurements, and re-splice if excessive. Bend loss detection: look for localized losses on OTDR, check cable routing paths, verify bend radius compliance, and test at 1550nm (more sensitive). Environmental factors: temperature extremes affecting loss, moisture ingress possibilities, mechanical stress points, and vibration-induced problems. Connector problems: improper ferrule polish, cracked ferrules, contaminated adapters, and mismatched connector types. Cable damage: macro-bends from improper storage, micro-bends from tie wraps, crush damage from weight, and tensile damage from pulling. Testing methodology: use insertion loss testing first, follow with OTDR analysis, test bi-directionally always, and document each measurement. Resolution verification: re-test after repairs, compare to specifications, monitor for stability, and update documentation.",
+    "difficulty": "easy",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-007",
+    "category": "fiber",
+    "question": "What are the different fiber optic cable types and their applications in various installation environments?",
+    "answer": "Fiber cable selection depends on environment and application requirements. Indoor cable types: riser-rated (OFNR) for vertical runs, plenum-rated (OFNP) for air spaces, low-smoke zero-halogen (LSZH) for confined spaces, and tight-buffer for direct termination. Outdoor cable types: loose-tube for temperature extremes, armored for direct burial, aerial self-supporting (ADSS), and figure-8 with messenger wire. Indoor/outdoor cables: dual-rated for transitions, eliminates splice points, water-blocked construction, and suitable for both environments. Loose-tube construction: gel-filled for water blocking, allows fiber movement, better for temperature cycles, and typically 250μm coating. Tight-buffer construction: 900μm buffer over fiber, easier to terminate, less preparation required, and common in premises. Armored variations: corrugated steel (CST) for rodents, aluminum tape (APL) for moisture, interlocking armor (ILA) for crush, and dielectric for lightning prone. Tactical cables: military applications, crush/abrasion resistant, deployable/retrievable, and chemical resistant. Submarine cables: special water blocking, pressure resistant design, armored for anchors, and repeater compatibility. Ribbon cables: multiple fibers in flat ribbon, high fiber density, mass fusion splicing, and data center backbone. Drop cables: flat or round construction, pre-connectorized options, weather resistant jacket, and flexible for routing. Fire ratings importance: plenum requires lowest smoke, riser for vertical shafts, general purpose limitations, and local code compliance. Environmental considerations: temperature rating range, UV resistance for outdoor, water/moisture blocking, and chemical compatibility. Fiber count selection: current plus growth needs, standard increments available, cost per fiber economics, and splice enclosure capacity.",
+    "difficulty": "easy",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-008",
+    "category": "fiber",
+    "question": "Explain the differences between singlemode and multimode fiber, including when to use each type.",
+    "answer": "Understanding fiber modes determines application suitability. Singlemode characteristics: 9μm core diameter, single light path propagation, unlimited bandwidth potential, and yellow jacket typically. Multimode characteristics: 50μm or 62.5μm core, multiple light paths, limited bandwidth-distance product, and orange or aqua jacket. Distance capabilities: singlemode reaches 40km+ easily, multimode limited to 2km typically, depends on data rate, and wavelength dependent. Wavelength differences: singlemode uses 1310nm/1550nm, multimode uses 850nm/1300nm, CWDM/DWDM singlemode only, and wavelength determines attenuation. Bandwidth comparison: singlemode essentially unlimited, multimode limited by modal dispersion, OM3/OM4 improved bandwidth, and OM5 supports multiple wavelengths. Cost considerations: singlemode fiber costs less, singlemode electronics cost more, installation costs similar, and total system cost evaluation. Application guidelines: singlemode for long distance, carrier/ISP networks, CATV distribution, and high bandwidth needs. Multimode applications: enterprise LANs, data centers, short building runs, and cost-sensitive installations. Equipment compatibility: transceivers must match fiber, mode conditioning sometimes required, media converters available, and plan for future needs. Migration considerations: multimode to singlemode common, requires equipment replacement, plan during renovations, and maintain dual infrastructure. Testing differences: different test equipment needed, reference cables must match, wavelength selection critical, and mandrel wrap for multimode. Connector colors: blue for singlemode, beige for 62.5μm multimode, aqua for 50μm OM3/OM4, and green for APC singlemode. Mixing concerns: never mix in same link, high loss at junction, equipment damage possible, and clear labeling essential.",
+    "difficulty": "easy",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-009",
+    "category": "fiber",
+    "question": "Describe proper safety procedures when working with fiber optic cables, including laser safety.",
+    "answer": "Fiber optic safety requires awareness of multiple hazards. Laser safety classifications: Class 1 safe under all conditions, Class 1M safe without magnification, Class 2 visible light only, and Class 3R/3B/4 require controls. Eye protection: never look into fiber end, use appropriate laser safety glasses, assume all fibers are energized, and use power meter instead. Invisible radiation hazards: infrared light invisible, damage occurs without sensation, accumulative exposure effects, and permanent retinal damage possible. Fiber fragment hazards: glass splinters extremely sharp, penetrate skin easily, difficult to see/remove, and can migrate deeper. Handling procedures: work over fiber disposal container, use black pad for visibility, tape or wet wipes for cleanup, and never eat/drink in work area. Disposal requirements: use sharps container for scraps, label as fiber waste, never use regular trash, and seal containers properly. Chemical safety: isopropyl alcohol flammable, use adequate ventilation, avoid skin contact, and proper storage required. Epoxy hazards: some types toxic, use appropriate gloves, avoid inhalation, and follow SDS requirements. Tool safety: cleaver blades extremely sharp, fusion splicer high voltage, proper tool maintenance, and appropriate training required. First aid procedures: fiber in skin use tape removal, fiber in eye seek immediate medical, chemical exposure follow SDS, and maintain first aid supplies. PPE requirements: safety glasses mandatory, disposable gloves recommended, avoid loose clothing, and remove jewelry. Work area setup: adequate lighting essential, smooth work surface, fiber disposal container, and cleaning supplies ready. Documentation requirements: maintain SDS sheets, laser classification labels, emergency procedures posted, and incident reporting system.",
+    "difficulty": "easy",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-010",
+    "category": "fiber",
+    "question": "How do you perform end-to-end testing and certification of a newly installed fiber optic system?",
+    "answer": "System certification requires comprehensive testing methodology. Pre-testing preparation: verify installation complete, check all connections cleaned, confirm labeling correct, and prepare test forms. Test equipment required: optical loss test set (OLTS), optical time domain reflectometer (OTDR), visual fault locator (VFL), and inspection microscope. Reference setup: set reference per standard (1, 2, or 3 jumper), verify reference cables quality, check equipment calibration current, and document reference values. Tier 1 testing (basic): insertion loss both directions, compare to loss budget, test at operational wavelengths, and length verification. Test procedure: connect to far end, measure received power, calculate total loss, and reverse direction test. Pass/fail criteria: meet TIA/ISO standards, within calculated budget, consistent both directions, and no individual event excessive. Tier 2 testing (extended): OTDR trace both directions, event characterization, reflectance measurements, and complete link documentation. OTDR analysis: verify total length, check connector losses, identify splice losses, and measure fiber attenuation. Polarity verification: check transmit-receive pairing, verify duplex orientation, use visual light source, and correct if needed. Documentation requirements: record all measurements, create test certificates, include OTDR traces, and maintain permanent records. Troubleshooting failures: isolate problem segment, clean and retest, check reference setup, and verify test parameters. Special tests: chromatic dispersion if needed, polarization mode dispersion, spectral attenuation, and bandwidth verification. Acceptance criteria: meet contract specifications, comply with standards, consistent with design, and customer approval. Report generation: professional test reports, executive summary included, detailed appendices, and recommendations provided. Database creation: as-built documentation, test result archive, warranty information, and maintenance baseline.",
+    "difficulty": "easy",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-011",
+    "category": "fiber",
+    "question": "Explain the process of installing a fiber optic cable in an existing underground conduit with multiple bends.",
+    "answer": "Conduit installation requires careful planning to prevent cable damage. Pre-installation inspection: verify conduit route using plans, check conduit size adequate (30% fill ratio maximum), probe for obstructions, and test with mandrel if questionable. Conduit preparation: clean using foam carriers, remove water with compressed air, verify innerduct if present, and lubricate if necessary. Cable selection: calculate pulling tension limits, verify bend radius specifications, choose appropriate cable construction, and confirm length with slack. Pulling equipment: select appropriate pulling grip, use breakaway swivel mandatory, calibrated tension monitor, and proper cable reel setup. Lubrication strategy: use cable manufacturer approved, apply at entrance and bends, consider intermediate points, and maintain continuous application. Pull rope installation: use proper size for tension, account for stretch factor, pre-lubricate if needed, and verify rated strength. Pulling calculations: determine maximum tension allowed, calculate sidewall pressure, identify critical bend point, and verify within limits. Setup procedures: position reel for straight feed, use cable guides/sheaves, protect cable at entrance, and establish communication system. Pulling execution: maintain steady pull rate (30-50 ft/min typical), monitor tension continuously, stop if limits approached, and coordinate feed and pull. Intermediate assists: use cable pushers at entrance, mid-assist points if available, reduce tension significantly, and coordinate timing carefully. Slack management: leave specified slack at ends, create service loops properly, avoid exceeding bend radius, and secure appropriately. Documentation: record maximum tension pulled, note any difficulties, photograph installation, and update as-built drawings. Post-installation: cap conduit ends, test cable immediately, verify no damage occurred, and complete acceptance testing.",
+    "difficulty": "easy",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-012",
+    "category": "fiber",
+    "question": "Describe CWDM and DWDM technology, including applications and installation considerations.",
+    "answer": "Wavelength division multiplexing maximizes fiber capacity. CWDM overview: 20nm channel spacing, 18 wavelengths available (1270-1610nm), lower cost than DWDM, and uncooled lasers possible. DWDM overview: 0.8nm or less spacing, 40-80+ channels typical, C-band primarily (1530-1565nm), and requires precise control. Application differences: CWDM for metro networks, enterprise connectivity, lower capacity needs, and cost-sensitive applications. DWDM applications: long-haul networks, submarine cables, maximum capacity required, and service provider backbone. Component requirements: wavelength-specific transceivers, optical multiplexers/demultiplexers, optical amplifiers (DWDM), and dispersion compensation. Installation considerations: ultra-clean connections critical, precise power balancing, chromatic dispersion management, and polarization mode dispersion. Loss budget criticality: tighter margins than standard, every 0.1dB matters, cumulative effects significant, and monitoring essential. Connector cleanliness: contamination affects all channels, more critical than single wavelength, specialized cleaning procedures, and frequent inspection required. Testing requirements: optical spectrum analyzer ideal, channel power verification, OSNR measurements, and bit error rate testing. Power balancing: equalize channel powers, account for amplifier tilt, monitor span losses, and adjust as needed. Network design: point-to-point simplest, ring architecture protection, mesh for redundancy, and ROADM flexibility. Troubleshooting challenges: isolate channel problems, cross-talk possibilities, nonlinear effects, and temperature sensitivity. Upgrade considerations: verify fiber compatibility, dispersion characteristics, existing loss budget, and amplifier spacing. Documentation essential: wavelength assignments, power levels per channel, patch panel layouts, and emergency procedures. Maintenance procedures: regular power monitoring, periodic connector cleaning, spare channel testing, and performance trending. Future expansion: reserve wavelengths planned, upgrade path defined, equipment compatibility, and capacity planning documented.",
+    "difficulty": "easy",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-013",
+    "category": "fiber",
+    "question": "How do you properly install and maintain a fiber optic closure/splice enclosure in various environments?",
+    "answer": "Splice closures protect critical fiber connections in harsh environments. Closure selection: match environment type (aerial, buried, underground), size for current and future splices, verify seal type (mechanical or heat-shrink), and check mounting accessories. Pre-installation preparation: review manufacturer instructions, verify all components present, check sealing materials fresh, and organize workspace efficiently. Cable preparation: measure and mark entry points, clean cables thoroughly, remove armor/strength members appropriately, and maintain manufacturer specifications. Grounding requirements: bond all metallic components, connect to external ground, verify continuity tested, and use approved materials. Sealing process: follow specific sequence critical, use correct sealant amounts, ensure void-free application, and allow cure time specified. Mechanical seals: verify O-ring condition, apply lubricant if specified, tighten to torque specs, and check seal compression. Heat-shrink installation: use proper heat gun, apply heat evenly, watch for full recovery, and verify adhesive flow. Fiber organization: maintain bend radius throughout, use splice trays efficiently, route tubes/fibers logically, and secure without stress. Splice protection: use appropriate protectors, organize in trays properly, avoid crossovers/tangles, and maintain accessibility. Slack storage: create proper loops, secure without kinking, plan for re-entry needs, and protect from damage. Strength member attachment: secure per design, provide strain relief, maintain pull-out strength, and verify mechanical integrity. Pressure testing: use specified pressure only, monitor for leaks, maintain test duration, and document results. Environmental considerations: UV protection if exposed, drainage for water, insect prevention measures, and corrosion protection. Re-entry procedures: document opening method, maintain seal integrity, replace consumables, and test after re-closure. Maintenance schedule: annual inspection minimum, check after severe weather, verify grounding intact, test seals periodically, and maintain documentation current.",
+    "difficulty": "easy",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-014",
+    "category": "fiber",
+    "question": "Explain the process of fiber optic cable restoration after a major outage, including prioritization and communication.",
+    "answer": "Fiber restoration requires rapid, organized response to minimize downtime. Initial response: activate emergency plan immediately, mobilize restoration teams, assess scope of damage, and establish command center. Priority establishment: identify critical services affected (911, hospitals, utilities), determine customer impact numbers, assess revenue implications, and create restoration sequence. Damage assessment: locate all damage points, determine restoration method needed, evaluate accessibility issues, and estimate repair duration. Resource mobilization: call in additional crews, arrange equipment/materials, coordinate vendor support, and establish staging areas. Communication protocols: notify affected customers immediately, establish update schedule, coordinate with emergency services, and brief management regularly. Temporary restoration: consider alternate routing, deploy temporary cable, use microwave backup, and bridge critical services. Repair strategies: quick splice for speed, permanent splice later, replace damaged sections, and test as you go. Safety priorities: ensure scene safe, check for hazards, proper traffic control, and follow procedures. Documentation requirements: photograph all damage, track resources used, record restoration times, and maintain for claims. Testing procedures: OTDR before and after, verify service restoration, check power levels, and confirm with customers. Permanent restoration: schedule follow-up work, replace temporary fixes, optimize routing, and update documentation. Lessons learned: conduct after-action review, identify improvement areas, update emergency plans, and share knowledge gained. Cost tracking: labor hours detailed, materials used, equipment rental, and contractor costs. Customer follow-up: verify services normal, address any issues, provide incident summary, and discuss prevention. Prevention planning: identify vulnerable points, implement redundancy, improve monitoring, and regular drills. Quality assurance: verify work meets standards, test thoroughly, inspect workmanship, and maintain warranties.",
+    "difficulty": "easy",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-015",
+    "category": "fiber",
+    "question": "What is the difference between core-alignment and cladding-alignment fusion splicers, and when would you choose one over the other?",
+    "answer": "A core-alignment splicer uses multiple cameras and motors to align the actual cores of the two fibers before fusing them. This results in a very low-loss, precise splice, typically less than 0.02 dB. A cladding-alignment splicer aligns the outer surfaces of the fibers (the cladding). This is faster and the equipment is less expensive, but the splice quality is not as good, with typical losses around 0.05 to 0.1 dB. I would choose a core-alignment splicer for long-haul networks, backbone links, and any situation where minimizing signal loss is critical. I would use a cladding-alignment splicer for shorter, less critical links, like fiber-to-the-home installations, where speed and cost are more important factors.",
+    "difficulty": "easy",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-016",
+    "category": "fiber",
+    "question": "You see a 'ghost' on an OTDR trace. What is it, and how do you identify it?",
+    "answer": "A ghost is a false event on an OTDR trace that is caused by a large reflection from a real event, typically a dirty or damaged connector. The strong reflection bounces back and forth in the fiber, causing the OTDR to see it as a second, non-existent event further down the line. I can identify a ghost because it will be an equal distance from the reflective event as the reflective event is from the start of the trace. Ghosts are also non-reflective events and will not show any loss. To confirm, I can change the pulse width of the OTDR, which will often cause the ghost to move or disappear, while a real event will stay in the same place.",
+    "difficulty": "easy",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-017",
+    "category": "fiber",
+    "question": "Explain the difference between UPC and APC connectors and why you cannot mate them.",
+    "answer": "UPC (Ultra Physical Contact) and APC (Angled Physical Contact) are two different types of fiber optic connector end-face polishes. A UPC connector has a slightly domed end-face that is polished flat at a 90-degree angle to the fiber. An APC connector has an end-face that is polished at an 8-degree angle. This angle causes any reflected light to bounce out into the cladding, rather than back down the fiber. This results in much lower back reflection, which is critical for applications like FTTx and video. You can never mate a UPC and an APC connector because the different angles will create an air gap between the fiber cores, which will cause a very high-loss connection and can damage both connectors.",
+    "difficulty": "easy",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-018",
+    "category": "fiber",
+    "question": "What is a launch cable, and why is it essential for OTDR testing?",
+    "answer": "A launch cable, also known as a pulse suppressor, is a long fiber optic cable, typically at least 150 meters, that is connected between the OTDR and the fiber link being tested. It is essential for OTDR testing because it allows the OTDR to settle down after sending out its high-powered test pulse. Without a launch cable, the reflection from the first connector on the link would be hidden in the OTDR's 'dead zone,' and you would not be able to accurately measure its loss or reflectance. A launch cable effectively moves the first connector out of the dead zone, allowing for accurate testing of the entire link, including the first and last connectors.",
+    "difficulty": "medium",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-019",
+    "category": "fiber",
+    "question": "What are the key installation standards you would follow when installing aerial fiber optic cable?",
+    "answer": "I would follow the standards set by the National Electrical Safety Code (NESC) and any local regulations. Key standards include maintaining the proper clearance from power lines, which is typically 40 inches at the pole and 25 inches at mid-span. I would also ensure the cable has the proper sag, which is calculated based on the span length and the cable's weight, to prevent it from hanging too low in hot weather or being too tight in cold weather. I would also ensure that the cable is properly bonded and grounded at each pole to protect it from lightning and other electrical hazards. Finally, I would follow the manufacturer's specifications for the cable and hardware, such as the minimum bend radius and the proper torque for the clamps.",
+    "difficulty": "medium",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-020",
+    "category": "fiber",
+    "question": "You are experiencing high loss on a newly installed fiber link. What are the first three things you would check?",
+    "answer": "The first thing I would check is the cleanliness of the connectors. Dirty connectors are the most common cause of high loss, so I would inspect and clean both end-faces with a fiber scope and a one-click cleaner. If that doesn't solve the problem, the second thing I would check is for any macrobends or microbends in the cable. I would visually inspect the entire length of the patch cords and the cable in the splice trays to ensure there are no sharp bends or kinks. The third thing I would check is the splice quality. I would use an OTDR to test the link and look for any high-loss splices. If I find one, I would re-do the splice.",
+    "difficulty": "medium",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-021",
+    "category": "fiber",
+    "question": "What is the purpose of a fiber optic attenuator?",
+    "answer": "A fiber optic attenuator is a passive device that is used to reduce the power of an optical signal. It is essentially like a pair of sunglasses for the fiber. You would use an attenuator when the signal coming from the transmitter is too strong for the receiver. If the receiver is overloaded with too much power, it can cause errors and damage the receiver. An attenuator is placed in the fiber link, typically at the receiver end, to reduce the power to a level that is within the receiver's operating range. They come in a variety of fixed values, such as 5 dB, 10 dB, and 15 dB.",
+    "difficulty": "medium",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-022",
+    "category": "fiber",
+    "question": "What is the difference between loose-tube and tight-buffered fiber optic cable?",
+    "answer": "Loose-tube and tight-buffered are two different types of fiber optic cable construction. In a loose-tube cable, the fibers are placed inside a semi-rigid, gel-filled tube that has a larger inner diameter than the fibers themselves. This allows the fibers to move freely and protects them from the stress of temperature changes and other environmental factors. Loose-tube cable is the standard for outdoor use. In a tight-buffered cable, each fiber is coated with a 900-micron buffer that is directly in contact with the fiber. This makes the cable more rugged and easier to terminate, but it does not provide as much protection from temperature variations. Tight-buffered cable is typically used for indoor applications.",
+    "difficulty": "medium",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-023",
+    "category": "fiber",
+    "question": "What is a visual fault locator (VFL), and how is it used?",
+    "answer": "A visual fault locator, or VFL, is a small, handheld device that shoots a bright red laser light down a fiber optic cable. It is used to find breaks, sharp bends, and bad connectors in a short length of fiber, typically up to a few kilometers. If there is a break or a sharp bend in the fiber, the red light will be visible through the cable's jacket, making it easy to pinpoint the location of the fault. A VFL is also a great tool for continuity testing. If you can see the red light at the other end of the cable, you know that the fiber is not broken.",
+    "difficulty": "medium",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-024",
+    "category": "fiber",
+    "question": "What is the difference between insertion loss and return loss?",
+    "answer": "Insertion loss is the amount of signal power that is lost as the signal passes through a connector or a splice. It is measured in decibels (dB) and should be as low as possible. A good fusion splice will have an insertion loss of less than 0.1 dB, and a good connector will have an insertion loss of less than 0.5 dB. Return loss, also known as reflectance, is the amount of signal power that is reflected back towards the source from a connector or a splice. It is also measured in dB, but in this case, a higher value is better, as it means less light is being reflected. High return loss can be a problem for high-speed and analog video applications.",
+    "difficulty": "medium",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-025",
+    "category": "fiber",
+    "question": "You are performing a fusion splice and the splicer gives you a 'bad cleave' error. What are the likely causes?",
+    "answer": "A bad cleave error means that the end-face of the fiber is not perfectly flat and at a 90-degree angle. The most likely cause is a dirty or worn-out blade in the fiber cleaver. I would first try cleaning the blade with a lint-free wipe and alcohol. If that doesn't work, I would rotate the blade to a new position. Most cleavers have a blade that can be rotated to 16 different positions before it needs to be replaced. Another possible cause is that the fiber is not being held securely in the cleaver, or that the user is not operating the cleaver correctly. I would ensure that the fiber is properly placed in the cleaver and that I am following the manufacturer's instructions.",
+    "difficulty": "medium",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-026",
+    "category": "fiber",
+    "question": "What is a mid-span entry, and why would you perform one?",
+    "answer": "A mid-span entry is a technique used to access the fibers in a loose-tube fiber optic cable without cutting the entire cable. This is done when you need to add a new splice point or a drop to an existing cable without disrupting the service on the other fibers in the cable. The process involves carefully shaving a window in the outer jacket and the buffer tube to expose the fibers inside. You can then pull out the specific fiber you need to work on, while the other fibers, known as 'express' fibers, remain untouched in the buffer tube. This is a highly skilled procedure that requires special tools and a lot of care to avoid damaging the other fibers.",
+    "difficulty": "medium",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-027",
+    "category": "fiber",
+    "question": "What is the purpose of the gel inside a loose-tube fiber optic cable?",
+    "answer": "The gel inside a loose-tube fiber optic cable serves two main purposes. The first is to protect the fibers from moisture. If water gets into the cable, it can freeze and expand, which can put stress on the fibers and cause them to break. The gel fills the empty space in the buffer tubes and prevents water from getting in. The second purpose of the gel is to lubricate the fibers and allow them to move freely within the tube. This is important to protect the fibers from the stress of temperature changes, which can cause the cable to expand and contract.",
+    "difficulty": "medium",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-028",
+    "category": "fiber",
+    "question": "What is a fiber distribution hub (FDH), and what is its role in a FTTH network?",
+    "answer": "A fiber distribution hub, or FDH, is a cabinet that is used to connect the feeder fibers coming from the central office to the distribution fibers that go out to the individual homes in a neighborhood. It is a key component of a fiber-to-the-home (FTTH) network. Inside the FDH, you will typically find a number of optical splitters, which take the single fiber from the central office and split the signal to serve multiple homes, typically 32 or 64. The FDH provides a flexible and organized way to manage the fiber connections in a neighborhood and allows for easy testing and troubleshooting.",
+    "difficulty": "medium",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-029",
+    "category": "fiber",
+    "question": "What is the difference between a mechanical splice and a fusion splice?",
+    "answer": "A mechanical splice is a device that holds two fibers together in a precisely aligned position. It uses an index-matching gel to help couple the light from one fiber to the other. Mechanical splices are relatively easy and fast to install, and they don't require any expensive tools. However, they have a higher insertion loss and a lower reliability than fusion splices. A fusion splice, on the other hand, is where the two fibers are actually melted or welded together using an electric arc. This creates a permanent, low-loss connection that is almost as strong as the original fiber. Fusion splicing requires a special, expensive tool called a fusion splicer, but it is the preferred method for any critical or long-term application.",
+    "difficulty": "medium",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-030",
+    "category": "fiber",
+    "question": "What is the minimum bend radius of a fiber optic cable, and why is it important?",
+    "answer": "The minimum bend radius is the tightest that a fiber optic cable can be bent without causing damage or excessive signal loss. If you bend a fiber optic cable too tightly, it can cause the light to leak out of the core, which will increase the attenuation of the signal. In extreme cases, it can even cause the fiber to break. The minimum bend radius is different for different types of cable, but a general rule of thumb is that it is 20 times the diameter of the cable when the cable is under tension, and 10 times the diameter of the cable when it is not under tension. It is a critical specification that must be followed during installation to ensure the long-term reliability of the network.",
+    "difficulty": "medium",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-031",
+    "category": "fiber",
+    "question": "What is a fiber optic power meter, and what is it used for?",
+    "answer": "A fiber optic power meter is a device that is used to measure the power of an optical signal. It is one of the most essential tools for a fiber optic technician. It is used to measure the output power of a transmitter, the input power at a receiver, and the amount of signal loss in a fiber optic link. To measure the loss in a link, you would use the power meter in conjunction with a fiber optic light source. You would first connect the light source directly to the power meter to get a reference reading, and then you would connect the light source to one end of the link and the power meter to the other end. The difference between the two readings is the insertion loss of the link.",
+    "difficulty": "medium",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-032",
+    "category": "fiber",
+    "question": "What is the difference between single-mode and multi-mode fiber?",
+    "answer": "The main difference between single-mode and multi-mode fiber is the size of the core. Single-mode fiber has a very small core, typically around 9 microns, which allows only a single ray of light to travel down the fiber. This eliminates modal dispersion, which is the main limiting factor in the bandwidth of multi-mode fiber, and allows single-mode fiber to be used for very long distances and very high data rates. Multi-mode fiber has a larger core, typically 50 or 62.5 microns, which allows multiple rays of light to travel down the fiber at the same time. This makes it easier to couple light into the fiber, but it also causes modal dispersion, which limits the bandwidth and the distance. Multi-mode fiber is typically used for shorter-distance applications, such as in a data center or a local area network.",
+    "difficulty": "medium",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-033",
+    "category": "fiber",
+    "question": "What is chromatic dispersion, and why is it a problem for high-speed fiber optic links?",
+    "answer": "Chromatic dispersion is a phenomenon where different wavelengths of light travel at slightly different speeds down a fiber optic cable. This is a problem for high-speed fiber optic links because the light pulses that represent the data are made up of a range of different wavelengths. As the pulse travels down the fiber, the different wavelengths spread out, which causes the pulse to become distorted. At very high data rates, this distortion can cause the pulses to overlap, which makes it impossible for the receiver to distinguish between them. This is why chromatic dispersion is a major limiting factor in the distance of high-speed fiber optic links. It can be compensated for by using dispersion-compensating fiber or other special equipment.",
+    "difficulty": "medium",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-034",
+    "category": "fiber",
+    "question": "What is the purpose of an optical amplifier?",
+    "answer": "An optical amplifier is a device that amplifies an optical signal directly, without having to first convert it to an electrical signal. This is a key technology that has made long-haul fiber optic communication possible. In a long fiber optic link, the signal will gradually lose power as it travels down the fiber. An optical amplifier is used to boost the signal back up to its original power level. The most common type of optical amplifier is an Erbium-Doped Fiber Amplifier, or EDFA, which is used in DWDM (Dense Wavelength Division Multiplexing) systems.",
+    "difficulty": "medium",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-035",
+    "category": "fiber",
+    "question": "What is DWDM, and how does it increase the capacity of a fiber optic link?",
+    "answer": "DWDM, or Dense Wavelength Division Multiplexing, is a technology that allows multiple optical signals to be transmitted over a single fiber optic cable by using different wavelengths of light. Each wavelength is a separate channel, and each channel can carry its own independent data stream. This allows for a massive increase in the capacity of a fiber optic link. For example, a single fiber that could previously only carry a single 10 Gbps signal can now carry 40 or even 80 different 10 Gbps signals by using DWDM. This has been a key technology in enabling the growth of the internet.",
+    "difficulty": "hard",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-036",
+    "category": "fiber",
+    "question": "What is the difference between a pigtail and a patch cord?",
+    "answer": "A pigtail is a short piece of fiber optic cable that has a connector on one end and a bare fiber on the other. It is used to terminate a multi-fiber cable by fusion splicing the bare end of the pigtail to one of the fibers in the cable. A patch cord, on the other hand, is a fiber optic cable that has connectors on both ends. It is used to connect two devices together, such as a switch to a patch panel, or to connect a patch panel to a piece of equipment. In short, a pigtail is used for permanent termination, while a patch cord is used for temporary or semi-permanent connections.",
+    "difficulty": "hard",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-037",
+    "category": "fiber",
+    "question": "What is the purpose of a fiber optic patch panel?",
+    "answer": "A fiber optic patch panel is a piece of hardware that is used to organize and manage fiber optic cables in a data center or a telecommunications room. It provides a central location where you can terminate the fiber optic cables and then connect them to other devices with patch cords. This makes it much easier to manage the network and to make changes to the configuration. It also provides a safe and secure place to store the splices and connectors, which protects them from damage. A patch panel is an essential component of any well-organized fiber optic network.",
+    "difficulty": "hard",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-038",
+    "category": "fiber",
+    "question": "What is a fiber optic cleaver, and why is it important?",
+    "answer": "A fiber optic cleaver is a tool that is used to create a perfectly flat, 90-degree cut on the end of a fiber optic strand. This is a critical step in the fiber optic termination process, especially for fusion splicing. If the cleave is not perfect, it will result in a high-loss splice or a poor-quality connector. A good cleaver will have a very sharp, durable blade, and it will hold the fiber securely in place to ensure a consistent, high-quality cleave every time. It is one of the most important tools for a fiber optic technician.",
+    "difficulty": "hard",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-039",
+    "category": "fiber",
+    "question": "What is the difference between a fiber optic modem and a fiber optic router?",
+    "answer": "A fiber optic modem, also known as an Optical Network Terminal or ONT, is a device that converts the optical signal from the fiber optic cable into an electrical signal that can be used by a computer or a router. A fiber optic router is a device that takes the electrical signal from the ONT and creates a local area network, typically with Wi-Fi, to connect multiple devices to the internet. In many modern fiber-to-the-home installations, the ONT and the router are combined into a single device, which is often referred to as a residential gateway.",
+    "difficulty": "hard",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-040",
+    "category": "fiber",
+    "question": "What is a fiber optic splice closure?",
+    "answer": "A fiber optic splice closure is a protective enclosure that is used to store and protect fiber optic splices. It is designed to be used in a variety of outdoor environments, such as aerial, underground, or buried. A splice closure is typically made of a durable, weather-resistant material, and it has a sealing system to protect the splices from moisture, dust, and insects. Inside the closure, there are splice trays that are used to organize and secure the individual splices. A splice closure is a critical component of the outside plant fiber optic network, as it protects the most vulnerable part of the cable.",
+    "difficulty": "hard",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-041",
+    "category": "fiber",
+    "question": "What is a fiber optic breakout kit?",
+    "answer": "A fiber optic breakout kit, also known as a fan-out kit, is a set of components that is used to separate the individual fibers in a loose-tube fiber optic cable and protect them so they can be terminated with connectors. The kit typically includes a set of 900-micron buffer tubes that are color-coded to match the fibers. You would slide the buffer tubes over the bare 250-micron fibers to build them up to the size of a tight-buffered cable. This provides the necessary protection for the fibers so they can be terminated with standard connectors. A breakout kit is an essential tool for terminating loose-tube cable in the field.",
+    "difficulty": "hard",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-042",
+    "category": "fiber",
+    "question": "What is the purpose of a fiber optic inspection scope?",
+    "answer": "A fiber optic inspection scope is a special microscope that is used to inspect the end-face of a fiber optic connector. It is an essential tool for ensuring the quality of a fiber optic connection. Even a small amount of dust or dirt on the end-face of a connector can cause a high-loss connection, so it is critical to inspect every connector before you mate it. A good inspection scope will have a magnification of at least 200x, and it will allow you to see any dirt, debris, or damage on the connector end-face. It is a key tool for troubleshooting and for preventative maintenance.",
+    "difficulty": "hard",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-043",
+    "category": "fiber",
+    "question": "What is the difference between a fiber optic cable and a copper cable?",
+    "answer": "The main difference between a fiber optic cable and a copper cable is how they transmit information. A copper cable transmits information using electrical signals, while a fiber optic cable transmits information using pulses of light. This gives fiber optic cable several advantages over copper cable. It has a much higher bandwidth, which means it can carry much more information. It is also immune to electromagnetic interference, which can be a problem with copper cable. Finally, a fiber optic cable can transmit data over much longer distances than a copper cable without the need for a repeater.",
+    "difficulty": "hard",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-044",
+    "category": "fiber",
+    "question": "What is a fiber optic converter?",
+    "answer": "A fiber optic converter, also known as a media converter, is a device that is used to convert an electrical signal from a copper cable to an optical signal for a fiber optic cable, and vice versa. It is used to extend the distance of a network link beyond the 100-meter limitation of copper Ethernet cable. For example, you could use a pair of media converters to connect two switches together that are in different buildings a kilometer apart. One media converter would be at each end of the fiber optic link to convert the signal from copper to fiber and then back to copper.",
+    "difficulty": "hard",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-045",
+    "category": "fiber",
+    "question": "What is a fiber optic splitter?",
+    "answer": "A fiber optic splitter is a passive optical device that takes a single optical signal and splits it into multiple output signals. This is a key component of a passive optical network (PON), which is the technology that is used for most fiber-to-the-home (FTTH) networks. In a PON, a single fiber from the central office is run to a neighborhood, where it is connected to a splitter. The splitter then divides the signal to serve multiple homes, typically 32 or 64. This is a very cost-effective way to build a FTTH network, as it allows you to share the cost of the fiber and the equipment in the central office among multiple subscribers.",
+    "difficulty": "hard",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-046",
+    "category": "fiber",
+    "question": "What is a fiber optic jumper?",
+    "answer": "A fiber optic jumper is another name for a fiber optic patch cord. It is a short fiber optic cable that has connectors on both ends. It is used to connect two devices together, such as a switch to a patch panel, or to connect a patch panel to a piece of equipment. Jumpers are typically used for connections within a single room or a single rack. They come in a variety of lengths and with a variety of different connector types to match the equipment they are connecting.",
+    "difficulty": "hard",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-047",
+    "category": "fiber",
+    "question": "What is a fiber optic adapter?",
+    "answer": "A fiber optic adapter, also known as a mating sleeve or a coupler, is a small device that is used to connect two fiber optic connectors together. It has a port on each end that is designed to accept a specific type of connector, such as an LC or an SC. The adapter has a precision alignment sleeve inside that ensures that the two fiber cores are perfectly aligned. This is critical for a low-loss connection. Adapters are used in patch panels, wall outlets, and other places where you need to connect two fiber optic cables together.",
+    "difficulty": "hard",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-048",
+    "category": "fiber",
+    "question": "What is a fiber optic cable tray?",
+    "answer": "A fiber optic cable tray is a system of channels and supports that is used to route and protect fiber optic cables in a data center or a telecommunications room. It is designed to maintain the minimum bend radius of the cables and to protect them from being crushed or damaged. A cable tray system can be mounted overhead or under a raised floor, and it comes in a variety of sizes and materials to meet the needs of different installations. It is an essential component of any well-organized and professional fiber optic installation.",
+    "difficulty": "hard",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-049",
+    "category": "fiber",
+    "question": "What is a fiber optic distribution frame?",
+    "answer": "A fiber optic distribution frame (FDF) is a large, free-standing or wall-mounted frame that is used to manage and terminate a large number of fiber optic cables. It is typically used in a central office or a large data center. An FDF provides a central location to splice, terminate, and patch a large number of fibers. It is designed to be highly organized and to provide easy access to the individual fibers for testing and troubleshooting. It is a key component of any large-scale fiber optic network.",
+    "difficulty": "hard",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  },
+  {
+    "id": "fiber-050",
+    "category": "fiber",
+    "question": "What is wavelength division multiplexing (WDM) and how does it increase fiber capacity?",
+    "answer": "**WDM Technology Overview**\n• Transmits multiple optical signals simultaneously\n• Each signal uses different wavelength (color) of light\n• Signals don't interfere with each other\n• Dramatically increases fiber capacity\n\n**Types of WDM**\n• **CWDM (Coarse WDM)**: 18 channels, 20nm spacing\n• **DWDM (Dense WDM)**: 40-80+ channels, 0.8nm spacing\n• **UDWDM (Ultra-Dense)**: 160+ channels, 0.4nm spacing\n\n**How It Works**\n• Multiplexer combines different wavelengths at transmit end\n• Single fiber carries all wavelengths\n• Demultiplexer separates wavelengths at receive end\n• Each wavelength acts as independent channel\n\n**Capacity Increase**\n• Single fiber: 10 Gbps capacity\n• With 40-channel DWDM: 400 Gbps\n• With 80-channel DWDM: 800 Gbps\n• Modern systems: Multiple Terabits per second\n\n**Applications**\n• Long-haul telecommunications\n• Submarine cable systems\n• Metropolitan area networks\n• Data center interconnects\n\n**Key Components**\n• Optical multiplexers/demultiplexers\n• Optical amplifiers (EDFA)\n• Wavelength-specific transceivers\n• Optical add-drop multiplexers (OADM)\n\n**Advantages**\n• Maximizes existing fiber infrastructure\n• Scalable capacity upgrades\n• Protocol transparent\n• Cost-effective for high bandwidth",
+    "difficulty": "hard",
+    "tags": [
+      "fiber",
+      "technical"
+    ]
+  }
+]

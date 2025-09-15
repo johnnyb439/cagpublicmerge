@@ -1,0 +1,156 @@
+{
+  "sample_conversations": [
+    {
+      "id": "conv_direct_001",
+      "type": "direct",
+      "title": null,
+      "created_by": "user_tone123",
+      "created_at": "2025-09-14T10:00:00Z",
+      "updated_at": "2025-09-14T15:30:00Z",
+      "is_active": true,
+      "metadata": {
+        "is_recruiter_chat": false
+      }
+    },
+    {
+      "id": "conv_channel_network",
+      "type": "channel",
+      "title": "Network Engineers Chat",
+      "created_by": "system",
+      "created_at": "2025-09-01T00:00:00Z",
+      "updated_at": "2025-09-14T16:45:00Z",
+      "is_active": true,
+      "metadata": {
+        "job_category": "network_engineering",
+        "channel_id": "channel_network_eng"
+      }
+    },
+    {
+      "id": "conv_recruiter_001",
+      "type": "recruiter",
+      "title": "TechCorp Opportunity",
+      "created_by": "recruiter_sarah456",
+      "created_at": "2025-09-14T14:00:00Z",
+      "updated_at": "2025-09-14T14:15:00Z",
+      "is_active": true,
+      "metadata": {
+        "is_recruiter_chat": true,
+        "company": "TechCorp",
+        "position": "Senior Network Engineer"
+      }
+    }
+  ],
+
+  "sample_messages": [
+    {
+      "id": "msg_001",
+      "conversation_id": "conv_direct_001",
+      "sender_id": "user_john789",
+      "content": "Hey! How's the job search going?",
+      "message_type": "text",
+      "reply_to": null,
+      "sent_at": "2025-09-14T15:30:00Z",
+      "edited_at": null,
+      "is_deleted": false,
+      "attachments": []
+    },
+    {
+      "id": "msg_002",
+      "conversation_id": "conv_channel_network",
+      "sender_id": "user_alice456",
+      "content": "Anyone have experience with Cisco SD-WAN implementations? Working on a big project and could use some insights! 🌐",
+      "message_type": "text",
+      "reply_to": null,
+      "sent_at": "2025-09-14T16:45:00Z",
+      "edited_at": null,
+      "is_deleted": false,
+      "attachments": []
+    },
+    {
+      "id": "msg_003",
+      "conversation_id": "conv_recruiter_001",
+      "sender_id": "recruiter_sarah456",
+      "content": "Hi Terrence! I came across your profile and I'm impressed with your network engineering background. We have a Senior Network Engineer position that might be perfect for you. Are you open to discussing this opportunity?",
+      "message_type": "text",
+      "reply_to": null,
+      "sent_at": "2025-09-14T14:15:00Z",
+      "edited_at": null,
+      "is_deleted": false,
+      "attachments": []
+    }
+  ],
+
+  "sample_channels": [
+    {
+      "id": "channel_network_eng",
+      "name": "Network Engineers",
+      "slug": "network-engineers",
+      "description": "Connect with other network engineering professionals. Share experiences, ask questions, and discuss the latest in routing, switching, and network infrastructure.",
+      "job_category": "network_engineering",
+      "icon": "🌐",
+      "is_public": true,
+      "member_count": 247,
+      "created_at": "2025-09-01T00:00:00Z"
+    },
+    {
+      "id": "channel_cybersecurity",
+      "name": "Cybersecurity Professionals",
+      "slug": "cybersecurity",
+      "description": "Information security discussions, threat analysis, compliance questions, and career advice for cybersecurity professionals.",
+      "job_category": "cybersecurity",
+      "icon": "🔒",
+      "is_public": true,
+      "member_count": 189,
+      "created_at": "2025-09-01T00:00:00Z"
+    },
+    {
+      "id": "channel_cloud_eng",
+      "name": "Cloud Engineers",
+      "slug": "cloud-engineers",
+      "description": "AWS, Azure, Google Cloud discussions. DevOps practices, infrastructure as code, and cloud architecture patterns.",
+      "job_category": "cloud_engineering",
+      "icon": "☁️",
+      "is_public": true,
+      "member_count": 312,
+      "created_at": "2025-09-01T00:00:00Z"
+    }
+  ],
+
+  "sample_notifications": [
+    {
+      "id": "notif_001",
+      "user_id": "user_tone123",
+      "type": "recruiter_message",
+      "title": "New message from TechCorp Recruiter",
+      "content": "Sarah from TechCorp sent you a message about a Senior Network Engineer position",
+      "related_id": "conv_recruiter_001",
+      "is_read": false,
+      "created_at": "2025-09-14T14:15:00Z"
+    },
+    {
+      "id": "notif_002",
+      "user_id": "user_tone123",
+      "type": "mention",
+      "title": "You were mentioned in Network Engineers",
+      "content": "@tone123 what's your take on this SD-WAN setup?",
+      "related_id": "msg_004",
+      "is_read": false,
+      "created_at": "2025-09-14T16:50:00Z"
+    }
+  ],
+
+  "recruiter_message_templates": [
+    {
+      "id": "template_001",
+      "name": "Initial Outreach",
+      "subject": "Exciting Opportunity at {company}",
+      "content": "Hi {candidate_name}! I came across your profile and I'm impressed with your {skills} background. We have a {position} role that might be perfect for you. Are you open to discussing this opportunity?"
+    },
+    {
+      "id": "template_002",
+      "name": "Follow-up",
+      "subject": "Following up on {position} opportunity",
+      "content": "Hi {candidate_name}, I wanted to follow up on the {position} opportunity I mentioned. Would you be available for a brief call this week to discuss the role in more detail?"
+    }
+  ]
+}

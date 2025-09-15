@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
+import { useUser } from '@/components/AuthProvider'
 import { motion } from 'framer-motion'
 import { 
   ArrowLeft, 
@@ -220,6 +221,7 @@ Located in beautiful Colorado Springs with views of Pikes Peak and access to wor
 export default function JobDetailPage() {
   const params = useParams()
   const router = useRouter()
+  const { user, loading: authLoading } = useUser()
   const [job, setJob] = useState<any>(null)
   const [loading, setLoading] = useState(true)
 
@@ -335,84 +337,154 @@ export default function JobDetailPage() {
         >
           <h2 className="text-2xl font-montserrat font-bold mb-4">About This Role</h2>
           <div className="prose max-w-none text-gray-700 dark:text-gray-300 whitespace-pre-line">
-            {job.fullDescription}
+            {job.description}
           </div>
+          
+          {!user && (
+            <div className="mt-4 p-4 bg-gradient-to-r from-dynamic-green/10 to-dynamic-blue/10 border border-dynamic-green/30 rounded-lg">
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                📋 **Want the full job description?** Sign in to access detailed requirements, responsibilities, and benefits.
+              </p>
+            </div>
+          )}
         </motion.div>
 
-        {/* Requirements */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="bg-white dark:bg-command-black rounded-lg shadow-md p-8 mb-8"
-        >
-          <h2 className="text-2xl font-montserrat font-bold mb-4">Requirements</h2>
-          <ul className="space-y-3">
-            {job.requirements.map((req: string, index: number) => (
-              <li key={index} className="flex items-start">
-                <CheckCircle size={20} className="text-dynamic-green mr-3 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-700 dark:text-gray-300">{req}</span>
-              </li>
-            ))}
-          </ul>
-        </motion.div>
+        {user ? (
+          <>
+            {/* Full Details for Authenticated Users */}
+            {/* Requirements */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="bg-white dark:bg-command-black rounded-lg shadow-md p-8 mb-8"
+            >
+              <h2 className="text-2xl font-montserrat font-bold mb-4">Requirements</h2>
+              <ul className="space-y-3">
+                {job.requirements.map((req: string, index: number) => (
+                  <li key={index} className="flex items-start">
+                    <CheckCircle size={20} className="text-dynamic-green mr-3 mt-0.5 flex-shrink-0" />
+                    <span className="text-gray-700 dark:text-gray-300">{req}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
 
-        {/* Responsibilities */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="bg-white dark:bg-command-black rounded-lg shadow-md p-8 mb-8"
-        >
-          <h2 className="text-2xl font-montserrat font-bold mb-4">Responsibilities</h2>
-          <ul className="space-y-3">
-            {job.responsibilities.map((resp: string, index: number) => (
-              <li key={index} className="flex items-start">
-                <div className="w-2 h-2 bg-dynamic-blue rounded-full mr-3 mt-1.5 flex-shrink-0"></div>
-                <span className="text-gray-700 dark:text-gray-300">{resp}</span>
-              </li>
-            ))}
-          </ul>
-        </motion.div>
+            {/* Responsibilities */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="bg-white dark:bg-command-black rounded-lg shadow-md p-8 mb-8"
+            >
+              <h2 className="text-2xl font-montserrat font-bold mb-4">Responsibilities</h2>
+              <ul className="space-y-3">
+                {job.responsibilities.map((resp: string, index: number) => (
+                  <li key={index} className="flex items-start">
+                    <div className="w-2 h-2 bg-dynamic-blue rounded-full mr-3 mt-1.5 flex-shrink-0"></div>
+                    <span className="text-gray-700 dark:text-gray-300">{resp}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
 
-        {/* Benefits */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="bg-white dark:bg-command-black rounded-lg shadow-md p-8 mb-8"
-        >
-          <h2 className="text-2xl font-montserrat font-bold mb-4">Benefits & Perks</h2>
-          <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {job.benefits.map((benefit: string, index: number) => (
-              <li key={index} className="flex items-start">
-                <CheckCircle size={20} className="text-emerald-green mr-3 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-700 dark:text-gray-300">{benefit}</span>
-              </li>
-            ))}
-          </ul>
-        </motion.div>
-
-        {/* Apply CTA */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="bg-gradient-to-r from-dynamic-green to-dynamic-blue rounded-lg p-8 text-white text-center"
-        >
-          <h2 className="text-2xl font-montserrat font-bold mb-4">
-            Ready to Take the Next Step?
-          </h2>
-          <p className="mb-6">
-            This position requires an active {job.clearance} clearance. Apply now to connect with our team.
-          </p>
-          <Link
-            href="/contact"
-            className="btn-primary bg-white dark:bg-gray-800 text-command-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 inline-block"
+            {/* Benefits */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="bg-white dark:bg-command-black rounded-lg shadow-md p-8 mb-8"
+            >
+              <h2 className="text-2xl font-montserrat font-bold mb-4">Benefits & Perks</h2>
+              <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {job.benefits.map((benefit: string, index: number) => (
+                  <li key={index} className="flex items-start">
+                    <CheckCircle size={20} className="text-emerald-green mr-3 mt-0.5 flex-shrink-0" />
+                    <span className="text-gray-700 dark:text-gray-300">{benefit}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          </>
+        ) : (
+          /* Premium Content Gate for Non-Authenticated Users */
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="bg-gradient-to-br from-dynamic-green/5 to-dynamic-blue/5 border-2 border-dashed border-dynamic-green/30 rounded-lg p-12 mb-8 text-center"
           >
-            Apply for This Position
-          </Link>
-        </motion.div>
+            <div className="max-w-2xl mx-auto">
+              <div className="text-6xl mb-6">🔒</div>
+              <h2 className="text-3xl font-montserrat font-bold mb-4 gradient-text">
+                Premium Job Details
+              </h2>
+              <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
+                Get access to detailed requirements, responsibilities, benefits, and direct application links.
+              </p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div className="p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
+                  <div className="text-2xl mb-2">📋</div>
+                  <h3 className="font-semibold mb-1">Full Requirements</h3>
+                  <p className="text-sm text-gray-500">Exact qualifications needed</p>
+                </div>
+                <div className="p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
+                  <div className="text-2xl mb-2">🎯</div>
+                  <h3 className="font-semibold mb-1">Day-to-Day Duties</h3>
+                  <p className="text-sm text-gray-500">What you'll actually do</p>
+                </div>
+                <div className="p-4 bg-white dark:bg-gray-800 rounded-lg shadow">
+                  <div className="text-2xl mb-2">💰</div>
+                  <h3 className="font-semibold mb-1">Complete Benefits</h3>
+                  <p className="text-sm text-gray-500">Full compensation package</p>
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link
+                  href="/login"
+                  className="btn-primary px-8 py-4 text-lg"
+                >
+                  🔓 Login to View Details
+                </Link>
+                <Link
+                  href="/register"
+                  className="px-8 py-4 border-2 border-dynamic-green text-dynamic-green hover:bg-dynamic-green hover:text-white transition-all duration-300 rounded-lg font-semibold text-lg"
+                >
+                  🚀 Create Free Account
+                </Link>
+              </div>
+              
+              <p className="text-sm text-gray-500 mt-4">
+                ✅ Free account • ✅ Instant access • ✅ All job details
+              </p>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Apply CTA - Premium Users Only */}
+        {user && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="bg-gradient-to-r from-dynamic-green to-dynamic-blue rounded-lg p-8 text-white text-center"
+          >
+            <h2 className="text-2xl font-montserrat font-bold mb-4">
+              Ready to Take the Next Step?
+            </h2>
+            <p className="mb-6">
+              This position requires an active {job.clearance} clearance. Apply now to connect with our team.
+            </p>
+            <Link
+              href="/contact"
+              className="btn-primary bg-white dark:bg-gray-800 text-command-black dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 inline-block"
+            >
+              Apply for This Position
+            </Link>
+          </motion.div>
+        )}
       </div>
     </section>
   )

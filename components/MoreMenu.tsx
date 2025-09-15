@@ -47,6 +47,7 @@ export default function MoreMenu() {
 
   // Different menu items based on login status
   const baseMenuItems = [
+    { href: '/subscription', label: '💳 Subscription Plans' },
     { href: '/about', label: 'About' },
     { href: '/services', label: 'Services' },
     { href: '/jobs', label: 'Jobs' },
@@ -54,8 +55,13 @@ export default function MoreMenu() {
     { href: '/resources', label: 'Resources' },
   ]
 
-  const menuItems = user 
-    ? [{ href: '/dashboard', label: '📊 Dashboard' }, ...baseMenuItems]
+  const menuItems = user
+    ? [
+        { href: '/dashboard', label: '📊 Dashboard' },
+        { href: '/conversations', label: '💬 Messages' },
+        { href: '/messages', label: '👥 Find Professionals' },
+        ...baseMenuItems
+      ]
     : baseMenuItems
 
   useEffect(() => {

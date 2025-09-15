@@ -84,7 +84,16 @@ function DashboardContent() {
     { label: 'Profile Completion', value: '75%', icon: User, color: 'text-dynamic-green', href: '/profile' },
     { label: 'Jobs Applied', value: '12', icon: Briefcase, color: 'text-dynamic-blue', href: '/dashboard/applications' },
     { label: 'Certifications', value: '3', icon: Award, color: 'text-emerald-green', href: '/dashboard/certifications' },
-    { label: 'Mock Interviews', value: '5', icon: Target, color: 'text-sky-blue', href: '/mock-interview' }
+    { 
+      label: 'Practice Interview', 
+      value: '334', 
+      icon: Target, 
+      color: 'text-emerald-400', 
+      href: '/mock-interview',
+      subtitle: 'Questions Available',
+      isSpecial: true,
+      description: 'AI-powered practice with instant feedback'
+    }
   ]
 
   const activities = [
@@ -169,13 +178,55 @@ function DashboardContent() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: index * 0.1 }}
-                className="bg-white dark:bg-command-black rounded-lg shadow-md p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer"
+                className={`rounded-lg shadow-md p-6 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer ${
+                  stat.isSpecial 
+                    ? 'bg-gradient-to-br from-emerald-400/10 to-cyan-400/10 border-2 border-emerald-400/30 hover:border-emerald-400/50 hover:shadow-emerald-400/20 relative overflow-hidden' 
+                    : 'bg-white dark:bg-command-black'
+                }`}
               >
+                {/* Special sparkle effect for interview card */}
+                {stat.isSpecial && (
+                  <div className="absolute -top-2 -right-2 text-yellow-400 text-xl animate-pulse">✨</div>
+                )}
+                
                 <div className="flex items-center justify-between mb-4">
-                  <stat.icon size={24} className={stat.color} />
-                  <span className="text-2xl font-bold">{stat.value}</span>
+                  <stat.icon 
+                    size={stat.isSpecial ? 28 : 24} 
+                    className={`${stat.color} ${stat.isSpecial ? 'animate-pulse' : ''}`} 
+                  />
+                  <div className="text-right">
+                    <span className={`font-bold ${stat.isSpecial ? 'text-3xl text-emerald-600 dark:text-emerald-400' : 'text-2xl'}`}>
+                      {stat.value}
+                    </span>
+                    {stat.subtitle && (
+                      <p className="text-xs text-emerald-600 dark:text-emerald-400 font-semibold">
+                        {stat.subtitle}
+                      </p>
+                    )}
+                  </div>
                 </div>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">{stat.label}</p>
+                
+                <div>
+                  <p className={`text-sm font-semibold ${
+                    stat.isSpecial 
+                      ? 'text-emerald-700 dark:text-emerald-300' 
+                      : 'text-gray-600 dark:text-gray-400'
+                  }`}>
+                    {stat.label}
+                  </p>
+                  {stat.description && (
+                    <p className="text-xs text-emerald-600 dark:text-emerald-400 mt-1 font-medium">
+                      {stat.description}
+                    </p>
+                  )}
+                  
+                  {stat.isSpecial && (
+                    <div className="flex items-center mt-2 text-emerald-600 dark:text-emerald-400">
+                      <span className="text-xs font-bold">Start Practice →</span>
+                      <ChevronRight size={12} className="ml-1" />
+                    </div>
+                  )}
+                </div>
               </motion.div>
             </Link>
           ))}

@@ -39,7 +39,8 @@
       "Read(//var/folders/s_/ptv2jdl50v7467mfdm3txqlc0000gn/T/TemporaryItems/NSIRD_screencaptureui_KdCwSl/**)",
       "Read(//Users/tone/Desktop/**)",
       "Bash(sudo installer:*)",
-      "Read(//var/folders/s_/ptv2jdl50v7467mfdm3txqlc0000gn/T/TemporaryItems/NSIRD_screencaptureui_5xI4mu/**)"
+      "Read(//var/folders/s_/ptv2jdl50v7467mfdm3txqlc0000gn/T/TemporaryItems/NSIRD_screencaptureui_5xI4mu/**)",
+      "Read(//var/folders/s_/ptv2jdl50v7467mfdm3txqlc0000gn/T/TemporaryItems/NSIRD_screencaptureui_JmyL5Z/**)"
     ],
     "deny": [],
     "additionalDirectories": [

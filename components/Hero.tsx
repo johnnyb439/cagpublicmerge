@@ -111,18 +111,24 @@ export default function Hero() {
 
           {renderCTAs()}
 
-          {/* CAG QR Code */}
-          <div className="flex justify-center">
-            <div className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
-              <div className="w-40 h-40 relative">
-                <Image
-                  src="/qr-code-cag.png"
-                  alt="CAG QR Code"
-                  width={160}
-                  height={160}
-                  className="w-full h-full object-contain"
-                />
+          {/* CAG QR Code - Links to Job Board */}
+          <div className="flex flex-col items-center space-y-3">
+            <Link href="/jobs" className="group">
+              <div className="bg-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-105 cursor-pointer">
+                <div className="w-40 h-40 relative">
+                  <Image
+                    src="/qr-code-cag.png"
+                    alt="CAG QR Code - Access Job Board"
+                    width={160}
+                    height={160}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
               </div>
+            </Link>
+            <div className="text-center">
+              <p className="text-sm text-gray-300 font-semibold">📱 Scan or Click for Jobs</p>
+              <p className="text-xs text-gray-400">Browse cleared positions instantly</p>
             </div>
           </div>
         </motion.div>

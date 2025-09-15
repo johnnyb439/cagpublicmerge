@@ -1,0 +1,244 @@
+{
+  "conversations": [
+    {
+      "id": "conv_001",
+      "type": "direct",
+      "participant": {
+        "id": "user_sarah_recruiter",
+        "name": "Sarah Williams",
+        "title": "Senior Tech Recruiter @ TechCorp",
+        "avatar_color": "from-purple-500 to-pink-500",
+        "status": "online"
+      },
+      "last_message": {
+        "content": "Hi Terrence! I came across your profile and I'm impressed with your network engineering background. We have a Senior Network Engineer position at TechCorp that pays $95K-120K. Are you open to discussing this opportunity?",
+        "timestamp": "2025-09-14T10:15:00Z",
+        "sender": "user_sarah_recruiter",
+        "preview": "Senior Network Engineer position at TechCorp that pays $95K-120K..."
+      },
+      "message_count": 3,
+      "is_recruiter": true
+    },
+    {
+      "id": "conv_002",
+      "type": "direct",
+      "participant": {
+        "id": "user_mike_network",
+        "name": "Mike Rodriguez",
+        "title": "Network Administrator @ DataFlow Corp",
+        "avatar_color": "from-blue-500 to-green-500",
+        "status": "online"
+      },
+      "last_message": {
+        "content": "Thanks for the SD-WAN advice yesterday! I implemented your suggestions and the network performance improved by 30%. You saved my project! 🙏",
+        "timestamp": "2025-09-14T09:45:00Z",
+        "sender": "user_mike_network",
+        "preview": "Thanks for the SD-WAN advice! Network performance improved by 30%..."
+      },
+      "message_count": 12
+    },
+    {
+      "id": "conv_003",
+      "type": "system",
+      "participant": {
+        "id": "cag_official",
+        "name": "CAG Official",
+        "title": "Cleared Advisory Group Team",
+        "avatar_color": "from-emerald-500 to-teal-500",
+        "status": "online"
+      },
+      "last_message": {
+        "content": "🎉 Welcome to CAG Professional Messaging! You're now connected with 2,847 cleared IT professionals. Check out our new Mock Interview feature and premium subscription options.",
+        "timestamp": "2025-09-14T08:30:00Z",
+        "sender": "cag_official",
+        "preview": "Welcome to CAG Professional Messaging! Connected with 2,847 professionals..."
+      },
+      "message_count": 1,
+      "is_official": true
+    },
+    {
+      "id": "conv_004",
+      "type": "direct",
+      "participant": {
+        "id": "user_jennifer_recruiter",
+        "name": "Jennifer Chen",
+        "title": "Cybersecurity Recruiter @ SecureNet",
+        "avatar_color": "from-red-500 to-orange-500",
+        "status": "away"
+      },
+      "last_message": {
+        "content": "We're hiring for a SOC Analyst III position - $85K base + clearance bonus. The team works on cutting-edge threat detection. Would you be interested in a quick 15-min call this week?",
+        "timestamp": "2025-09-14T07:20:00Z",
+        "sender": "user_jennifer_recruiter",
+        "preview": "SOC Analyst III position - $85K + clearance bonus, threat detection..."
+      },
+      "message_count": 2,
+      "is_recruiter": true
+    },
+    {
+      "id": "conv_005",
+      "type": "direct",
+      "participant": {
+        "id": "user_alex_cloud",
+        "name": "Alex Thompson",
+        "title": "Cloud Solutions Architect @ AWS",
+        "avatar_color": "from-yellow-500 to-orange-500",
+        "status": "online"
+      },
+      "last_message": {
+        "content": "The AWS re:Invent conference was incredible! Did you see the new networking services they announced? I think they'd be perfect for your infrastructure setup.",
+        "timestamp": "2025-09-13T16:30:00Z",
+        "sender": "user_alex_cloud",
+        "preview": "AWS re:Invent was incredible! New networking services announced..."
+      },
+      "message_count": 8
+    },
+    {
+      "id": "conv_006",
+      "type": "direct",
+      "participant": {
+        "id": "user_david_recruiter",
+        "name": "David Kim",
+        "title": "Technical Recruiter @ Defense Contractors Inc",
+        "avatar_color": "from-indigo-500 to-purple-500",
+        "status": "busy"
+      },
+      "last_message": {
+        "content": "URGENT: Top Secret clearance required - Network Security Engineer position in DC area. $130K-150K + benefits. Client needs someone ASAP. Can we talk today?",
+        "timestamp": "2025-09-13T14:15:00Z",
+        "sender": "user_david_recruiter",
+        "preview": "URGENT: TS clearance - Network Security Engineer $130K-150K in DC..."
+      },
+      "message_count": 5,
+      "is_recruiter": true
+    },
+    {
+      "id": "conv_007",
+      "type": "direct",
+      "participant": {
+        "id": "user_lisa_helpdesk",
+        "name": "Lisa Martinez",
+        "title": "IT Support Manager @ TechSupport Plus",
+        "avatar_color": "from-green-500 to-blue-500",
+        "status": "online"
+      },
+      "last_message": {
+        "content": "Hey! Saw your post about transitioning from help desk to networking. I made that same jump 2 years ago. Happy to share my study plan and certification path if you're interested!",
+        "timestamp": "2025-09-13T11:22:00Z",
+        "sender": "user_lisa_helpdesk",
+        "preview": "Saw your post about transitioning to networking. Happy to share my study plan..."
+      },
+      "message_count": 6
+    },
+    {
+      "id": "conv_008",
+      "type": "direct",
+      "participant": {
+        "id": "user_robert_systems",
+        "name": "Robert Johnson",
+        "title": "Senior Systems Administrator @ MegaCorp",
+        "avatar_color": "from-gray-500 to-slate-500",
+        "status": "away"
+      },
+      "last_message": {
+        "content": "The PowerShell script you shared for automated server monitoring is working perfectly! Cut our incident response time by 50%. You're a lifesaver! 🚀",
+        "timestamp": "2025-09-13T09:45:00Z",
+        "sender": "user_robert_systems",
+        "preview": "PowerShell script working perfectly! Cut incident response time by 50%..."
+      },
+      "message_count": 15
+    },
+    {
+      "id": "conv_009",
+      "type": "direct",
+      "participant": {
+        "id": "user_maria_recruiter",
+        "name": "Maria Gonzalez",
+        "title": "Senior Talent Acquisition @ CyberSolutions",
+        "avatar_color": "from-pink-500 to-rose-500",
+        "status": "online"
+      },
+      "last_message": {
+        "content": "Hi! I specialize in cleared cybersecurity positions. Saw you have CISSP - I have 3 immediate openings for Security Engineers $100K+. All remote-friendly. Interested?",
+        "timestamp": "2025-09-12T15:30:00Z",
+        "sender": "user_maria_recruiter",
+        "preview": "Specialize in cleared cybersecurity. 3 Security Engineer openings $100K+ remote..."
+      },
+      "message_count": 1,
+      "is_recruiter": true
+    },
+    {
+      "id": "conv_010",
+      "type": "direct",
+      "participant": {
+        "id": "user_kevin_devops",
+        "name": "Kevin Park",
+        "title": "DevOps Engineer @ StartupTech",
+        "avatar_color": "from-cyan-500 to-blue-500",
+        "status": "online"
+      },
+      "last_message": {
+        "content": "Your Kubernetes deployment strategy from last week's discussion went live today - zero downtime migration! The team is calling it the smoothest deploy we've ever had. Thanks again! 🎉",
+        "timestamp": "2025-09-12T13:45:00Z",
+        "sender": "user_kevin_devops",
+        "preview": "Kubernetes deployment went live - zero downtime! Smoothest deploy ever..."
+      },
+      "message_count": 22
+    },
+    {
+      "id": "conv_011",
+      "type": "direct",
+      "participant": {
+        "id": "user_amanda_cloud",
+        "name": "Amanda Foster",
+        "title": "Cloud Infrastructure Engineer @ CloudFirst",
+        "avatar_color": "from-violet-500 to-purple-500",
+        "status": "busy"
+      },
+      "last_message": {
+        "content": "Quick question about multi-region VPC peering - running into routing issues with our disaster recovery setup. Mind if I pick your brain for 10 minutes later today?",
+        "timestamp": "2025-09-12T10:15:00Z",
+        "sender": "user_amanda_cloud",
+        "preview": "Multi-region VPC peering routing issues with DR setup..."
+      },
+      "message_count": 7
+    },
+    {
+      "id": "conv_012",
+      "type": "direct",
+      "participant": {
+        "id": "user_james_recruiter",
+        "name": "James Wilson",
+        "title": "Executive Recruiter @ TalentPro",
+        "avatar_color": "from-emerald-500 to-green-500",
+        "status": "online"
+      },
+      "last_message": {
+        "content": "Confidential opportunity: Fortune 500 company seeking Network Architecture Lead. $140K-160K + equity. Can't share company name yet, but it's a household name. Available for a discrete call?",
+        "timestamp": "2025-09-12T08:00:00Z",
+        "sender": "user_james_recruiter",
+        "preview": "Fortune 500 Network Architecture Lead $140K-160K + equity. Discrete call?..."
+      },
+      "message_count": 3,
+      "is_recruiter": true
+    },
+    {
+      "id": "conv_013",
+      "type": "direct",
+      "participant": {
+        "id": "user_sophia_security",
+        "name": "Sophia Davis",
+        "title": "Information Security Analyst @ SecureBank",
+        "avatar_color": "from-red-500 to-pink-500",
+        "status": "online"
+      },
+      "last_message": {
+        "content": "The incident response playbook you helped me create just saved us during a security event last night. Executive team was impressed with our 15-minute response time! 🛡️",
+        "timestamp": "2025-09-11T19:30:00Z",
+        "sender": "user_sophia_security",
+        "preview": "Incident response playbook saved us! 15-minute response time impressed execs..."
+      },
+      "message_count": 18
+    }
+  ]
+}

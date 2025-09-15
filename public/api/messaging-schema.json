@@ -1,0 +1,376 @@
+{
+  "schema_version": "1.0.0",
+  "database_design": "Enterprise Messaging System",
+  "created": "2025-09-14",
+
+  "conversations": {
+    "description": "Chat conversations (1-on-1 or group)",
+    "fields": {
+      "id": {
+        "type": "string",
+        "description": "Unique conversation ID",
+        "example": "conv_abc123"
+      },
+      "type": {
+        "type": "enum",
+        "values": ["direct", "group", "channel", "recruiter"],
+        "description": "Type of conversation"
+      },
+      "title": {
+        "type": "string",
+        "description": "Conversation name (for groups/channels)",
+        "example": "Network Engineers Chat"
+      },
+      "created_by": {
+        "type": "string",
+        "description": "User ID who created conversation"
+      },
+      "created_at": {
+        "type": "datetime",
+        "description": "When conversation was created"
+      },
+      "updated_at": {
+        "type": "datetime",
+        "description": "Last message timestamp"
+      },
+      "is_active": {
+        "type": "boolean",
+        "description": "Whether conversation is active",
+        "default": true
+      },
+      "metadata": {
+        "type": "object",
+        "description": "Extra data (job_category, etc.)",
+        "example": {
+          "job_category": "network_engineering",
+          "is_recruiter_chat": false,
+          "company": "TechCorp"
+        }
+      }
+    }
+  },
+
+  "messages": {
+    "description": "Individual messages within conversations",
+    "fields": {
+      "id": {
+        "type": "string",
+        "description": "Unique message ID",
+        "example": "msg_xyz789"
+      },
+      "conversation_id": {
+        "type": "string",
+        "description": "Parent conversation ID"
+      },
+      "sender_id": {
+        "type": "string",
+        "description": "User ID of message sender"
+      },
+      "content": {
+        "type": "text",
+        "description": "Message content"
+      },
+      "message_type": {
+        "type": "enum",
+        "values": ["text", "image", "file", "system"],
+        "description": "Type of message content"
+      },
+      "reply_to": {
+        "type": "string",
+        "description": "Message ID this is replying to (threading)",
+        "nullable": true
+      },
+      "sent_at": {
+        "type": "datetime",
+        "description": "When message was sent"
+      },
+      "edited_at": {
+        "type": "datetime",
+        "description": "When message was last edited",
+        "nullable": true
+      },
+      "is_deleted": {
+        "type": "boolean",
+        "description": "Soft delete flag",
+        "default": false
+      },
+      "attachments": {
+        "type": "array",
+        "description": "File attachments",
+        "example": [
+          {
+            "filename": "resume.pdf",
+            "url": "/uploads/files/resume.pdf",
+            "size": 1024000
+          }
+        ]
+      }
+    }
+  },
+
+  "conversation_participants": {
+    "description": "Users participating in conversations",
+    "fields": {
+      "id": {
+        "type": "string",
+        "description": "Unique participant record ID"
+      },
+      "conversation_id": {
+        "type": "string",
+        "description": "Conversation they're part of"
+      },
+      "user_id": {
+        "type": "string",
+        "description": "Participating user ID"
+      },
+      "role": {
+        "type": "enum",
+        "values": ["member", "admin", "recruiter", "candidate"],
+        "description": "Participant role in conversation"
+      },
+      "joined_at": {
+        "type": "datetime",
+        "description": "When user joined conversation"
+      },
+      "last_read_at": {
+        "type": "datetime",
+        "description": "Last time user read messages",
+        "nullable": true
+      },
+      "notifications_enabled": {
+        "type": "boolean",
+        "description": "Whether user gets notifications",
+        "default": true
+      }
+    }
+  },
+
+  "channels": {
+    "description": "Job category group channels",
+    "fields": {
+      "id": {
+        "type": "string",
+        "description": "Unique channel ID",
+        "example": "channel_network_eng"
+      },
+      "name": {
+        "type": "string",
+        "description": "Channel display name",
+        "example": "Network Engineers"
+      },
+      "slug": {
+        "type": "string",
+        "description": "URL-friendly identifier",
+        "example": "network-engineers"
+      },
+      "description": {
+        "type": "text",
+        "description": "Channel description",
+        "example": "Chat with other network engineering professionals"
+      },
+      "job_category": {
+        "type": "string",
+        "description": "Related job category",
+        "example": "network_engineering"
+      },
+      "icon": {
+        "type": "string",
+        "description": "Channel icon/emoji",
+        "example": "🌐"
+      },
+      "is_public": {
+        "type": "boolean",
+        "description": "Whether channel is publicly joinable",
+        "default": true
+      },
+      "member_count": {
+        "type": "number",
+        "description": "Current number of members",
+        "default": 0
+      },
+      "created_at": {
+        "type": "datetime",
+        "description": "When channel was created"
+      }
+    }
+  },
+
+  "channel_members": {
+    "description": "Users who are members of channels",
+    "fields": {
+      "id": {
+        "type": "string",
+        "description": "Unique membership record ID"
+      },
+      "channel_id": {
+        "type": "string",
+        "description": "Channel they're a member of"
+      },
+      "user_id": {
+        "type": "string",
+        "description": "Member user ID"
+      },
+      "role": {
+        "type": "enum",
+        "values": ["member", "moderator", "admin"],
+        "description": "Member role in channel"
+      },
+      "joined_at": {
+        "type": "datetime",
+        "description": "When user joined channel"
+      },
+      "is_muted": {
+        "type": "boolean",
+        "description": "Whether notifications are muted",
+        "default": false
+      }
+    }
+  },
+
+  "user_presence": {
+    "description": "Real-time user online status",
+    "fields": {
+      "user_id": {
+        "type": "string",
+        "description": "User ID"
+      },
+      "status": {
+        "type": "enum",
+        "values": ["online", "away", "busy", "offline"],
+        "description": "Current presence status"
+      },
+      "last_seen": {
+        "type": "datetime",
+        "description": "Last time user was active"
+      },
+      "custom_status": {
+        "type": "string",
+        "description": "Custom status message",
+        "example": "In a meeting",
+        "nullable": true
+      }
+    }
+  },
+
+  "message_reactions": {
+    "description": "Reactions/likes on messages",
+    "fields": {
+      "id": {
+        "type": "string",
+        "description": "Unique reaction ID"
+      },
+      "message_id": {
+        "type": "string",
+        "description": "Message being reacted to"
+      },
+      "user_id": {
+        "type": "string",
+        "description": "User who reacted"
+      },
+      "reaction": {
+        "type": "string",
+        "description": "Reaction emoji/type",
+        "example": "👍"
+      },
+      "created_at": {
+        "type": "datetime",
+        "description": "When reaction was added"
+      }
+    }
+  },
+
+  "notifications": {
+    "description": "Message notifications for users",
+    "fields": {
+      "id": {
+        "type": "string",
+        "description": "Unique notification ID"
+      },
+      "user_id": {
+        "type": "string",
+        "description": "User receiving notification"
+      },
+      "type": {
+        "type": "enum",
+        "values": ["new_message", "mention", "recruiter_message", "channel_invite"],
+        "description": "Type of notification"
+      },
+      "title": {
+        "type": "string",
+        "description": "Notification title",
+        "example": "New message from John"
+      },
+      "content": {
+        "type": "text",
+        "description": "Notification content"
+      },
+      "related_id": {
+        "type": "string",
+        "description": "Related message/conversation ID"
+      },
+      "is_read": {
+        "type": "boolean",
+        "description": "Whether notification has been read",
+        "default": false
+      },
+      "created_at": {
+        "type": "datetime",
+        "description": "When notification was created"
+      }
+    }
+  },
+
+  "job_categories": {
+    "description": "Available job categories for channels",
+    "data": [
+      {
+        "id": "network_engineering",
+        "name": "Network Engineering",
+        "icon": "🌐",
+        "description": "Network infrastructure, routing, switching"
+      },
+      {
+        "id": "cybersecurity",
+        "name": "Cybersecurity",
+        "icon": "🔒",
+        "description": "Information security, ethical hacking, compliance"
+      },
+      {
+        "id": "cloud_engineering",
+        "name": "Cloud Engineering",
+        "icon": "☁️",
+        "description": "AWS, Azure, Google Cloud, DevOps"
+      },
+      {
+        "id": "systems_admin",
+        "name": "Systems Administration",
+        "icon": "🖥️",
+        "description": "Server management, Linux, Windows"
+      },
+      {
+        "id": "help_desk",
+        "name": "Help Desk & Support",
+        "icon": "🎧",
+        "description": "Technical support, user assistance"
+      },
+      {
+        "id": "devops",
+        "name": "DevOps Engineering",
+        "icon": "⚙️",
+        "description": "CI/CD, automation, infrastructure as code"
+      },
+      {
+        "id": "data_engineering",
+        "name": "Data Engineering",
+        "icon": "📊",
+        "description": "Data pipelines, analytics, databases"
+      },
+      {
+        "id": "software_dev",
+        "name": "Software Development",
+        "icon": "💻",
+        "description": "Programming, web development, mobile apps"
+      }
+    ]
+  }
+}

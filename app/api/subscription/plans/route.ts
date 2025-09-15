@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 // CAG Subscription Plans - Enterprise Ready! 🚀
-export const subscriptionPlans = {
+const subscriptionPlans = {
   free: {
     id: 'free',
     name: 'CAG Explorer',

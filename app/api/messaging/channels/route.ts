@@ -135,7 +135,7 @@ export async function GET(request: NextRequest) {
       data: {
         channels: filteredChannels,
         count: filteredChannels.length,
-        categories: [...new Set(channels.map(c => c.job_category))]
+        categories: Array.from(new Set(channels.map(c => c.job_category)))
       }
     });
 

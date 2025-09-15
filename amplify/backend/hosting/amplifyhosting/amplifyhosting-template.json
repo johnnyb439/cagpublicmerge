@@ -1,0 +1,51 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Amplify Hosting for CAG Enterprise Platform",
+  "Parameters": {
+    "env": {
+      "Type": "String"
+    }
+  },
+  "Resources": {
+    "AmplifyApp": {
+      "Type": "AWS::Amplify::App",
+      "Properties": {
+        "Name": "CAG-Enterprise-Platform",
+        "Repository": "https://github.com/tmorris-dev/aws-talent-platform",
+        "AccessToken": "{{resolve:secretsmanager:github-token:SecretString:token}}",
+        "BuildSpec": "version: 1\nfrontend:\n  phases:\n    preBuild:\n      commands:\n        - npm ci\n    build:\n      commands:\n        - npm run build\n  artifacts:\n    baseDirectory: .next\n    files:\n      - '**/*'\n  cache:\n    paths:\n      - node_modules/**/*",
+        "EnvironmentVariables": [
+          {
+            "Name": "AMPLIFY_ENV",
+            "Value": {
+              "Ref": "env"
+            }
+          }
+        ]
+      }
+    },
+    "AmplifyBranch": {
+      "Type": "AWS::Amplify::Branch",
+      "Properties": {
+        "AppId": {
+          "Fn::GetAtt": ["AmplifyApp", "AppId"]
+        },
+        "BranchName": "main",
+        "EnableAutoBuild": true,
+        "Stage": "PRODUCTION"
+      }
+    }
+  },
+  "Outputs": {
+    "AppId": {
+      "Value": {
+        "Fn::GetAtt": ["AmplifyApp", "AppId"]
+      }
+    },
+    "AppUrl": {
+      "Value": {
+        "Fn::Sub": "https://main.${AmplifyApp.DefaultDomain}"
+      }
+    }
+  }
+}

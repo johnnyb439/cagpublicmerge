@@ -1,0 +1,154 @@
+{
+  "certificationProgressions": {
+    "comptia-a-plus": {
+      "next": ["comptia-network-plus", "comptia-security-plus"],
+      "timeToNext": 6,
+      "salaryBoost": 5
+    },
+    "comptia-network-plus": {
+      "next": ["comptia-security-plus", "ccna"],
+      "timeToNext": 6,
+      "salaryBoost": 8
+    },
+    "comptia-security-plus": {
+      "next": ["comptia-cysa-plus", "comptia-pentest-plus", "cissp-associate"],
+      "timeToNext": 12,
+      "salaryBoost": 12
+    },
+    "comptia-cysa-plus": {
+      "next": ["comptia-casp-plus", "cissp", "giac-gcih"],
+      "timeToNext": 18,
+      "salaryBoost": 15
+    },
+    "comptia-pentest-plus": {
+      "next": ["oscp", "giac-gpen", "ceh"],
+      "timeToNext": 12,
+      "salaryBoost": 18
+    },
+    "aws-cloud-practitioner": {
+      "next": ["aws-solutions-architect-associate", "aws-developer-associate"],
+      "timeToNext": 3,
+      "salaryBoost": 10
+    },
+    "aws-solutions-architect-associate": {
+      "next": ["aws-solutions-architect-professional", "aws-devops-engineer-professional"],
+      "timeToNext": 12,
+      "salaryBoost": 20
+    },
+    "aws-developer-associate": {
+      "next": ["aws-devops-engineer-professional", "aws-solutions-architect-professional"],
+      "timeToNext": 12,
+      "salaryBoost": 18
+    },
+    "aws-sysops-administrator-associate": {
+      "next": ["aws-devops-engineer-professional", "aws-solutions-architect-professional"],
+      "timeToNext": 12,
+      "salaryBoost": 18
+    },
+    "azure-fundamentals": {
+      "next": ["azure-administrator", "azure-developer"],
+      "timeToNext": 3,
+      "salaryBoost": 8
+    },
+    "azure-administrator": {
+      "next": ["azure-solutions-architect", "azure-devops-engineer"],
+      "timeToNext": 12,
+      "salaryBoost": 18
+    },
+    "ccna": {
+      "next": ["ccnp-enterprise", "comptia-security-plus", "aws-cloud-practitioner"],
+      "timeToNext": 12,
+      "salaryBoost": 15
+    },
+    "ccnp-enterprise": {
+      "next": ["ccie-enterprise", "aws-advanced-networking"],
+      "timeToNext": 24,
+      "salaryBoost": 25
+    },
+    "cissp": {
+      "next": ["cissp-concentrations", "cism", "crisc"],
+      "timeToNext": 24,
+      "salaryBoost": 30
+    },
+    "pmp": {
+      "next": ["pgmp", "pmi-acp", "safe-agilist"],
+      "timeToNext": 18,
+      "salaryBoost": 20
+    },
+    "itil-foundation": {
+      "next": ["itil-practitioner", "itil-expert"],
+      "timeToNext": 6,
+      "salaryBoost": 5
+    }
+  },
+  "renewalWindows": {
+    "90": {
+      "urgency": "low",
+      "message": "Your {certName} expires in 90 days. Time to start planning renewal.",
+      "color": "blue"
+    },
+    "60": {
+      "urgency": "medium",
+      "message": "Your {certName} expires in 60 days. Schedule your renewal exam soon.",
+      "color": "yellow"
+    },
+    "30": {
+      "urgency": "high",
+      "message": "URGENT: Your {certName} expires in 30 days! Book renewal exam now.",
+      "color": "red"
+    }
+  },
+  "careerPaths": {
+    "security-analyst": {
+      "certs": ["comptia-security-plus", "comptia-cysa-plus", "cissp"],
+      "timeline": 36,
+      "avgSalary": 110000
+    },
+    "cloud-architect": {
+      "certs": ["aws-cloud-practitioner", "aws-solutions-architect-associate", "aws-solutions-architect-professional"],
+      "timeline": 24,
+      "avgSalary": 140000
+    },
+    "network-engineer": {
+      "certs": ["comptia-network-plus", "ccna", "ccnp-enterprise"],
+      "timeline": 30,
+      "avgSalary": 95000
+    },
+    "devops-engineer": {
+      "certs": ["aws-developer-associate", "aws-devops-engineer-professional", "kubernetes-cka"],
+      "timeline": 24,
+      "avgSalary": 130000
+    },
+    "project-manager": {
+      "certs": ["itil-foundation", "pmp", "safe-agilist"],
+      "timeline": 18,
+      "avgSalary": 115000
+    }
+  },
+  "prepResources": {
+    "comptia-security-plus": {
+      "official": "https://www.comptia.org/certifications/security",
+      "udemy": "https://www.udemy.com/course/securityplus/",
+      "coursera": "https://www.coursera.org/professional-certificates/comptia-security-plus",
+      "examTopics": "https://www.examtopics.com/exams/comptia/sy0-601/"
+    },
+    "aws-solutions-architect-associate": {
+      "official": "https://aws.amazon.com/certification/certified-solutions-architect-associate/",
+      "udemy": "https://www.udemy.com/course/aws-certified-solutions-architect-associate-saa-c03/",
+      "acloudguru": "https://acloudguru.com/course/aws-certified-solutions-architect-associate",
+      "examTopics": "https://www.examtopics.com/exams/amazon/aws-certified-solutions-architect-associate-saa-c03/"
+    },
+    "cissp": {
+      "official": "https://www.isc2.org/Certifications/CISSP",
+      "udemy": "https://www.udemy.com/course/cissp-training/",
+      "cybrary": "https://www.cybrary.it/course/cissp/",
+      "examTopics": "https://www.examtopics.com/exams/isc2/cissp/"
+    },
+    "ccna": {
+      "official": "https://www.cisco.com/c/en/us/training-events/training-certifications/certifications/associate/ccna.html",
+      "udemy": "https://www.udemy.com/course/complete-cisco-ccna/",
+      "cbt": "https://www.cbtnuggets.com/certification-playlist/cisco/ccna",
+      "examTopics": "https://www.examtopics.com/exams/cisco/200-301/"
+    }
+  }
+}

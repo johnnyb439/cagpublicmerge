@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import {
@@ -8,6 +8,7 @@ import {
   Clock, FileText, Trash2, Edit, Download, Upload,
   Shield, Cloud, Network, Database, Code, Lock
 } from 'lucide-react'
+import CareerRoadmap from '@/components/dashboard/CareerRoadmap'
 
 interface Certification {
   id: string
@@ -367,11 +368,24 @@ export default function CertificationsPage() {
           ))}
         </div>
 
+        {/* Career Roadmap Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="mb-12"
+        >
+          <h2 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-white">
+            Your Career Roadmap
+          </h2>
+          <CareerRoadmap />
+        </motion.div>
+
         {/* Popular Certifications */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
+          transition={{ duration: 0.8, delay: 0.7 }}
           className="bg-white dark:bg-command-black rounded-lg shadow-lg p-6"
         >
           <h2 className="text-xl font-semibold mb-6">Popular Certifications for Cleared Professionals</h2>
